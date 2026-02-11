@@ -1,0 +1,33 @@
+.wrapper {
+    margin: 0;
+    padding: 0;
+    height: 60px;
+    background-color: #D0F2EE;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    /* margin-bottom: -50px; */
+    padding: 10px  ;
+    
+}
+
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+ul {
+   list-style-type : none;
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   gap: 45px;
+   padding: 15px 0px;
+   /* padding-right: 50px; */
+}
+
+a {
+    color: var(--Accent-03, #8398B4);
+    text-decoration: none;
+}

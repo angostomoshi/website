@@ -1,0 +1,564 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap');
+
+:root {
+  --primary-blue: #2A6EBB;
+  --primary-teal: #1AA8A3;
+  --secondary-blue: #0C3B98;
+  --accent-blue: #8398B4;
+  --light-bg: #b1eae3;
+  --white: #ffffff;
+  --dark-text: #0C3B98;
+  --medium-text: #2A6EBB;
+  --grey-light: #CFD1D4;
+  --shadow: 0px 4px 8px rgba(1, 115, 153, 0.15);
+  --transition: all 0.3s ease;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Nunito Sans', sans-serif;
+}
+
+.navbar {
+  width: 100%;
+  background: var(--light-bg);
+  color: var(--secondary-blue);
+  height: 80px;
+  padding: 0 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
+}
+
+/* Logo Styles */
+.logo-container {
+  flex: 0 0 auto;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  transition: var(--transition);
+}
+
+.logo:hover {
+  transform: scale(1.02);
+}
+
+/* Logo Initials - WHITE text on colored background */
+.logo-initials {
+  width: 50px;
+  height: 50px;
+  background: linear-gradient(135deg, var(--primary-blue), var(--primary-teal));
+  color: var(--white) !important; /* WHITE - FORCE with !important */
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  font-weight: 700;
+  box-shadow: var(--shadow);
+}
+
+.logo-text {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Desktop Logo text - DARK BLUE for VISIBILITY */
+.logo-main {
+  font-size: 20px;
+  font-weight: 700;
+  color: #0C3B98 !important; /* DARK BLUE - FORCE with !important */
+  line-height: 1.2;
+  text-shadow: 0 1px 3px rgba(255, 255, 255, 0.8);
+}
+
+.logo-sub {
+  font-size: 11px;
+  color: #2A6EBB !important; /* MEDIUM BLUE - FORCE with !important */
+  font-weight: 600; /* Made bolder */
+  letter-spacing: 0.5px;
+}
+
+/* Center Navigation */
+.nav-center {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.nav-menu-center {
+  display: flex;
+  align-items: center;
+  list-style: none;
+  gap: 40px;
+  margin: 0;
+  padding: 0;
+}
+
+/* Right Navigation */
+.nav-right {
+  flex: 0 0 auto;
+}
+
+.nav-menu-right {
+  display: flex;
+  align-items: center;
+  list-style: none;
+  gap: 40px;
+  margin: 0;
+  padding: 0;
+}
+
+/* Common Navigation Item Styles */
+.nav-menu-center li,
+.nav-menu-right li {
+  position: relative;
+}
+
+.nav-menu-center a,
+.nav-menu-right a {
+  text-decoration: none;
+  color: #0C3B98 !important; /* DARK BLUE - FORCE with !important */
+  font-weight: 700; /* Made bolder */
+  font-size: 16px;
+  transition: var(--transition);
+  padding: 5px 0;
+  position: relative;
+}
+
+.nav-menu-center a:hover,
+.nav-menu-right a:hover {
+  color: var(--primary-blue) !important;
+}
+
+.nav-menu-center a span.active,
+.nav-menu-right a span.active {
+  color: var(--primary-blue) !important;
+  position: relative;
+  font-weight: 700;
+}
+
+.nav-menu-center a span.active::after,
+.nav-menu-right a span.active::after {
+  content: '';
+  position: absolute;
+  bottom: -6px;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(90deg, var(--primary-blue), var(--primary-teal));
+  border-radius: 2px;
+  animation: slideIn 0.3s ease;
+  box-shadow: 0 2px 4px rgba(42, 110, 187, 0.3);
+}
+
+@keyframes slideIn {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+/* Mobile Menu Toggle */
+.menu-toggle {
+  display: none;
+  cursor: pointer;
+  padding: 8px;
+  background: transparent;
+  border: none;
+  transition: var(--transition);
+}
+
+.menu-toggle:hover {
+  background: rgba(42, 110, 187, 0.1);
+  border-radius: 6px;
+}
+
+/* Mobile Menu */
+.mobile-menu {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1001;
+}
+
+.mobile-menu.active {
+  display: block;
+}
+
+/* Mobile Overlay */
+.mobile-menu-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(2px);
+}
+
+/* Mobile Menu Content */
+.mobile-menu-content {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 320px;
+  height: 100%;
+  background: var(--light-bg); /* Same light blue as desktop */
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  transform: translateX(100%);
+  animation: slideInRight 0.3s ease forwards;
+  box-shadow: -5px 0 20px rgba(0, 0, 0, 0.2);
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+/* Mobile Menu Header with Close Button */
+.mobile-menu-header {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 20px;
+}
+
+.menu-close {
+  cursor: pointer;
+  padding: 8px;
+  background: rgba(42, 110, 187, 0.1);
+  border: 1px solid rgba(42, 110, 187, 0.3);
+  border-radius: 6px;
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.menu-close:hover {
+  background: rgba(42, 110, 187, 0.2);
+  transform: rotate(90deg);
+}
+
+.mobile-logo {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 40px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(42, 110, 187, 0.2);
+}
+
+/* Mobile Logo Initials - WHITE text on colored background */
+.mobile-logo-initials {
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(135deg, var(--primary-blue), var(--primary-teal));
+  color: var(--white) !important; /* WHITE - FORCE with !important */
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  font-weight: 700;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.mobile-logo-text {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Mobile Logo text - DARK BLUE for visibility */
+.mobile-logo-main {
+  font-size: 20px;
+  font-weight: 700;
+  color: #0C3B98 !important; /* DARK BLUE - FORCE with !important */
+  line-height: 1.2;
+}
+
+.mobile-logo-sub {
+  font-size: 12px;
+  color: #2A6EBB !important; /* MEDIUM BLUE - FORCE with !important */
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.mobile-nav-links {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin: 0;
+  padding: 0;
+}
+
+.mobile-nav-links li {
+  width: 100%;
+}
+
+.mobile-nav-links a {
+  display: block;
+  text-decoration: none;
+  color: #0C3B98 !important; /* DARK BLUE - FORCE with !important */
+  font-size: 17px;
+  font-weight: 600;
+  padding: 15px 20px;
+  border-radius: 8px;
+  transition: var(--transition);
+  border: 2px solid transparent;
+}
+
+.mobile-nav-links a:hover {
+  background: rgba(42, 110, 187, 0.1);
+  color: #0C3B98 !important;
+  padding-left: 25px;
+}
+
+.mobile-nav-links a.active {
+  background: rgba(42, 110, 187, 0.15);
+  color: #0C3B98 !important;
+  font-weight: 700;
+  border-color: rgba(42, 110, 187, 0.3);
+}
+
+.mobile-nav-links a.active::before {
+  content: '▶';
+  margin-right: 10px;
+  font-size: 12px;
+  color: var(--primary-blue);
+  display: inline-block;
+  animation: bounce 0.5s ease infinite alternate;
+}
+
+@keyframes bounce {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(3px);
+  }
+}
+
+/* Force navigation text to be visible with DARK colors */
+.navbar .logo-main,
+.navbar .logo-sub,
+.navbar .nav-menu-center a,
+.navbar .nav-menu-right a,
+.mobile-logo-main,
+.mobile-logo-sub,
+.mobile-nav-links a {
+  color: #0C3B98 !important;
+}
+
+/* Ensure logo initials remain white */
+.navbar .logo-initials,
+.mobile-logo-initials {
+  color: var(--white) !important;
+}
+
+/* Media Queries */
+
+/* Tablet (768px - 1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .navbar {
+    padding: 0 20px;
+    height: 75px;
+  }
+  
+  .nav-menu-center,
+  .nav-menu-right {
+    gap: 30px;
+  }
+  
+  .logo-main {
+    font-size: 18px;
+    color: #0C3B98 !important;
+  }
+  
+  .logo-sub {
+    font-size: 10px;
+    color: #2A6EBB !important;
+  }
+  
+  .nav-menu-center a,
+  .nav-menu-right a {
+    font-size: 15px;
+    color: #0C3B98 !important;
+  }
+  
+  .logo-initials {
+    color: var(--white) !important; /* Ensure white on tablet */
+  }
+  
+  .mobile-menu-content {
+    width: 300px;
+  }
+}
+
+/* Mobile (max-width: 767px) */
+@media (max-width: 767px) {
+  .navbar {
+    padding: 0 15px;
+    height: 70px;
+  }
+  
+  .menu-toggle {
+    display: block;
+  }
+  
+  .nav-center,
+  .nav-right {
+    display: none;
+  }
+  
+  .mobile-menu {
+    display: block;
+  }
+  
+  .logo-main {
+    font-size: 16px;
+    color: #0C3B98 !important;
+  }
+  
+  .logo-sub {
+    font-size: 9px;
+    color: #2A6EBB !important;
+  }
+  
+  .logo-initials {
+    width: 45px;
+    height: 45px;
+    font-size: 20px;
+    color: var(--white) !important; /* Ensure white on mobile */
+  }
+  
+  .mobile-menu-content {
+    width: 280px;
+    padding: 25px;
+  }
+}
+
+/* Small Mobile (max-width: 480px) */
+@media (max-width: 480px) {
+  .navbar {
+    padding: 0 12px;
+    height: 65px;
+  }
+  
+  .mobile-menu-content {
+    width: 85%;
+    max-width: 280px;
+    padding: 20px;
+  }
+  
+  .logo-main {
+    font-size: 15px;
+    color: #0C3B98 !important;
+  }
+  
+  .logo-sub {
+    font-size: 8px;
+    color: #2A6EBB !important;
+  }
+  
+  .logo-initials {
+    width: 40px;
+    height: 40px;
+    font-size: 18px;
+    color: var(--white) !important; /* Ensure white on small mobile */
+  }
+  
+  .mobile-nav-links a {
+    font-size: 16px;
+    padding: 12px 15px;
+  }
+  
+  .mobile-logo-initials {
+    width: 50px;
+    height: 50px;
+    font-size: 20px;
+  }
+  
+  .mobile-logo-main {
+    font-size: 18px;
+    color: #0C3B98 !important;
+  }
+  
+  .mobile-logo-sub {
+    font-size: 11px;
+    color: #2A6EBB !important;
+  }
+}
+
+/* Extra Small Mobile (max-width: 360px) */
+@media (max-width: 360px) {
+  .navbar {
+    padding: 0 10px;
+    height: 60px;
+  }
+  
+  .mobile-menu-content {
+    width: 100%;
+    max-width: 260px;
+    padding: 15px;
+  }
+  
+  .logo-initials {
+    width: 35px;
+    height: 35px;
+    font-size: 16px;
+    color: var(--white) !important; /* Ensure white on extra small mobile */
+  }
+  
+  .logo-main {
+    font-size: 14px;
+    color: #0C3B98 !important;
+  }
+  
+  .logo-sub {
+    display: none;
+  }
+  
+  .mobile-logo {
+    flex-direction: column;
+    text-align: center;
+    gap: 10px;
+  }
+  
+  .mobile-logo-text {
+    align-items: center;
+  }
+  
+  .mobile-logo-initials {
+    width: 45px;
+    height: 45px;
+    font-size: 18px;
+  }
+  
+  .mobile-nav-links a {
+    font-size: 15px;
+    padding: 10px 12px;
+  }
+}

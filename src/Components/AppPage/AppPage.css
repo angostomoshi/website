@@ -1,0 +1,264 @@
+.App_page {
+    margin: auto;
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: 10px;
+    width: 100%;
+    background: var(--Secondary-Main-Secondary, #1259E4);
+    min-height: 600px; /* Reduced height */
+    max-height: 700px; /* Controlled maximum height */
+    align-items: center;
+    overflow: hidden;
+    padding: 0 20px;
+}
+
+.App_page_left {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+}
+
+.App_page_left img {
+    width: 550px; /* Reduced from 700px */
+    border-radius: 30px; /* Slightly reduced */
+    height: auto;
+    object-fit: contain;
+    display: block;
+    margin: 0 auto;
+}
+
+.App_page_right {
+    margin: 30px auto; /* Reduced from 50px */
+    text-align: center;
+    justify-content: center;
+    display: block;
+    padding-left: 30px; /* Reduced from 50px */
+    padding-right: 20px; /* Reduced from 30px */
+    padding-top: 30px; /* Reduced from 50px */
+    padding-bottom: 20px; /* Added bottom padding */
+}
+
+.App_page_right h3 {
+    color: var(--White-01, #FDFDFD);
+    font-family: Nunito;
+    font-size: 42px; /* Reduced from 48px */
+    font-style: normal;
+    font-weight: 800;
+    line-height: 1.2; /* Better line height */
+    padding-bottom: 15px; /* Reduced from 30px */
+    margin: 0; /* Reset margin */
+}
+
+.App_page_right h3 span {
+    color: var(--Primary-04, #64D5C8);
+    font-family: Nunito;
+    font-size: 42px; /* Reduced from 48px */
+    font-style: normal;
+    font-weight: 800;
+    line-height: 1.2;
+}
+
+.App_page_right p {
+    margin: 10px 0 20px 0; /* Adjusted spacing */
+}
+
+.download-options {
+    display: inline-flex;
+    gap: 20px; /* Reduced from 30px */
+    margin-top: 5px;
+}
+
+.apple {
+    width: 160px; /* Reduced from 200px */
+    border-radius: 25px; /* Slightly reduced */
+    transition: transform 0.3s ease; /* Added hover effect */
+}
+
+.playstore {
+    width: 160px; /* Reduced from 200px */
+    border-radius: 25px; /* Slightly reduced */
+    transition: transform 0.3s ease; /* Added hover effect */
+}
+
+.apple:hover, .playstore:hover {
+    transform: scale(1.05); /* Subtle hover effect */
+}
+
+/* Tablet Styles (431px - 767px) */
+@media (min-width: 431px) and (max-width: 767px) {
+    .App_page {
+        width: 100%;
+        grid-template-columns: 1fr 1fr;
+        gap: 15px;
+        min-height: 500px; /* Reduced for tablet */
+        max-height: 600px;
+        padding: 0 15px;
+    }
+
+    .App_page_left {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-right: 0;
+    }
+
+    .App_page_left img {
+        width: 380px; /* Reduced from 450px */
+        border-radius: 30px;
+        height: auto;
+        position: static;
+        margin: 0 auto;
+    }
+
+    .App_page_right {
+        width: 100%;
+        margin: 20px 0;
+        padding-left: 15px;
+        padding-right: 15px;
+        padding-top: 30px;
+        padding-bottom: 20px;
+    }
+
+    .App_page_right h3 {
+        font-size: 32px; /* Reduced from 38px */
+        padding-bottom: 10px;
+    }
+
+    .App_page_right h3 span {
+        font-size: 32px; /* Reduced from 38px */
+    }
+
+    .download-options {
+        display: inline-flex;
+        gap: 15px;
+        padding-left: 0;
+    }
+
+    .apple, .playstore {
+        width: 110px; /* Reduced from 120px */
+        border-radius: 20px;
+    }
+}
+
+/* Desktop Small (768px - 1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
+    .App_page {
+        width: 100%;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+        min-height: 550px;
+        max-height: 650px;
+    }
+
+    .App_page_left img {
+        width: 450px; /* Reduced from 550px */
+        position: static;
+        margin: 0 auto;
+    }
+
+    .App_page_right h3 {
+        font-size: 36px;
+    }
+
+    .App_page_right h3 span {
+        font-size: 36px;
+    }
+
+    .apple, .playstore {
+        width: 140px;
+    }
+}
+
+/* Mobile Styles (max-width: 430px) */
+@media (max-width: 430px) {
+    .App_page {
+        width: 100%;
+        display: flex;
+        flex-direction: column-reverse;
+        gap: 10px;
+        min-height: auto; /* Auto height for mobile */
+        max-height: none;
+        padding: 20px 15px;
+    }
+
+    .App_page_left {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-right: 0;
+        margin-top: 10px;
+    }
+
+    .App_page_left img {
+        width: 85%;
+        max-width: 280px; /* Reduced from 350px */
+        border-radius: 25px;
+        height: auto;
+        position: static;
+        margin: 0 auto;
+    }
+
+    .App_page_right {
+        width: 100%;
+        margin: 10px 0;
+        text-align: center;
+        justify-content: center;
+        display: block;
+        padding-left: 0px;
+        padding-right: 0px;
+        padding-top: 15px;
+        padding-bottom: 10px;
+    }
+
+    .App_page_right h3 {
+        font-size: 28px; /* Reduced from 32px */
+        padding-bottom: 10px;
+        line-height: 1.2;
+    }
+
+    .App_page_right h3 span {
+        font-size: 28px; /* Reduced from 32px */
+    }
+
+    .App_page_right p {
+        margin: 5px 0 15px 0;
+        font-size: 14px;
+    }
+
+    .download-options {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+        padding-left: 0;
+    }
+
+    .apple, .playstore {
+        width: 140px; /* Slightly larger on mobile for better touch */
+        border-radius: 25px;
+    }
+}
+
+/* Extra Large Desktop */
+@media (min-width: 1400px) {
+    .App_page {
+        min-height: 650px;
+        max-height: 750px;
+    }
+    
+    .App_page_left img {
+        width: 600px; /* Slightly larger for big screens */
+    }
+    
+    .App_page_right h3 {
+        font-size: 48px;
+    }
+    
+    .apple, .playstore {
+        width: 180px;
+    }
+}

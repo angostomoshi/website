@@ -1,0 +1,326 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+/* CSS Variables for Consistency */
+:root {
+  --primary-color: #0c3b98;
+  --secondary-color: #1259E4;
+  --accent-color: #16CDAC;
+  --background-light: #D0F2EE;
+  --text-dark: #1A1A1A;
+  --text-light: #999AA1;
+  --white: #ffffff;
+  --shadow: 0 10px 30px rgba(12, 59, 152, 0.1);
+  --gradient: linear-gradient(135deg, #16CDAC 0%, #0c3b98 100%);
+}
+
+/* Main Container */
+.about_page {
+  margin: 30px auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  width: 100%;
+  max-width: 1400px;
+  background: var(--background-light);
+  border-radius: 20px;
+  padding: 40px;
+  box-shadow: var(--shadow);
+}
+
+/* Left Column - Image */
+.about_page_left {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: 15px;
+}
+
+.healthcare_img {
+  width: 100%;
+  height: 500px;
+  object-fit: cover;
+  border-radius: 15px;
+  transition: transform 0.3s ease;
+}
+
+.healthcare_img:hover {
+  transform: scale(1.02);
+}
+
+.play_icon {
+  width: 60px;
+  height: 60px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+  z-index: 2;
+}
+
+.play_icon:hover {
+  transform: translate(-50%, -50%) scale(1.1);
+}
+
+/* Right Column - Content */
+.about_page_right {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 20px 0;
+}
+
+.about_page_right h1 {
+  margin-top: 0;
+  color: var(--text-dark);
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 2.5rem;
+  font-weight: 800;
+  line-height: 1.2;
+  margin-bottom: 25px;
+}
+
+.about_page_right h1 span {
+  color: var(--primary-color);
+  background: var(--gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 900;
+}
+
+.about_page_right p {
+  color: var(--text-light);
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 1.125rem;
+  font-weight: 400;
+  line-height: 1.7;
+  margin-bottom: 20px;
+}
+
+.about_page_right p:last-of-type {
+  margin-bottom: 30px;
+}
+
+/* Button Styles */
+.about_btn {
+  margin-top: 20px;
+  padding: 15px 35px;
+  background: var(--gradient);
+  color: var(--white);
+  border: none;
+  border-radius: 8px;
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(12, 59, 152, 0.2);
+  width: fit-content;
+  text-decoration: none;
+}
+
+.about_btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(12, 59, 152, 0.3);
+}
+
+.anchor-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* Video Overlay Effect */
+.about_page_left::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(to bottom, transparent 50%, rgba(0, 0, 0, 0.1));
+  border-radius: 15px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Responsive Design */
+
+/* Tablet Landscape (1024px - 768px) */
+@media (max-width: 1024px) {
+  .about_page {
+    grid-template-columns: 1fr;
+    gap: 30px;
+    padding: 30px;
+    max-width: 90%;
+  }
+  
+  .about_page_left,
+  .about_page_right {
+    width: 100%;
+  }
+  
+  .healthcare_img {
+    height: 400px;
+  }
+  
+  .about_page_right h1 {
+    font-size: 2.2rem;
+    text-align: center;
+  }
+  
+  .about_page_right p {
+    text-align: center;
+    font-size: 1.05rem;
+  }
+  
+  .about_btn {
+    display: block;
+    margin: 30px auto;
+  }
+}
+
+/* Tablet Portrait (767px - 481px) */
+@media (max-width: 767px) {
+  .about_page {
+    max-width: 95%;
+    margin: 20px auto;
+    padding: 25px;
+  }
+  
+  .about_page_right h1 {
+    font-size: 1.8rem;
+  }
+  
+  .about_page_right p {
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+  
+  .healthcare_img {
+    height: 350px;
+  }
+  
+  .play_icon {
+    width: 50px;
+    height: 50px;
+  }
+}
+
+/* Mobile (480px and below) */
+@media (max-width: 480px) {
+  .about_page {
+    margin: 15px auto;
+    padding: 20px;
+    border-radius: 15px;
+  }
+  
+  .about_page_right h1 {
+    font-size: 1.6rem;
+  }
+  
+  .about_page_right p {
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+  
+  .healthcare_img {
+    height: 300px;
+  }
+  
+  .play_icon {
+    width: 45px;
+    height: 45px;
+  }
+  
+  .about_btn {
+    width: 100%;
+    padding: 14px;
+    font-size: 15px;
+  }
+}
+
+/* Large Desktop Screens (1450px and above) */
+@media (min-width: 1450px) {
+  .about_page {
+    max-width: 1400px;
+    padding: 40px;
+    gap: 60px;
+  }
+  
+  .healthcare_img {
+    height: 550px;
+  }
+  
+  .about_page_right h1 {
+    font-size: 2.8rem;
+  }
+  
+  .about_page_right p {
+    font-size: 1.25rem;
+    line-height: 1.8;
+  }
+  
+  .play_icon {
+    width: 70px;
+    height: 70px;
+  }
+}
+
+/* Animation for page load */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.about_page {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+/* Hover effect for the entire card */
+.about_page:hover {
+  transform: translateY(-5px);
+  transition: transform 0.3s ease;
+}
+
+/* Focus styles for accessibility */
+.about_btn:focus,
+.play_icon:focus {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 4px;
+}
+
+/* Print Styles */
+@media print {
+  .about_page {
+    background: none;
+    box-shadow: none;
+    grid-template-columns: 1fr;
+  }
+  
+  .play_icon {
+    display: none;
+  }
+  
+  .about_btn {
+    display: none;
+  }
+  
+  .healthcare_img {
+    height: auto;
+    max-height: 300px;
+  }
+}
