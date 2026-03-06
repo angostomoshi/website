@@ -11,7 +11,7 @@ export const ContactPage = () => {
     <div >
        <Navbar/>
      <ContactHero/>
-     <Title title='CONTACT US' subTitle='Get in touch'/>
+   
      <Contact/>
      <Footer/>
      

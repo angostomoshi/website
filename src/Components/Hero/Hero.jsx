@@ -1,20 +1,179 @@
 import React, { useState, useEffect } from 'react';
-import './Hero.css';
-import { Link } from 'react-router-dom';
+import { Card, Row, Col, Typography, Spin, Empty, Tag, Space, theme } from 'antd';
+import { MailOutlined, FireOutlined, StarOutlined, RocketOutlined, CrownOutlined, ThunderboltOutlined, HeartOutlined, TrophyOutlined, GiftOutlined } from '@ant-design/icons';
+import { getDocs, collection } from "firebase/firestore/lite";
+import { db } from "../../firebase/firebase_config";
 
-// Use only existing assets that you have
+// Import all your images
 import physician from '../../assets/Phys.png';
 import b1 from '../../assets/1.png';
-import b2 from '../../assets/3.png';
+import b2 from '../../assets/b2.png';
 import b3 from '../../assets/b2.png';
-import image_200 from '../../assets/200+.png';
-import image_15k from '../../assets/15K+.png';
-import image_50 from '../../assets/50+.png';
 
-export const Hero = () => {
+const { Text } = Typography;
+const { useToken } = theme;
+
+const HeroSection = () => {
+  const { token } = useToken();
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [products, setProducts] = useState([]);
+  const [filteredProducts, setFilteredProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  // Hardcoded products data with uniform blue gradient but different icons
+  const hardcodedProducts = [
+    {
+      id: "hardcoded-1",
+      name: "OUT PATIENT CENTRE",
+      description: "O-50 Bed Hospital\n\n(This price is subject to VAT tax @ 16%). Training, support, travel and accommodation fees to be billed at 50% of the cost of the software",
+      price: 3999.00,
+      currency: "USD",
+      mediaType: null,
+      mediaUrl: null,
+      createdAt: new Date().toISOString(),
+      iconType: 'fire',
+      tagType: 'popular' // First card has POPULAR tag
+    },
+    {
+      id: "hardcoded-2",
+      name: "OUT PATIENT CENTRE",
+      description: "O-50 Bed Hospital\n\n(This price is subject to VAT tax @ 16%). Training, support, travel and accommodation fees to be billed at 50% of the cost of the software",
+      price: 5999.00,
+      currency: "USD",
+      mediaType: null,
+      mediaUrl: null,
+      createdAt: new Date().toISOString(),
+      iconType: 'star',
+      tagType: 'featured' // Second card has FEATURED tag
+    },
+    {
+      id: "hardcoded-3",
+      name: "OUT PATIENT CENTRE",
+      description: "51-100 Bed Hospital\n\n(This price is subject to VAT tax @ 16%) Training, support fees to be billed online and ready to help.",
+      price: 8999.00,
+      currency: "USD",
+      mediaType: null,
+      mediaUrl: null,
+      createdAt: new Date().toISOString(),
+      iconType: 'rocket',
+      tagType: 'new' // Third card has NEW tag
+    }
+  ];
+
+  // Icon mapping
+  const getIconByType = (type) => {
+    switch(type) {
+      case 'fire': return <FireOutlined />;
+      case 'star': return <StarOutlined />;
+      case 'rocket': return <RocketOutlined />;
+      case 'crown': return <CrownOutlined />;
+      case 'thunder': return <ThunderboltOutlined />;
+      case 'heart': return <HeartOutlined />;
+      case 'trophy': return <TrophyOutlined />;
+      case 'gift': return <GiftOutlined />;
+      default: return <FireOutlined />;
+    }
+  };
+
+  // Tag configuration
+  const getTagByType = (type, index) => {
+    const tags = {
+      popular: { color: '#fa541c', icon: <FireOutlined />, text: 'POPULAR', burning: index === 0 },
+      featured: { color: '#faad14', icon: <StarOutlined />, text: 'FEATURED', burning: false },
+      new: { color: '#52c41a', icon: <RocketOutlined />, text: 'NEW', burning: false },
+      bestseller: { color: '#722ed1', icon: <CrownOutlined />, text: 'BEST SELLER', burning: false },
+      trending: { color: '#eb2f96', icon: <HeartOutlined />, text: 'TRENDING', burning: false },
+      limited: { color: '#1890ff', icon: <ThunderboltOutlined />, text: 'LIMITED', burning: false }
+    };
+    return tags[type] || tags.popular;
+  };
+
+  // Different icon types for Firebase products
+  const iconTypes = ['fire', 'star', 'rocket', 'crown', 'thunder', 'heart', 'trophy', 'gift'];
   
-  // Carousel items using all three images
+  // Different tag types for Firebase products
+  const tagTypes = ['popular', 'featured', 'new', 'bestseller', 'trending', 'limited'];
+
+  // Uniform blue gradient for all cards
+  const uniformBlueGradient = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
+
+  // Currency symbols
+  const currencySymbols = {
+    KES: "KSh",
+    USD: "$",
+    EUR: "€",
+    GBP: "£",
+    JPY: "¥",
+    CNY: "¥",
+  };
+
+  // Format currency
+  const formatCurrency = (amount, currency = "USD") => {
+    const symbol = currencySymbols[currency] || currency;
+    return `${symbol}${amount?.toLocaleString() || 0}`;
+  };
+
+  // Fetch products from Firebase
+  const fetchProducts = async () => {
+    try {
+      setLoading(true);
+      console.log("Fetching products from Firebase...");
+      
+      const productsRef = collection(db, "products", "listings", "products");
+      const snapshot = await getDocs(productsRef);
+      
+      let data = [];
+      
+      if (!snapshot.empty) {
+        snapshot.forEach((doc, index) => {
+          const productData = doc.data();
+          // Assign different icon and tag type to each Firebase product
+          const iconType = iconTypes[index % iconTypes.length];
+          const tagType = tagTypes[index % tagTypes.length];
+          data.push({ 
+            id: doc.id, 
+            ...productData,
+            price: Number(productData.price) || 0,
+            createdAt: productData.createdAt?.toDate ? productData.createdAt.toDate() : productData.createdAt,
+            updatedAt: productData.updatedAt?.toDate ? productData.updatedAt.toDate() : productData.updatedAt,
+            iconType: iconType,
+            tagType: tagType,
+          });
+        });
+        
+        console.log(`Found ${data.length} products from Firebase`);
+        setProducts(data);
+        setFilteredProducts(data);
+      } else {
+        console.log("No products in Firebase, using hardcoded products");
+        setProducts(hardcodedProducts);
+        setFilteredProducts(hardcodedProducts);
+      }
+    } catch (err) {
+      console.error("Error fetching products:", err);
+      console.log("Using hardcoded products due to error");
+      setProducts(hardcodedProducts);
+      setFilteredProducts(hardcodedProducts);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchProducts();
+  }, []);
+
+  const handleGmailEnquiry = (productName, productPrice) => {
+    const recipient = "angostomoshi@gmail.com";
+    const subject = encodeURIComponent(`Enquiry about ${productName}`);
+    const body = encodeURIComponent(
+      `Hello,\n\nI'm interested in ${productName} (${formatCurrency(productPrice, 'USD')}).\n\nPlease provide more information and pricing.\n\nThank you.`
+    );
+    
+    window.open(`https://mail.google.com/mail/?view=cm&fs=1&to=${recipient}&su=${subject}&body=${body}`, '_blank');
+  };
+
+  // Carousel items
   const carouselItems = [
     {
       id: 1,
@@ -49,93 +208,406 @@ export const Hero = () => {
     }, 5000);
     
     return () => clearInterval(interval);
-  }, []);
+  }, [carouselItems.length]);
 
   const goToSlide = (index) => {
     setCurrentSlide(index);
   };
 
-  const handleEnquire = (product, price) => {
-    const message = encodeURIComponent(`Hello, I'm interested in the ${product} plan priced at $${price}. Please provide more information.`);
-    window.open(`https://wa.me/254732530218?text=${message}`, '_blank');
-  };
-
   return (
-    <div id='Hero' className='hero'>
+    <div style={{ 
+      width: '100%',
+      minHeight: '100vh',
+      fontFamily: "'Inter', 'Nunito', sans-serif",
+      background: 'linear-gradient(180deg, #FFFFFF 0%, #F5F9FF 100%)',
+    }}>
+      <style>{`
+        @keyframes fadeInUp {
+          from { opacity: 0; transform: translateY(40px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes typing {
+          from { width: 0; }
+          to { width: 100%; }
+        }
+        @keyframes pulse {
+          0% { transform: scale(1); }
+          50% { transform: scale(1.1); }
+          100% { transform: scale(1); }
+        }
+        @keyframes burn {
+          0% { transform: scale(1); opacity: 1; filter: drop-shadow(0 0 2px #ff4d4f); }
+          50% { transform: scale(1.2); opacity: 0.9; filter: drop-shadow(0 0 8px #ff4d4f) drop-shadow(0 0 12px #faad14); }
+          100% { transform: scale(1); opacity: 1; filter: drop-shadow(0 0 2px #ff4d4f); }
+        }
+        @keyframes flicker {
+          0% { opacity: 1; }
+          25% { opacity: 0.8; }
+          50% { opacity: 1; }
+          75% { opacity: 0.9; }
+          100% { opacity: 1; }
+        }
+        @keyframes float {
+          0% { transform: translateY(0px); }
+          50% { transform: translateY(-10px); }
+          100% { transform: translateY(0px); }
+        }
+        @keyframes spin {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(360deg); }
+        }
+        .product-card {
+          transition: all 0.3s ease;
+          height: 100%;
+          display: flex;
+          flex-direction: column;
+          border-radius: 20px !important;
+          overflow: hidden;
+          background: white;
+          border: 1px solid #f0f0f0 !important;
+        }
+        .product-card:hover {
+          transform: translateY(-8px);
+          box-shadow: 0 20px 40px rgba(114, 46, 209, 0.15) !important;
+          border-color: transparent !important;
+        }
+        .product-image-container {
+          height: 200px;
+          position: relative;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+          overflow: hidden;
+        }
+        .product-icon-wrapper {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 100%;
+          height: 100%;
+        }
+        .product-icon-large {
+          font-size: 100px;
+          color: white;
+          filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.3));
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+        .product-icon-large svg {
+          width: 100px;
+          height: 100px;
+        }
+        .icon-fire {
+          animation: pulse 2s infinite, flicker 3s infinite;
+        }
+        .icon-star {
+          animation: pulse 3s infinite, float 4s infinite;
+        }
+        .icon-rocket {
+          animation: pulse 2.5s infinite, float 3s infinite;
+        }
+        .icon-crown {
+          animation: pulse 3s infinite, spin 10s infinite linear;
+        }
+        .icon-thunder {
+          animation: flicker 1s infinite;
+        }
+        .icon-heart {
+          animation: pulse 2s infinite;
+        }
+        .icon-trophy {
+          animation: pulse 3s infinite, float 4s infinite;
+        }
+        .icon-gift {
+          animation: pulse 2.5s infinite;
+        }
+        .enquire-button {
+          transition: all 0.3s ease;
+          background: linear-gradient(135deg, #667eea, #764ba2);
+          border: none;
+          height: 48px;
+          font-weight: 600;
+          font-size: 15px;
+          letter-spacing: 0.5px;
+          border-radius: 12px;
+          box-shadow: 0 8px 16px rgba(102, 126, 234, 0.2);
+          color: white;
+          width: 100%;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 10px;
+          margin-top: 16px;
+          border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .enquire-button:hover {
+          transform: translateY(-3px);
+          box-shadow: 0 15px 25px rgba(102, 126, 234, 0.3);
+          background: linear-gradient(135deg, #764ba2, #667eea);
+        }
+        .price-tag {
+          font-size: 28px;
+          font-weight: 800;
+          color: #1A237E;
+          display: inline-block;
+          letter-spacing: -0.5px;
+          margin-bottom: 8px;
+        }
+        .product-name {
+          font-size: 24px;
+          font-weight: 700;
+          color: #1A237E;
+          margin-bottom: 12px;
+          line-height: 1.3;
+          text-transform: uppercase;
+          letter-spacing: 0.5px;
+        }
+        .product-description {
+          color: #666;
+          font-size: 14px;
+          line-height: 1.7;
+          margin: 8px 0;
+          white-space: pre-line;
+        }
+        .stats-icon {
+          font-size: 28px;
+          color: white;
+        }
+        .section-title {
+          font-size: clamp(1.8rem, 5vw, 2.8rem);
+          font-weight: 800;
+          margin-bottom: clamp(15px, 3vw, 25px);
+          line-height: 1.2;
+          color: #1A237E;
+        }
+        .gradient-text {
+          background: linear-gradient(90deg, #667eea, #764ba2);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+        }
+        .badge {
+          display: inline-block;
+          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+          color: white;
+          padding: clamp(10px, 2vw, 15px) clamp(20px, 4vw, 30px);
+          border-radius: 50px;
+          font-size: clamp(1rem, 2.5vw, 1.2rem);
+          font-weight: 700;
+          letter-spacing: 0.5px;
+          box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+        }
+        .stat-card {
+          background: rgba(255, 255, 255, 0.15);
+          backdrop-filter: blur(10px);
+          border-radius: clamp(15px, 3vw, 20px);
+          padding: clamp(15px, 3vw, 25px);
+          border: 2px solid rgba(255, 255, 255, 0.2);
+          display: flex;
+          align-items: center;
+          gap: clamp(10px, 2vw, 15px);
+          transition: all 0.3s ease;
+        }
+        .stat-card:hover {
+          background: rgba(255, 255, 255, 0.25);
+          transform: translateY(-5px);
+          border-color: rgba(255, 255, 255, 0.4);
+        }
+        .product-tag {
+          position: absolute;
+          top: 16px;
+          right: 16px;
+          z-index: 10;
+          box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+          font-weight: 700;
+          border: none;
+          padding: 6px 16px;
+          border-radius: 30px;
+          font-size: 13px;
+          letter-spacing: 0.5px;
+          display: flex;
+          align-items: center;
+          gap: 4px;
+        }
+        .burning-tag {
+          animation: burn 1.5s infinite, flicker 0.5s infinite;
+        }
+        .activate-windows {
+          font-size: 11px;
+          color: #999;
+          text-align: right;
+          margin-top: 8px;
+          font-style: italic;
+        }
+        .carousel-dot {
+          width: clamp(10px, 2vw, 14px);
+          height: clamp(10px, 2vw, 14px);
+          border-radius: 50%;
+          background: rgba(255, 255, 255, 0.5);
+          border: 2px solid rgba(255, 255, 255, 0.8);
+          cursor: pointer;
+          transition: all 0.3s ease;
+          padding: 0;
+        }
+        .carousel-dot.active {
+          background: white;
+          transform: scale(1.2);
+        }
+      `}</style>
+
       {/* FULL WIDTH CAROUSEL SECTION */}
-      <div className='hero-carousel-section'>
-        <div className='hero-carousel'>
-          <div className='carousel-container'>
+      <div style={{
+        width: '100%',
+        height: 'min(80vh, 900px)',
+        minHeight: 'min(70vh, 500px)',
+        position: 'relative',
+        overflow: 'hidden',
+      }}>
+        <div style={{ width: '100%', height: '100%', position: 'relative' }}>
+          <div style={{ position: 'relative', width: '100%', height: '100%' }}>
             {carouselItems.map((item, index) => (
               <div 
                 key={item.id}
-                className={`carousel-slide ${index === currentSlide ? 'active' : ''}`}
+                style={{
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                  width: '100%',
+                  height: '100%',
+                  opacity: index === currentSlide ? 1 : 0,
+                  transition: 'opacity 0.8s ease-in-out',
+                }}
               >
-                {/* Full width image */}
                 <img 
                   src={item.image} 
                   alt={item.title}
-                  className='carousel-image'
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'cover',
+                    objectPosition: 'center',
+                    display: 'block',
+                  }}
+                  loading="lazy"
                 />
-                
-                {/* Minimal overlay for better text visibility */}
-                <div className='carousel-dark-overlay'></div>
-                
-                {/* Text overlay - Split layout */}
-                <div className='carousel-overlay'>
-                  <div className='carousel-content-container'>
-                    <div className='carousel-text-overlay'>
-                      {/* Left side: Main text */}
-                      <div className='carousel-left-content'>
-                        <h1 className='carousel-main-text'>
-                          Funsoft I-HMIS
+                <div style={{
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                  width: '100%',
+                  height: '100%',
+                  background: 'linear-gradient(45deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.4) 100%)',
+                  zIndex: 1,
+                }}></div>
+                <div style={{
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                  width: '100%',
+                  height: '100%',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  zIndex: 2,
+                  padding: '0 clamp(15px, 5vw, 50px)',
+                }}>
+                  <div style={{ width: '100%', maxWidth: '1400px', margin: '0 auto' }}>
+                    <div style={{
+                      width: '100%',
+                      display: 'grid',
+                      gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+                      gap: 'clamp(20px, 5vw, 60px)',
+                      alignItems: 'center',
+                      animation: 'fadeInUp 1s ease-out',
+                    }}>
+                      <div style={{ textAlign: 'left' }}>
+                        <h1 style={{
+                          fontSize: 'clamp(2rem, 8vw, 4.5rem)',
+                          fontWeight: 900,
+                          lineHeight: 1.1,
+                          color: 'white',
+                          margin: '0 0 clamp(15px, 3vw, 25px) 0',
+                          fontFamily: "'Nunito', sans-serif",
+                          textShadow: '0 4px 30px rgba(0, 0, 0, 0.6)',
+                          letterSpacing: '-0.5px',
+                          textTransform: 'uppercase',
+                          animation: 'typing 3.5s steps(40, end)',
+                          overflow: 'hidden',
+                          whiteSpace: 'nowrap',
+                          borderRight: '4px solid white',
+                          display: 'inline-block',
+                          maxWidth: '100%',
+                        }}>
+                          FUNSOFT Healthcare Systems
                         </h1>
-                        <h2 className='carousel-sub-text'>
-                          Reforming Healthcare Service Delivery
+                        <h2 style={{
+                          fontSize: 'clamp(1rem, 4vw, 2rem)',
+                          fontWeight: 600,
+                          lineHeight: 1.3,
+                          color: 'rgba(255, 255, 255, 0.95)',
+                          margin: 0,
+                          fontFamily: "'Inter', sans-serif",
+                          textShadow: '0 4px 20px rgba(0, 0, 0, 0.5)',
+                          letterSpacing: '0.5px',
+                          textTransform: 'uppercase',
+                          animation: 'fadeInUp 1s ease-out 1.5s both',
+                          maxWidth: '600px',
+                        }}>
+                          Trusted by 200+ Healthcare Facilities
                         </h2>
                       </div>
                       
-                      {/* Right side: System Usage Stats */}
-                      <div className='carousel-right-stats'>
-                        <div className='stat-item'>
-                          <div className='stat-icon'>
-                            <img src={image_200} alt="200+ Healthcare Facilities" />
+                      <div style={{
+                        display: 'grid',
+                        gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+                        gap: 'clamp(15px, 3vw, 25px)',
+                        paddingLeft: 'clamp(20px, 5vw, 40px)',
+                        borderLeft: '2px solid rgba(255, 255, 255, 0.3)',
+                      }}>
+                        {[
+                          { icon: '🏥', number: '200+', text: 'Healthcare Facilities' },
+                          { icon: '👥', number: '15K+', text: 'Daily System Users' },
+                          { icon: '📚', number: '50+', text: 'Training Sessions' },
+                          { icon: '📋', number: '2M+', text: 'Patient Records Managed' },
+                        ].map((stat, idx) => (
+                          <div key={idx} className="stat-card">
+                            <div style={{
+                              minWidth: 'clamp(40px, 8vw, 60px)',
+                              height: 'clamp(40px, 8vw, 60px)',
+                              background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                              borderRadius: 'clamp(10px, 2vw, 15px)',
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                              flexShrink: 0,
+                              border: '2px solid rgba(255, 255, 255, 0.3)',
+                            }}>
+                              <span className="stats-icon">{stat.icon}</span>
+                            </div>
+                            <div>
+                              <h3 style={{
+                                fontSize: 'clamp(1.5rem, 4vw, 2.2rem)',
+                                fontWeight: 900,
+                                color: 'white',
+                                margin: 0,
+                                fontFamily: "'Nunito', sans-serif",
+                                lineHeight: 1,
+                                textShadow: '0 2px 10px rgba(0, 0, 0, 0.3)',
+                              }}>{stat.number}</h3>
+                              <p style={{
+                                fontSize: 'clamp(12px, 2vw, 14px)',
+                                color: 'rgba(255, 255, 255, 0.9)',
+                                margin: '5px 0 0 0',
+                                fontWeight: 600,
+                                letterSpacing: '0.3px',
+                                textTransform: 'uppercase',
+                              }}>{stat.text}</p>
+                            </div>
                           </div>
-                          <div className='stat-content'>
-                            <h3>200+</h3>
-                            <p>Healthcare Facilities</p>
-                          </div>
-                        </div>
-                        
-                        <div className='stat-item'>
-                          <div className='stat-icon'>
-                            <img src={image_15k} alt="15K+ Daily System Users" />
-                          </div>
-                          <div className='stat-content'>
-                            <h3>15K+</h3>
-                            <p>Daily System Users</p>
-                          </div>
-                        </div>
-                        
-                        <div className='stat-item'>
-                          <div className='stat-icon'>
-                            <img src={image_50} alt="10+ Years of Expertise " />
-                          </div>
-                          <div className='stat-content'>
-                            <h3>50+</h3>
-                            <p>Training Sessions</p>
-                          </div>
-                        </div>
-                        
-                        <div className='stat-item'>
-                          <div className='stat-icon'>
-                            <div className='stat-icon-text'>🏥</div>
-                          </div>
-                          <div className='stat-content'>
-                            <h3>2M+</h3>
-                            <p>Patient Records Managed</p>
-                          </div>
-                        </div>
+                        ))}
                       </div>
                     </div>
                   </div>
@@ -144,12 +616,22 @@ export const Hero = () => {
             ))}
           </div>
           
-          {/* Carousel Indicators */}
-          <div className='carousel-indicators'>
+          <div style={{
+            position: 'absolute',
+            bottom: 'clamp(20px, 5vh, 40px)',
+            left: 0,
+            width: '100%',
+            display: 'flex',
+            justifyContent: 'center',
+            gap: 'clamp(10px, 2vw, 15px)',
+            zIndex: 10,
+            flexWrap: 'wrap',
+            padding: '0 15px',
+          }}>
             {carouselItems.map((_, index) => (
               <button
                 key={index}
-                className={`carousel-indicator ${index === currentSlide ? 'active' : ''}`}
+                className={`carousel-dot ${index === currentSlide ? 'active' : ''}`}
                 onClick={() => goToSlide(index)}
                 aria-label={`Go to slide ${index + 1}`}
               />
@@ -158,182 +640,444 @@ export const Hero = () => {
         </div>
       </div>
       
-      {/* ============ WHO WE ARE SECTION (Replaces old content) ============ */}
-      <div className='hero-content-section'>
-        <div className='hero-content-wrapper'>
-          {/* Left content */}
-          <div className='hero-content-left'>
-            <div className='hero-text-content'>
-              <h2 className='hero-main-title'>
-                Who <span className='cloud-text'>We Are</span>
-              </h2>
-              <p className='hero-subtitle-colored'>
-                A service to clientele
-              </p>
-              <p className='hero-description'>
-                System Partners Limited (SPL) was founded in 2001 and incorporated as a private 
-                limited liability company in Kenya. It is a software development and information 
-                technology consultancy organization with a specific interest in designing and 
-                developing comprehensive I-HMIS software applications with a core accounting module 
-                that integrates with the business of our clients to produce a seamless system.
-              </p>
-              <p className='hero-description'>
-                At the same time the systems are highly robust to serve a diverse clientele while 
-                employing a standardized real time integrated accounting and process control platform 
-                in the form of an I-HMIS and management system. The firm is located on Mombasa Rd at 
-                the Royal ICT Business Park on the third floor.
-              </p>
-            </div>
+      {/* WHO WE ARE SECTION */}
+      <div style={{
+        width: '100%',
+        padding: 'clamp(40px, 8vw, 80px) 0',
+        background: 'linear-gradient(180deg, #FFFFFF 0%, #F8FBFF 100%)',
+      }}>
+        <div style={{
+          width: '100%',
+          maxWidth: '1400px',
+          margin: '0 auto',
+          padding: '0 clamp(15px, 5vw, 50px)',
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+          gap: 'clamp(30px, 6vw, 60px)',
+        }}>
+          <div>
+            <h2 className="section-title">
+              Who <span className="gradient-text">We Are</span>
+            </h2>
+            <p style={{
+              fontSize: 'clamp(1.1rem, 3vw, 1.5rem)',
+              fontWeight: 700,
+              lineHeight: 1.5,
+              color: '#0D47A1',
+              marginBottom: 'clamp(15px, 3vw, 20px)',
+              maxWidth: '700px',
+            }}>
+              A service to clientele
+            </p>
+            <p style={{
+              fontSize: 'clamp(0.9rem, 2vw, 1rem)',
+              lineHeight: 1.7,
+              color: '#3949AB',
+              marginBottom: 'clamp(15px, 3vw, 25px)',
+            }}>
+              System Partners Limited (SPL) was founded in 2001 and incorporated as a private 
+              limited liability company in Kenya. It is a software development and information 
+              technology consultancy organization with a specific interest in designing and 
+              developing comprehensive I-HMIS software applications with a core accounting module 
+              that integrates with the business of our clients to produce a seamless system.
+            </p>
+            <p style={{
+              fontSize: 'clamp(0.9rem, 2vw, 1rem)',
+              lineHeight: 1.7,
+              color: '#3949AB',
+              marginBottom: 'clamp(15px, 3vw, 25px)',
+            }}>
+              At the same time the systems are highly robust to serve a diverse clientele while 
+              employing a standardized real time integrated accounting and process control platform 
+              in the form of an I-HMIS and management system. The firm is located on Mombasa Rd at 
+              the Royal ICT Business Park on the third floor.
+            </p>
           </div>
           
-          {/* Right content - Simplified Overview Cards */}
-          <div className='hero-content-right'>
-            <div className='hero-features-grid'>
-              <div className='feature-card'>
-                <div className='feature-card-icon'>🏥</div>
-                <h4>Est. 2001</h4>
-                <p>Over 22 years of healthcare innovation in Kenya</p>
-              </div>
-              <div className='feature-card'>
-                <div className='feature-card-icon'>✓</div>
-                <h4>MOH Approved</h4>
-                <p>Certified for use in public healthcare facilities</p>
-              </div>
-              <div className='feature-card'>
-                <div className='feature-card-icon'>🔄</div>
-                <h4>Open Source</h4>
-                <p>Flexible, customizable, no vendor lock-in</p>
-              </div>
-              <div className='feature-card'>
-                <div className='feature-card-icon'>📊</div>
-                <h4>2M+ Records</h4>
-                <p>Successfully managed patient records</p>
-              </div>
+          <div>
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+              gap: 'clamp(15px, 3vw, 25px)',
+              width: '100%',
+            }}>
+              {[
+                { icon: '🏥', title: 'Est. 2001', desc: 'Over 22 years of healthcare innovation in Kenya' },
+                { icon: '✓', title: 'MOH Approved', desc: 'Certified for use in public healthcare facilities' },
+                { icon: '🔄', title: 'Open Source', desc: 'Flexible, customizable, no vendor lock-in' },
+                { icon: '📊', title: '2M+ Records', desc: 'Successfully managed patient records' },
+              ].map((feature, idx) => (
+                <div key={idx} style={{
+                  background: 'white',
+                  padding: 'clamp(20px, 4vw, 35px)',
+                  borderRadius: '20px',
+                  boxShadow: '0 15px 40px rgba(102, 126, 234, 0.1)',
+                  textAlign: 'center',
+                  transition: 'all 0.3s ease',
+                  border: '2px solid rgba(102, 126, 234, 0.05)',
+                  height: '100%',
+                  display: 'flex',
+                  flexDirection: 'column',
+                }}>
+                  <div style={{
+                    fontSize: 'clamp(2rem, 5vw, 3rem)',
+                    marginBottom: 'clamp(10px, 2vw, 15px)',
+                    color: '#667eea',
+                  }}>{feature.icon}</div>
+                  <h4 style={{
+                    fontSize: 'clamp(1rem, 3vw, 1.2rem)',
+                    color: '#1A237E',
+                    marginBottom: 'clamp(8px, 1.5vw, 10px)',
+                    fontWeight: 700,
+                  }}>{feature.title}</h4>
+                  <p style={{
+                    color: '#5C6BC0',
+                    fontSize: 'clamp(0.85rem, 2vw, 0.95rem)',
+                    margin: 0,
+                    lineHeight: 1.5,
+                    flexGrow: 1,
+                  }}>{feature.desc}</p>
+                </div>
+              ))}
             </div>
           </div>
         </div>
       </div>
 
-      {/* ============ SYSTEM IMPACT STATS SECTION ============ */}
-<div className='impact-stats-section'>
-  <div className='impact-stats-wrapper'>
-    <div className='impact-stats-grid'>
-      <div className='impact-stat-item'>
-        <div className='impact-stat-number'>200+</div>
-        <div className='impact-stat-label'>Healthcare Facilities</div>
-        <p className='impact-stat-description'>Hospitals and clinics across Kenya using Funsoft I-HMIS</p>
+      {/* SYSTEM IMPACT STATS SECTION */}
+      <div style={{
+        background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+        padding: 'clamp(40px, 8vw, 60px) 0',
+        width: '100%',
+      }}>
+        <div style={{
+          maxWidth: '1200px',
+          margin: '0 auto',
+          padding: '0 clamp(15px, 5vw, 20px)',
+        }}>
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))',
+            gap: 'clamp(20px, 5vw, 30px)',
+          }}>
+            {[
+              { icon: '🏥', number: '200+', label: 'Healthcare Facilities', desc: 'Hospitals and clinics across Kenya using Funsoft I-HMIS' },
+              { icon: '👥', number: '15K+', label: 'Daily Active Users', desc: 'Healthcare professionals using the system daily' },
+              { icon: '⏳', number: '10+', label: 'Years of Expertise', desc: 'Combined experience of our development team' },
+              { icon: '📋', number: '2M+', label: 'Patient Records', desc: 'Electronic health records securely managed' },
+              { icon: '⚡', number: '99.9%', label: 'System Uptime', desc: 'Reliable cloud infrastructure' },
+              { icon: '💳', number: '1M+', label: 'Monthly Transactions', desc: 'Billing, pharmacy, and lab transactions processed' },
+            ].map((stat, idx) => (
+              <div key={idx} style={{
+                textAlign: 'center',
+                color: 'white',
+                padding: '0 clamp(5px, 2vw, 10px)',
+              }}>
+                <div style={{
+                  fontSize: '48px',
+                  marginBottom: '15px',
+                  color: 'white',
+                  textShadow: '0 4px 15px rgba(0, 0, 0, 0.2)',
+                  transition: 'all 0.3s ease',
+                }}>{stat.icon}</div>
+                <div style={{
+                  fontSize: 'clamp(1.8rem, 5vw, 2.6rem)',
+                  fontWeight: 800,
+                  fontFamily: "'Nunito', sans-serif",
+                  color: 'white',
+                  marginBottom: 'clamp(5px, 1.5vw, 10px)',
+                  lineHeight: 1.1,
+                }}>{stat.number}</div>
+                <div style={{
+                  fontSize: 'clamp(14px, 3vw, 16px)',
+                  fontWeight: 600,
+                  marginBottom: 'clamp(5px, 1vw, 8px)',
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.5px',
+                  color: 'white',
+                }}>{stat.label}</div>
+                <p style={{
+                  fontSize: 'clamp(11px, 2vw, 13px)',
+                  opacity: 0.9,
+                  lineHeight: 1.4,
+                  margin: 0,
+                  color: 'white',
+                }}>{stat.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
-      <div className='impact-stat-item'>
-        <div className='impact-stat-number'>15K+</div>
-        <div className='impact-stat-label'>Daily Active Users</div>
-        <p className='impact-stat-description'>Healthcare professionals using the system daily</p>
-      </div>
-<div className='impact-stat-item'>
-  <div className='impact-stat-number'>10+</div>
-  <div className='impact-stat-label'>Years of Expertise</div>
-  <p className='impact-stat-description'>Combined experience of our development team</p>
-</div>
-      <div className='impact-stat-item'>
-        <div className='impact-stat-number'>2M+</div>
-        <div className='impact-stat-label'>Patient Records</div>
-        <p className='impact-stat-description'>Electronic health records securely managed</p>
-      </div>
-      <div className='impact-stat-item'>
-        <div className='impact-stat-number'>99.9%</div>
-        <div className='impact-stat-label'>System Uptime</div>
-        <p className='impact-stat-description'>Reliable cloud infrastructure</p>
-      </div>
-      <div className='impact-stat-item'>
-        <div className='impact-stat-number'>1M+</div>
-        <div className='impact-stat-label'>Monthly Transactions</div>
-        <p className='impact-stat-description'>Billing, pharmacy, and lab transactions processed</p>
-      </div>
-    </div>
-  </div>
-</div>
 
-      {/* ============ OVERVIEW SECTION (Funsoft I-HMIS Deep Dive) ============ */}
-      <div className='overview-section'>
-        <div className='overview-wrapper'>
-          <div className='overview-header'>
-            <h2 className='overview-title'>
-              An Overview of <span className='cloud-text'>Funsoft I-HMIS</span>
+      {/* OVERVIEW SECTION */}
+      <div style={{
+        width: '100%',
+        padding: 'clamp(40px, 8vw, 80px) 0',
+        background: 'linear-gradient(180deg, #F8FBFF 0%, #FFFFFF 100%)',
+      }}>
+        <div style={{
+          width: '100%',
+          maxWidth: '1400px',
+          margin: '0 auto',
+          padding: '0 clamp(15px, 5vw, 50px)',
+        }}>
+          <div style={{
+            textAlign: 'center',
+            marginBottom: 'clamp(30px, 6vw, 60px)',
+          }}>
+            <h2 className="section-title">
+              An Overview of <span className="gradient-text">Funsoft I-HMIS</span>
             </h2>
-            <p className='overview-subtitle'>
+            <p style={{
+              fontSize: 'clamp(1rem, 3vw, 1.5rem)',
+              color: '#667eea',
+              fontWeight: 600,
+              marginTop: 'clamp(10px, 2vw, 15px)',
+            }}>
               Developed in Kenya for the unique challenges of the public health sector
             </p>
           </div>
           
-          <div className='overview-grid'>
-            {/* Left Column */}
-            <div className='overview-left'>
-              <div className='overview-card'>
-                <div className='overview-icon'>⚡</div>
-                <h3>Uniqueness & Evolution</h3>
-                <p>
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+            gap: 'clamp(20px, 4vw, 40px)',
+          }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 'clamp(20px, 3vw, 30px)' }}>
+              <div style={{
+                background: 'white',
+                padding: 'clamp(20px, 4vw, 35px)',
+                borderRadius: '24px',
+                boxShadow: '0 15px 35px rgba(102, 126, 234, 0.08)',
+                transition: 'all 0.3s ease',
+                border: '2px solid rgba(102, 126, 234, 0.03)',
+                height: '100%',
+              }}>
+                <div style={{
+                  fontSize: 'clamp(2rem, 4vw, 2.5rem)',
+                  marginBottom: 'clamp(15px, 3vw, 20px)',
+                  color: '#667eea',
+                  background: '#f0e6ff',
+                  width: 'clamp(50px, 8vw, 70px)',
+                  height: 'clamp(50px, 8vw, 70px)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  borderRadius: '18px',
+                }}>⚡</div>
+                <h3 style={{
+                  fontSize: 'clamp(1.2rem, 3vw, 1.5rem)',
+                  fontWeight: 700,
+                  color: '#1A237E',
+                  marginBottom: 'clamp(10px, 2vw, 15px)',
+                }}>Uniqueness & Evolution</h3>
+                <p style={{
+                  fontSize: 'clamp(0.9rem, 2vw, 1rem)',
+                  lineHeight: 1.7,
+                  color: '#3949AB',
+                  marginBottom: 0,
+                }}>
                   The Funsoft I-HMIS is a unique system where end users are incorporated into the 
                   production routines. This has evolved a fairly effective system that takes care 
                   of various activities as applied to process control and administrative routines 
-                  in a healthcare environment. Users play a major role in determining service 
-                  management and data capture. All products are developed from scratch and go 
-                  through a thoroughly tested process.
+                  in a healthcare environment.
                 </p>
               </div>
               
-              <div className='overview-card'>
-                <div className='overview-icon'>📋</div>
-                <h3>Comprehensive Coverage</h3>
-                <p>
+              <div style={{
+                background: 'white',
+                padding: 'clamp(20px, 4vw, 35px)',
+                borderRadius: '24px',
+                boxShadow: '0 15px 35px rgba(102, 126, 234, 0.08)',
+                transition: 'all 0.3s ease',
+                border: '2px solid rgba(102, 126, 234, 0.03)',
+                height: '100%',
+              }}>
+                <div style={{
+                  fontSize: 'clamp(2rem, 4vw, 2.5rem)',
+                  marginBottom: 'clamp(15px, 3vw, 20px)',
+                  color: '#667eea',
+                  background: '#f0e6ff',
+                  width: 'clamp(50px, 8vw, 70px)',
+                  height: 'clamp(50px, 8vw, 70px)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  borderRadius: '18px',
+                }}>📋</div>
+                <h3 style={{
+                  fontSize: 'clamp(1.2rem, 3vw, 1.5rem)',
+                  fontWeight: 700,
+                  color: '#1A237E',
+                  marginBottom: 'clamp(10px, 2vw, 15px)',
+                }}>Comprehensive Coverage</h3>
+                <p style={{
+                  fontSize: 'clamp(0.9rem, 2vw, 1rem)',
+                  lineHeight: 1.7,
+                  color: '#3949AB',
+                  marginBottom: 0,
+                }}>
                   The system covers all operations: patient registration, doctors consultations, 
                   Outpatient/Inpatient, cash collection & billing, banking, theatre, laboratory, 
-                  pharmacy, stores/stocks, procurement, mortuary, kitchen, dental, mother child care, 
-                  debtors/creditors, assets, budget, patient records, HR and Payroll.
+                  pharmacy, stores/stocks, procurement, and more.
                 </p>
               </div>
               
-              <div className='overview-card'>
-                <div className='overview-icon'>📢</div>
-                <h3>Communication & M-PESA Integration</h3>
-                <p>
-                  Includes modules for email, SMS and internet communication. The company is at an 
-                  advanced stage of negotiating with Safaricom to provide M-PESA services through 
-                  the Funsoft system. The system can receive and convert SMS, email, XML, web services 
-                  into appropriate data and store it in the Funsoft database.
+              <div style={{
+                background: 'white',
+                padding: 'clamp(20px, 4vw, 35px)',
+                borderRadius: '24px',
+                boxShadow: '0 15px 35px rgba(102, 126, 234, 0.08)',
+                transition: 'all 0.3s ease',
+                border: '2px solid rgba(102, 126, 234, 0.03)',
+                height: '100%',
+              }}>
+                <div style={{
+                  fontSize: 'clamp(2rem, 4vw, 2.5rem)',
+                  marginBottom: 'clamp(15px, 3vw, 20px)',
+                  color: '#667eea',
+                  background: '#f0e6ff',
+                  width: 'clamp(50px, 8vw, 70px)',
+                  height: 'clamp(50px, 8vw, 70px)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  borderRadius: '18px',
+                }}>📢</div>
+                <h3 style={{
+                  fontSize: 'clamp(1.2rem, 3vw, 1.5rem)',
+                  fontWeight: 700,
+                  color: '#1A237E',
+                  marginBottom: 'clamp(10px, 2vw, 15px)',
+                }}>Communication & M-PESA</h3>
+                <p style={{
+                  fontSize: 'clamp(0.9rem, 2vw, 1rem)',
+                  lineHeight: 1.7,
+                  color: '#3949AB',
+                  marginBottom: 0,
+                }}>
+                  Includes modules for email, SMS and internet communication. Integration with 
+                  M-PESA services for seamless payment processing. The system can receive and 
+                  convert SMS, email, XML, web services into appropriate data.
                 </p>
               </div>
             </div>
             
-            {/* Right Column */}
-            <div className='overview-right'>
-              <div className='overview-card'>
-                <div className='overview-icon'>⏰</div>
-                <h3>Workflow Alerts & Scheduling</h3>
-                <p>
-                  The system is equipped with workflow alerts to prompt users of pending works. 
-                  Capabilities include reminders for clinics, bookings, meetings, appointments, 
-                  maintenance and service dates. Supports patient/staff photographs, biometrics, 
-                  and Smart Card Technologies. Can flag unusual data entries and enforce cash 
-                  handling thresholds.
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 'clamp(20px, 3vw, 30px)' }}>
+              <div style={{
+                background: 'white',
+                padding: 'clamp(20px, 4vw, 35px)',
+                borderRadius: '24px',
+                boxShadow: '0 15px 35px rgba(102, 126, 234, 0.08)',
+                transition: 'all 0.3s ease',
+                border: '2px solid rgba(102, 126, 234, 0.03)',
+                height: '100%',
+              }}>
+                <div style={{
+                  fontSize: 'clamp(2rem, 4vw, 2.5rem)',
+                  marginBottom: 'clamp(15px, 3vw, 20px)',
+                  color: '#667eea',
+                  background: '#f0e6ff',
+                  width: 'clamp(50px, 8vw, 70px)',
+                  height: 'clamp(50px, 8vw, 70px)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  borderRadius: '18px',
+                }}>⏰</div>
+                <h3 style={{
+                  fontSize: 'clamp(1.2rem, 3vw, 1.5rem)',
+                  fontWeight: 700,
+                  color: '#1A237E',
+                  marginBottom: 'clamp(10px, 2vw, 15px)',
+                }}>Workflow Alerts</h3>
+                <p style={{
+                  fontSize: 'clamp(0.9rem, 2vw, 1rem)',
+                  lineHeight: 1.7,
+                  color: '#3949AB',
+                  marginBottom: 0,
+                }}>
+                  Equipped with workflow alerts to prompt users of pending works. Capabilities 
+                  include reminders for clinics, bookings, meetings, appointments, maintenance 
+                  and service dates.
                 </p>
               </div>
               
-              <div className='overview-card'>
-                <div className='overview-icon'>📊</div>
-                <h3>Informatics & Planning</h3>
-                <p>
-                  Based on an Open Source platform, compatible with any operating system. Users can 
-                  customize the UI, reporting formats, and add features with minimal technical knowledge. 
-                  No annual license fee—only a maintenance fee. Installation takes 10 minutes with 
-                  a self-installer CD, backed by a 12-month free warranty.
+              <div style={{
+                background: 'white',
+                padding: 'clamp(20px, 4vw, 35px)',
+                borderRadius: '24px',
+                boxShadow: '0 15px 35px rgba(102, 126, 234, 0.08)',
+                transition: 'all 0.3s ease',
+                border: '2px solid rgba(102, 126, 234, 0.03)',
+                height: '100%',
+              }}>
+                <div style={{
+                  fontSize: 'clamp(2rem, 4vw, 2.5rem)',
+                  marginBottom: 'clamp(15px, 3vw, 20px)',
+                  color: '#667eea',
+                  background: '#f0e6ff',
+                  width: 'clamp(50px, 8vw, 70px)',
+                  height: 'clamp(50px, 8vw, 70px)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  borderRadius: '18px',
+                }}>📊</div>
+                <h3 style={{
+                  fontSize: 'clamp(1.2rem, 3vw, 1.5rem)',
+                  fontWeight: 700,
+                  color: '#1A237E',
+                  marginBottom: 'clamp(10px, 2vw, 15px)',
+                }}>Informatics & Planning</h3>
+                <p style={{
+                  fontSize: 'clamp(0.9rem, 2vw, 1rem)',
+                  lineHeight: 1.7,
+                  color: '#3949AB',
+                  marginBottom: 0,
+                }}>
+                  Based on an Open Source platform, compatible with any operating system. 
+                  Users can customize the UI, reporting formats, and add features with 
+                  minimal technical knowledge.
                 </p>
               </div>
               
-              <div className='overview-card highlight'>
-                <div className='overview-icon'>✅</div>
-                <h3>Ministry of Health Certified</h3>
-                <p>
+              <div style={{
+                background: 'linear-gradient(145deg, #FFFFFF, #F0E6FF)',
+                padding: 'clamp(20px, 4vw, 35px)',
+                borderRadius: '24px',
+                boxShadow: '0 15px 35px rgba(102, 126, 234, 0.08)',
+                transition: 'all 0.3s ease',
+                border: '2px solid rgba(102, 126, 234, 0.03)',
+                borderLeft: '6px solid #667eea',
+                height: '100%',
+              }}>
+                <div style={{
+                  fontSize: 'clamp(2rem, 4vw, 2.5rem)',
+                  marginBottom: 'clamp(15px, 3vw, 20px)',
+                  color: '#667eea',
+                  background: '#f0e6ff',
+                  width: 'clamp(50px, 8vw, 70px)',
+                  height: 'clamp(50px, 8vw, 70px)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  borderRadius: '18px',
+                }}>✅</div>
+                <h3 style={{
+                  fontSize: 'clamp(1.2rem, 3vw, 1.5rem)',
+                  fontWeight: 700,
+                  color: '#1A237E',
+                  marginBottom: 'clamp(10px, 2vw, 15px)',
+                }}>Ministry of Health Certified</h3>
+                <p style={{
+                  fontSize: 'clamp(0.9rem, 2vw, 1rem)',
+                  lineHeight: 1.7,
+                  color: '#3949AB',
+                  marginBottom: 0,
+                }}>
                   Funsoft I-HMIS was reviewed by the Ministry of Health and certified for use in 
-                  public healthcare facilities. Currently deployed in <strong>200+ healthcare facilities</strong>, serving <strong>15,000+ daily users</strong> and managing <strong>2M+ patient records</strong>.
+                  public healthcare facilities. Currently deployed in <strong>200+ healthcare facilities</strong>.
                 </p>
               </div>
             </div>
@@ -341,60 +1085,193 @@ export const Hero = () => {
         </div>
       </div>
 
-      {/* ============ WHY CHOOSE US (Simplified & Combined) ============ */}
-      <div className='pricing-section' style={{ background: 'linear-gradient(180deg, #F0F7FF 0%, #FFFFFF 100%)' }}>
-        <div className='pricing-wrapper'>
-          <div className='pricing-header'>
-            <h2 className='pricing-title'>Why <span className='cloud-text'>Choose Us</span></h2>
-            <p className='pricing-subtitle'>Ministry of Health Approved EMR/HIS System</p>
-            <div className='pricing-badge'>Trusted by 200+ Healthcare Facilities </div>
-          </div>
-          
-          <div className='pricing-grid'>
-            {/* Plan 1 - Popular */}
-            <div className='pricing-card popular'>
-              <div className='popular-badge'>most popular</div>
-              <h3 className='plan-title'>OUT Patient Centre</h3>
-              <div className='plan-price'>$3,999.00</div>
-              <p className='plan-description'>0-50 Bed Hospital</p>
-              <p className='price-note'>(This price is subject to VAT tax @ 16%). Training, support, travel and accommodation fees to be billed at 50% of the cost of the software</p>
-              <button className='btn-enquire' onClick={() => handleEnquire('OUT Patient Centre - $3,999', '3,999')}>
-                Enquire Now
-              </button>
-            </div>
+      {/* PRODUCTS SECTION */}
+      <div style={{
+        width: '100%',
+        padding: 'clamp(40px, 8vw, 80px) 0',
+        background: 'linear-gradient(180deg, #F8FBFF 0%, #FFFFFF 100%)',
+      }}>
+        <div style={{
+          width: '100%',
+          maxWidth: '1400px',
+          margin: '0 auto',
+          padding: '0 clamp(15px, 5vw, 50px)',
+        }}>
+          <div style={{
+            textAlign: 'center',
+            marginBottom: 'clamp(30px, 6vw, 60px)',
+          }}>
+            <h2 className="section-title">
+              Our <span className="gradient-text">Products & Solutions</span>
+            </h2>
+            <p style={{
+              fontSize: 'clamp(1rem, 3vw, 1.5rem)',
+              fontWeight: 600,
+              color: '#667eea',
+              marginBottom: 'clamp(15px, 3vw, 25px)',
+              textTransform: 'uppercase',
+              letterSpacing: '1px',
+            }}>
+              Ministry of Health Approved Healthcare Systems
+            </p>
             
-            {/* Plan 2 */}
-            <div className='pricing-card'>
-              <h3 className='plan-title'>OUT Patient Centre</h3>
-              <div className='plan-price'>$5,999.00</div>
-              <p className='plan-description'>0-50 Bed Hospital</p>
-              <p className='price-note'>(This price is subject to VAT tax @ 16%). Training, support, travel and accommodation fees to be billed at 50% of the cost of the software</p>
-              <button className='btn-enquire' onClick={() => handleEnquire('OUT Patient Centre - $5,999', '5,999')}>
-                Enquire Now
-              </button>
-            </div>
-            
-            {/* Plan 3 */}
-            <div className='pricing-card'>
-              <h3 className='plan-title'>OUT Patient Centre</h3>
-              <div className='plan-price'>$8,999.00</div>
-              <p className='plan-description'>51-100 Bed Hospital</p>
-              <p className='price-note'>(This price is subject to VAT tax @ 16%). Training, support, travel and accommodation fees to be billed at 50% of the cost of the software</p>
-              <button className='btn-enquire' onClick={() => handleEnquire('OUT Patient Centre - $8,999', '8,999')}>
-                Enquire Now
-              </button>
+            {/* Stats Badge */}
+            <div className="badge">
+              Trusted by 200+ Healthcare Facilities
             </div>
           </div>
-          
-          <div className='pricing-footer'>
-            <p className='footer-text'>View The Funsoft® Integrated Healthcare Information Management System (I-HMIS) and variants coverage</p>
-            <div className='footer-stats-mini'>
-              <span><strong>200+</strong> Facilities</span>
-              <span><strong>10+</strong>Years of Expertise</span>
-              <span><strong>15K+</strong> Daily Users</span>
-              <span><strong>2M+</strong> Records</span>
+
+          {/* Products Grid */}
+          {loading ? (
+            <div style={{ textAlign: 'center', padding: '60px 0' }}>
+              <Spin size="large" />
+              <Text style={{ display: 'block', marginTop: 16 }}>Loading products...</Text>
             </div>
-            <p className='footer-commitment'>Committed to our clients needs</p>
+          ) : products.length === 0 ? (
+            <Empty
+              image={Empty.PRESENTED_IMAGE_SIMPLE}
+              description="No products available"
+              style={{ padding: '40px 0' }}
+            />
+          ) : (
+            <Row gutter={[24, 24]}>
+              {products.map((product, index) => {
+                // Get tag based on product's tag type
+                const tag = getTagByType(product.tagType, index);
+                // Get icon based on product's icon type
+                const icon = getIconByType(product.iconType);
+                
+                // Determine icon animation class
+                let iconClass = '';
+                if (product.iconType === 'fire') iconClass = 'icon-fire';
+                else if (product.iconType === 'star') iconClass = 'icon-star';
+                else if (product.iconType === 'rocket') iconClass = 'icon-rocket';
+                else if (product.iconType === 'crown') iconClass = 'icon-crown';
+                else if (product.iconType === 'thunder') iconClass = 'icon-thunder';
+                else if (product.iconType === 'heart') iconClass = 'icon-heart';
+                else if (product.iconType === 'trophy') iconClass = 'icon-trophy';
+                else if (product.iconType === 'gift') iconClass = 'icon-gift';
+                
+                return (
+                  <Col xs={24} sm={12} lg={8} xl={8} key={product.id}>
+                    <Card
+                      hoverable
+                      className="product-card"
+                      cover={
+                        <div className="product-image-container">
+                          <div className="product-icon-wrapper">
+                            <div className={`product-icon-large ${iconClass}`}>
+                              {icon}
+                            </div>
+                          </div>
+                          {/* Each card has its own tag based on tagType */}
+                          <Tag 
+                            color={tag.color}
+                            className={`product-tag ${tag.burning ? 'burning-tag' : ''}`}
+                            icon={tag.icon}
+                          >
+                            {tag.text}
+                          </Tag>
+                        </div>
+                      }
+                    >
+                      <div style={{ padding: '24px' }}>
+                        <h3 className="product-name">{product.name}</h3>
+                        <div className="price-tag">{formatCurrency(product.price, product.currency)}</div>
+                        <div style={{ marginTop: 12 }}>
+                          {product.description?.split('\n').map((line, i) => (
+                            <p key={i} className="product-description" style={{ margin: i === 1 ? '8px 0' : '0' }}>
+                              {line}
+                            </p>
+                          ))}
+                        </div>
+                        
+                        <button
+                          className="enquire-button"
+                          onClick={() => handleGmailEnquiry(product.name, product.price)}
+                        >
+                          
+                          Enquire Now
+                        </button>
+                        
+                        
+                      </div>
+                    </Card>
+                  </Col>
+                );
+              })}
+            </Row>
+          )}
+          
+          {/* Footer Stats */}
+          <div style={{
+            marginTop: 'clamp(40px, 8vw, 60px)',
+            textAlign: 'center',
+            padding: 'clamp(30px, 6vw, 40px) clamp(15px, 3vw, 20px)',
+            background: 'linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%)',
+            borderRadius: '30px',
+            border: '1px solid rgba(102, 126, 234, 0.1)',
+          }}>
+            <p style={{
+              fontSize: 'clamp(1rem, 2.5vw, 1.2rem)',
+              color: '#1A237E',
+              fontWeight: 600,
+              marginBottom: 'clamp(15px, 3vw, 20px)',
+            }}>
+              The Funsoft® Integrated Healthcare Information Management System (I-HMIS)
+            </p>
+            <div style={{
+              display: 'flex',
+              justifyContent: 'center',
+              gap: '30px',
+              flexWrap: 'wrap',
+              margin: '20px 0 15px',
+            }}>
+              <span style={{
+                fontSize: '1rem',
+                color: '#666',
+                padding: '8px 20px',
+                background: 'linear-gradient(135deg, #f8f9fa, #ffffff)',
+                borderRadius: '40px',
+                border: '1px solid rgba(102, 126, 234, 0.1)',
+                boxShadow: '0 4px 12px rgba(0,0,0,0.03)',
+              }}><strong>200+</strong> Facilities</span>
+              <span style={{
+                fontSize: '1rem',
+                color: '#666',
+                padding: '8px 20px',
+                background: 'linear-gradient(135deg, #f8f9fa, #ffffff)',
+                borderRadius: '40px',
+                border: '1px solid rgba(102, 126, 234, 0.1)',
+                boxShadow: '0 4px 12px rgba(0,0,0,0.03)',
+              }}><strong>10+</strong> Years Expertise</span>
+              <span style={{
+                fontSize: '1rem',
+                color: '#666',
+                padding: '8px 20px',
+                background: 'linear-gradient(135deg, #f8f9fa, #ffffff)',
+                borderRadius: '40px',
+                border: '1px solid rgba(102, 126, 234, 0.1)',
+                boxShadow: '0 4px 12px rgba(0,0,0,0.03)',
+              }}><strong>15K+</strong> Daily Users</span>
+              <span style={{
+                fontSize: '1rem',
+                color: '#666',
+                padding: '8px 20px',
+                background: 'linear-gradient(135deg, #f8f9fa, #ffffff)',
+                borderRadius: '40px',
+                border: '1px solid rgba(102, 126, 234, 0.1)',
+                boxShadow: '0 4px 12px rgba(0,0,0,0.03)',
+              }}><strong>2M+</strong> Records</span>
+            </div>
+            <p style={{
+              fontSize: 'clamp(0.9rem, 2vw, 1rem)',
+              color: '#764ba2',
+              fontWeight: 600,
+              letterSpacing: '0.5px',
+            }}>
+              Committed to our clients needs
+            </p>
           </div>
         </div>
       </div>
@@ -402,4 +1279,4 @@ export const Hero = () => {
   );
 };
 
-export default Hero;
+export default HeroSection;

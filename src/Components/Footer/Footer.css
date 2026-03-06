@@ -106,7 +106,7 @@
 }
 
 .footer-list ul li {
-  margin-bottom: 12px;
+  margin-bottom: 15px;
 }
 
 .footer-list ul li a,
@@ -116,9 +116,6 @@
   font-size: 14px;
   line-height: 1.6;
   transition: all 0.3s ease;
-  display: flex;
-  align-items: center;
-  gap: 10px;
 }
 
 .footer-list ul li a:hover {
@@ -126,7 +123,8 @@
   transform: translateX(5px);
 }
 
-/* Contact Info - IMPROVED ICON SIZING AND STYLING */
+/* Office List & Contact Info - IMPROVED ICON STYLING */
+.office-list li,
 .contact-info ul li {
   display: flex;
   align-items: flex-start;
@@ -134,27 +132,31 @@
 }
 
 .contact-icon {
-  width: 18px;
-  height: 18px;
-  min-width: 18px;
-  min-height: 18px;
+  width: 20px;
+  height: 20px;
+  min-width: 20px;
+  min-height: 20px;
   flex-shrink: 0;
-  color: rgba(255, 255, 255, 0.9);
+  color: #16CDAC;
   transition: all 0.3s ease;
-  margin-top: 2px; /* Aligns better with text */
+  margin-top: 2px;
 }
 
+.office-list li:hover .contact-icon,
 .contact-info ul li:hover .contact-icon {
-  color: #16CDAC;
+  color: white;
   transform: scale(1.1);
 }
 
+.office-list li span,
 .contact-info ul li span {
   flex: 1;
   line-height: 1.5;
   word-break: break-word;
+  color: rgba(255, 255, 255, 0.9);
 }
 
+/* Business Hours */
 .business-hours {
   margin-top: 25px;
   padding-top: 20px;
@@ -166,13 +168,45 @@
   font-size: 14px;
   font-weight: 600;
   margin-bottom: 10px;
+  letter-spacing: 0.5px;
 }
 
 .business-hours p {
   color: rgba(255, 255, 255, 0.7);
   font-size: 13px;
-  margin: 5px 0;
+  margin: 6px 0;
   line-height: 1.4;
+}
+
+/* Social Links in Contact Us */
+.social-links {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.social-links a {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.social-links a:hover {
+  background: #16CDAC;
+  transform: translateY(-3px);
+}
+
+.social-links svg {
+  width: 18px;
+  height: 18px;
+  color: white;
+  transition: all 0.3s ease;
 }
 
 /* Bottom Section */
@@ -227,61 +261,16 @@
   gap: 15px;
 }
 
-.social-icons {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-}
-
-.social-icons span {
-  color: rgba(255, 255, 255, 0.8);
-  font-size: 13px;
-  font-weight: 500;
-}
-
-.social-icons a {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.1);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.3s ease;
-}
-
-.social-icons a:hover {
-  background: #16CDAC;
-  transform: translateY(-3px);
-}
-
-/* IMPROVED SOCIAL ICON STYLING */
-.social-icons svg {
-  width: 18px;
-  height: 18px;
-  display: block;
-  color: white;
-  transition: all 0.3s ease;
-}
-
-.social-icons a:hover svg {
-  color: white;
-}
-
-.social-icons a img {
-  width: 18px;
-  height: 18px;
-  display: block;
-  filter: brightness(0) invert(1);
-}
-
 .certification {
   display: flex;
   align-items: center;
   gap: 15px;
-  font-size: 11px;
-  color: rgba(255, 255, 255, 0.6);
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.7);
   font-weight: 500;
+  padding: 8px 15px;
+  background: rgba(22, 205, 172, 0.1);
+  border-radius: 30px;
 }
 
 /* Responsive Design */
@@ -294,25 +283,12 @@
   .footer {
     padding: 50px 30px 25px;
   }
-  
-  .contact-icon {
-    width: 16px;
-    height: 16px;
-    min-width: 16px;
-    min-height: 16px;
-  }
-  
-  .social-icons svg,
-  .social-icons a img {
-    width: 16px;
-    height: 16px;
-  }
 }
 
 @media (max-width: 768px) {
   .footer-div-top {
     grid-template-columns: 1fr;
-    gap: 30px;
+    gap: 35px;
   }
   
   .footer-div-bottom {
@@ -330,13 +306,19 @@
     padding: 40px 20px 20px;
   }
   
-  .social-icons a {
-    width: 34px;
-    height: 34px;
+  .contact-icon {
+    width: 18px;
+    height: 18px;
+    min-width: 18px;
+    min-height: 18px;
   }
   
-  .social-icons svg,
-  .social-icons a img {
+  .social-links a {
+    width: 36px;
+    height: 36px;
+  }
+  
+  .social-links svg {
     width: 16px;
     height: 16px;
   }
@@ -349,21 +331,10 @@
     gap: 10px;
   }
   
-  .social-icons {
-    flex-wrap: wrap;
-    justify-content: flex-start;
-  }
-  
-  .certification {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 5px;
-  }
-  
   .footer-links {
     flex-direction: column;
     align-items: flex-start;
-    gap: 5px;
+    gap: 8px;
   }
   
   .footer-links span {
@@ -371,21 +342,37 @@
   }
   
   .contact-icon {
-    width: 14px;
-    height: 14px;
-    min-width: 14px;
-    min-height: 14px;
+    width: 16px;
+    height: 16px;
+    min-width: 16px;
+    min-height: 16px;
     margin-top: 3px;
   }
   
-  .social-icons a {
-    width: 32px;
-    height: 32px;
+  .office-list li,
+  .contact-info ul li {
+    gap: 10px;
   }
   
-  .social-icons svg,
-  .social-icons a img {
-    width: 14px;
-    height: 14px;
+  .social-links {
+    justify-content: flex-start;
+  }
+  
+  .social-links a {
+    width: 34px;
+    height: 34px;
+  }
+  
+  .social-links svg {
+    width: 15px;
+    height: 15px;
+  }
+  
+  .certification {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+    background: none;
+    padding: 0;
   }
 }

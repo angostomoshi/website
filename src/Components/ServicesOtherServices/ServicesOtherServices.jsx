@@ -8,11 +8,11 @@ import educational_img from '../../assets/educational_img.svg'
 import payment_img from '../../assets/payment_img.svg'
 
 
-export const ServicesOtherServices = () => {
+export const Features = () => {
   return (
     <div className='other_services container'>
       <h1>
-          Our <span>Other </span> Services
+          Some of <span>Our Features</span>
         </h1>
 
 
@@ -21,59 +21,54 @@ export const ServicesOtherServices = () => {
         <div className='Appointment_booking'>
        <img src={appointment} alt="" className='appointment_image'/>
               <div className='appointment_div_text'>
-              <h4>Search and appointment <br /> booking</h4>
+              <h4>Smart Appointment Booking</h4>
               
-              <p>This is essential for connecting users with healthcare providers
-                 and enabling consultations, the core functionality of the app.</p>
+              <p>Connect with healthcare providers and book consultations seamlessly.</p>
                 </div>
                </div>
 
                <div className='Appointment_booking'>
        <img src={telehealth_img} alt="" className='appointment_image'/>
               <div>
-              <h4>Telehealth consultations</h4>
+              <h4>Virtual Telehealth</h4>
               
-              <p>This addresses the core challenge of limited access
-               and allows for virtual consultations with qualified professionals.</p>
+              <p>Virtual consultations with qualified professionals from anywhere.</p>
                 </div>
                </div>
 
                <div className='Appointment_booking'>
        <img src={secure_img} alt="" className='appointment_image'/>
               <div>
-              <h4>Secure messaging</h4>
+              <h4>Secure Messaging</h4>
               
-              <p>Enables essential communication between users 
-                and providers for follow-up questions or non-urgent consultations</p>
+              <p>Safe communication with providers for follow-ups and non-urgent needs.</p>
                 </div>
                </div> 
 
                <div className='Appointment_booking'>
        <img src={ authentication_img} alt="" className='appointment_image'/>
               <div>
-              <h4>User authentication and <br /> secure data storage</h4>
+              <h4>Privacy & Data Security</h4>
               
-              <p>Protects user privacy and ensures the confidentiality of medical information</p>
+              <p>Enterprise-grade authentication and encrypted medical records.</p>
                 </div>
                </div>
 
                <div className='Appointment_booking'>
        <img src={educational_img} alt="" className='appointment_image'/>
               <div>
-              <h4>Educational resources</h4>
+              <h4>Health Education Hub</h4>
               
-              <p>Partner with Easy Health platform doctors to create informative articles on various health topics.
-                 Provides a foundation for improved health literacy among users.</p>
+              <p>Informative articles from medical professionals on various health topics.</p>
                 </div>
                </div>
 
                <div className='Appointment_booking'>
        <img src={payment_img} alt="" className='appointment_image'/>
               <div>
-              <h4>Payment gateway</h4>
+              <h4>Secure Payments</h4>
               
-              <p>The app would integrate with a reputable payment gateway service provider. This service 
-                would securely handle all financial transactions within the app.</p>
+              <p>Integrated with trusted providers for safe and seamless transactions.</p>
                 </div>
                </div>
         </div>
@@ -81,4 +76,4 @@ export const ServicesOtherServices = () => {
   )
 }
 
-export default ServicesOtherServices
+export default Features

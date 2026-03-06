@@ -16,23 +16,14 @@ export const About = () => {
       {/* Right Column - Content */}
       <div className='about_page_right'>
         <h1>About <span>Funsoft Health</span> Management System</h1> 
-        <p>Funsoft Health Management System is a comprehensive healthcare technology solution designed to revolutionize 
-          medical services delivery. Our platform integrates cutting-edge technology with healthcare expertise to provide 
-          seamless, efficient, and accessible medical services for everyone.</p>
         
-        <p>We specialize in connecting patients with healthcare providers through innovative digital solutions, 
-          including virtual consultations, hospital coordination, pharmacy services, and health insurance management. 
-          Our system bridges the gap between traditional healthcare and modern technology.</p>
+        <p>Funsoft Health Management System was founded to address the global challenge of inaccessible primary healthcare through innovative technology solutions.</p>
         
-        <p>With strategic partnerships with leading healthcare providers and insurance companies, we ensure that 
-          every individual receives quality care through our integrated platform. Our mission is to make healthcare 
-          more accessible, affordable, and efficient for all Nigerians.</p>
+        <p>Our platform optimizes healthcare resource management by providing accurate, timely data for better decision-making. We transform underutilized resources into effectively managed assets through actionable intelligence.</p>
         
-        <p>The Funsoft system is built on principles of innovation, reliability, and patient-centric care. 
-          We continuously evolve our platform to meet the changing needs of the healthcare landscape while 
-          maintaining the highest standards of medical service delivery.</p>
-          
-   
+        <p>With successful implementations in Kenya, Sudan, Nigeria, and Ghana, our ICT solutions improve patient care, facility management, and policy formulation. We've partnered with governments, UN agencies, and international organizations including USAID and the World Bank.</p>
+        
+        <p>Through integrated health management systems and comprehensive staff training, we empower healthcare facilities to deliver quality, accessible care to all.</p>
       </div>
     </section>
   )

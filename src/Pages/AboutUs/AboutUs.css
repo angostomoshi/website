@@ -256,6 +256,164 @@ body {
 }
 
 /* ==========================================================================
+   Success Story Section (NEW)
+   ========================================================================== */
+.success-section {
+  padding: var(--spacing-xxl) 0;
+  background: linear-gradient(135deg, #f8fafc 0%, #e6f0fa 100%);
+}
+
+.success-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 50px;
+  align-items: center;
+}
+
+.success-paragraph {
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: var(--medium-text);
+  margin-bottom: 20px;
+}
+
+.hospital-showcase {
+  background: var(--white);
+  padding: var(--spacing-lg);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-light);
+  margin-top: 30px;
+}
+
+.hospital-showcase h3 {
+  color: var(--primary-blue);
+  margin-bottom: 15px;
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.hospital-list {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.hospital-list li {
+  padding: 8px 12px 8px 30px;
+  background: var(--light-teal);
+  border-radius: 8px;
+  font-size: 0.95rem;
+  color: var(--primary-blue);
+  position: relative;
+  font-weight: 500;
+}
+
+.hospital-list li::before {
+  content: "🏥";
+  position: absolute;
+  left: 8px;
+  font-size: 0.9rem;
+}
+
+.success-stats {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+.stat-card {
+  background: var(--white);
+  padding: 30px 20px;
+  border-radius: var(--radius-md);
+  text-align: center;
+  box-shadow: var(--shadow-light);
+  transition: var(--transition);
+}
+
+.stat-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-medium);
+}
+
+.stat-card.highlight {
+  background: var(--gradient-primary);
+  color: var(--white);
+}
+
+.stat-number {
+  font-size: 2.8rem;
+  font-weight: 900;
+  margin-bottom: 5px;
+  color: var(--primary-blue);
+  line-height: 1.2;
+}
+
+.highlight .stat-number {
+  color: var(--white);
+}
+
+.stat-label {
+  font-size: 0.95rem;
+  color: var(--medium-text);
+  font-weight: 600;
+}
+
+.highlight .stat-label {
+  color: rgba(255,255,255,0.9);
+}
+
+/* ==========================================================================
+   Results Section (NEW)
+   ========================================================================== */
+.results-section {
+  padding: var(--spacing-xxl) 0;
+  background: var(--white);
+}
+
+.results-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+  margin-top: 40px;
+}
+
+.result-item {
+  text-align: center;
+  padding: 35px 25px;
+  background: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%);
+  border-radius: var(--radius-md);
+  transition: var(--transition);
+  border: 1px solid rgba(22, 205, 172, 0.1);
+}
+
+.result-item:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-medium);
+  border-color: var(--primary-teal);
+}
+
+.result-icon {
+  font-size: 3.2rem;
+  margin-bottom: 15px;
+  display: block;
+}
+
+.result-item h3 {
+  color: var(--primary-blue);
+  margin-bottom: 10px;
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+
+.result-item p {
+  color: var(--medium-text);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+/* ==========================================================================
    Integrated Content Section
    ========================================================================== */
 .integrated-content {
@@ -416,6 +574,17 @@ body {
     gap: var(--spacing-md);
   }
   
+  .success-grid {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+  
+  .success-stats {
+    grid-template-columns: repeat(3, 1fr);
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
   .integrated-grid {
     grid-template-columns: 1fr;
     gap: var(--spacing-xl);
@@ -463,6 +632,22 @@ body {
   .section-title-main,
   .section-title {
     font-size: 1.5rem;
+  }
+  
+  .success-stats {
+    grid-template-columns: 1fr;
+    max-width: 300px;
+  }
+  
+  .hospital-list {
+    grid-template-columns: 1fr;
+  }
+  
+  .results-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    max-width: 400px;
+    margin: 30px auto 0;
   }
   
   .content-paragraph {
@@ -520,6 +705,18 @@ body {
     font-size: 1.4rem;
   }
   
+  .stat-number {
+    font-size: 2.2rem;
+  }
+  
+  .result-icon {
+    font-size: 2.8rem;
+  }
+  
+  .result-item h3 {
+    font-size: 1.2rem;
+  }
+  
   .graphic-element {
     max-width: 250px;
   }
@@ -553,5 +750,11 @@ body {
   .hero-subtitle {
     color: var(--dark-text);
     text-shadow: none;
+  }
+  
+  .stat-card,
+  .result-item,
+  .hospital-showcase {
+    break-inside: avoid;
   }
 }
