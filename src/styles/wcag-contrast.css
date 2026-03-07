@@ -1,0 +1,385 @@
+/* WCAG Contrast Compliance Enhancements */
+/* Ensures AA and AAA contrast ratios for accessibility */
+
+:root {
+  /* Higher Contrast Text Colors */
+  --text-primary: #0a0e27; /* AA compliant with white backgrounds */
+  --text-secondary: #1e293b; /* Darker secondary text */
+  --text-tertiary: #334155; /* AA compliant for tertiary */
+  --text-muted: #64748b; /* AA compliant muted text */
+  --text-light: #94a3b8; /* Slightly lighter for less emphasis */
+
+  /* Background Colors with Better Contrast */
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8fafc;
+  --bg-tertiary: #f1f5f9;
+
+  /* Interactive Element Colors */
+  --interactive-primary: #0066cc; /* Higher contrast cyan alternative */
+  --interactive-secondary: #0d47a1; /* High contrast blue */
+
+  /* State Colors */
+  --success-text: #065f46; /* High contrast green text */
+  --success-bg: #d1fae5; /* Light green background */
+  --error-text: #7f1d1d; /* High contrast red text */
+  --error-bg: #fee2e2; /* Light red background */
+  --warning-text: #92400e; /* High contrast orange text */
+  --warning-bg: #fef3c7; /* Light orange background */
+  --info-text: #082f49; /* High contrast blue text */
+  --info-bg: #e0f2fe; /* Light blue background */
+
+  /* Borders with Better Contrast */
+  --border-primary: #cbd5e1; /* Better contrast borders */
+  --border-secondary: #e2e8f0; /* Medium contrast borders */
+}
+
+/* Enhanced Text Contrast */
+body {
+  color: var(--text-secondary);
+  background-color: var(--bg-primary);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--text-primary);
+}
+
+p {
+  color: var(--text-secondary);
+}
+
+small,
+.small-text {
+  color: var(--text-muted);
+}
+
+/* Link Contrast */
+a {
+  color: #0066cc;
+  text-decoration: underline;
+  transition: all 0.3s ease;
+}
+
+a:visited {
+  color: #6f42c1;
+}
+
+a:hover {
+  color: #003d99;
+  background-color: rgba(0, 102, 204, 0.1);
+  padding: 2px 4px;
+  border-radius: 3px;
+}
+
+a:focus {
+  outline: 3px solid #0066cc;
+  outline-offset: 2px;
+}
+
+/* Button Contrast */
+.submit-btn,
+button[type="submit"],
+.button {
+  color: #ffffff;
+  background: #0066cc;
+  border: 2px solid #0066cc;
+  min-height: 44px; /* WCAG minimum touch target size */
+  min-width: 44px;
+  transition: all 0.3s ease;
+}
+
+.submit-btn:hover,
+button[type="submit"]:hover,
+.button:hover {
+  background: #003d99;
+  border-color: #003d99;
+}
+
+.submit-btn:focus,
+button[type="submit"]:focus,
+.button:focus {
+  outline: 3px solid #0066cc;
+  outline-offset: 2px;
+}
+
+.submit-btn:disabled,
+button[type="submit"]:disabled,
+.button:disabled {
+  background: #cbd5e1;
+  border-color: #cbd5e1;
+  color: #64748b;
+  cursor: not-allowed;
+}
+
+/* Form Input Contrast */
+input,
+textarea,
+select {
+  color: var(--text-secondary);
+  background-color: var(--bg-primary);
+  border: 2px solid var(--border-secondary);
+  min-height: 44px; /* WCAG minimum touch target size */
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: 3px solid #0066cc;
+  outline-offset: 1px;
+  border-color: #0066cc;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--text-muted);
+}
+
+input:invalid,
+textarea:invalid {
+  border-color: var(--error-text);
+  color: var(--error-text);
+}
+
+/* Label Contrast */
+label {
+  color: var(--text-secondary);
+  font-weight: 600;
+  display: block;
+  margin-bottom: 8px;
+  min-height: 24px;
+}
+
+/* Success State */
+.success,
+.success-message,
+.alert-success {
+  background-color: var(--success-bg);
+  color: var(--success-text);
+  border: 2px solid var(--success-text);
+  padding: 12px 16px;
+  border-radius: 8px;
+}
+
+/* Error State */
+.error,
+.error-message,
+.alert-error {
+  background-color: var(--error-bg);
+  color: var(--error-text);
+  border: 2px solid var(--error-text);
+  padding: 12px 16px;
+  border-radius: 8px;
+}
+
+/* Warning State */
+.warning,
+.warning-message,
+.alert-warning {
+  background-color: var(--warning-bg);
+  color: var(--warning-text);
+  border: 2px solid var(--warning-text);
+  padding: 12px 16px;
+  border-radius: 8px;
+}
+
+/* Info State */
+.info,
+.info-message,
+.alert-info {
+  background-color: var(--info-bg);
+  color: var(--info-text);
+  border: 2px solid var(--info-text);
+  padding: 12px 16px;
+  border-radius: 8px;
+}
+
+/* Card Contrast */
+.card {
+  background-color: var(--bg-primary);
+  border: 1px solid var(--border-secondary);
+  color: var(--text-secondary);
+}
+
+.card-title {
+  color: var(--text-primary);
+  font-weight: 700;
+}
+
+/* Navigation Contrast */
+nav,
+.nav {
+  background-color: var(--bg-secondary);
+  border-bottom: 2px solid var(--border-primary);
+}
+
+nav a,
+.nav a {
+  color: var(--text-secondary);
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  padding: 12px 16px;
+}
+
+nav a:hover,
+nav a:focus,
+.nav a:hover,
+.nav a:focus {
+  background-color: var(--bg-tertiary);
+  color: var(--text-primary);
+  outline: none;
+}
+
+nav a.active,
+.nav a.active {
+  color: #0066cc;
+  border-bottom: 3px solid #0066cc;
+  font-weight: 700;
+}
+
+/* Footer Contrast */
+footer {
+  background-color: #1e293b;
+  color: #e2e8f0;
+}
+
+footer a {
+  color: #93c5fd;
+}
+
+footer a:hover {
+  color: #ffffff;
+  background-color: rgba(147, 197, 253, 0.1);
+}
+
+/* Table Contrast */
+table {
+  border-collapse: collapse;
+}
+
+th {
+  background-color: var(--bg-tertiary);
+  color: var(--text-primary);
+  border: 1px solid var(--border-primary);
+  padding: 12px;
+  text-align: left;
+  font-weight: 700;
+}
+
+td {
+  border: 1px solid var(--border-secondary);
+  padding: 12px;
+  color: var(--text-secondary);
+}
+
+tr:nth-child(even) {
+  background-color: var(--bg-secondary);
+}
+
+tr:hover {
+  background-color: var(--bg-tertiary);
+}
+
+/* Focus Indicators */
+*:focus-visible {
+  outline: 3px solid #0066cc;
+  outline-offset: 2px;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible {
+  outline: 3px solid #0066cc;
+  outline-offset: 2px;
+}
+
+/* Skip Link */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: #0066cc;
+  color: white;
+  padding: 8px;
+  text-decoration: none;
+  z-index: 100;
+}
+
+.skip-link:focus {
+  top: 0;
+}
+
+/* Minimum Touch Target Size */
+button,
+a,
+input[type="checkbox"],
+input[type="radio"],
+.clickable {
+  min-height: 44px;
+  min-width: 44px;
+}
+
+/* Text Readability */
+body {
+  line-height: 1.5;
+  letter-spacing: 0.5px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  line-height: 1.2;
+  letter-spacing: 0;
+}
+
+p {
+  line-height: 1.6;
+  max-width: 80ch;
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* High Contrast Mode Support */
+@media (prefers-contrast: more) {
+  :root {
+    --text-primary: #000000;
+    --text-secondary: #1a1a1a;
+    --border-primary: #000000;
+    --interactive-primary: #0000ff;
+  }
+
+  a {
+    text-decoration: underline;
+    font-weight: 600;
+  }
+
+  button,
+  .button {
+    border: 3px solid currentColor;
+    font-weight: 700;
+  }
+}
+
+/* Dark Mode High Contrast */
+@media (prefers-color-scheme: dark) and (prefers-contrast: more) {
+  :root {
+    --text-primary: #ffffff;
+    --text-secondary: #f0f0f0;
+    --bg-primary: #000000;
+    --bg-secondary: #1a1a1a;
+  }
+}

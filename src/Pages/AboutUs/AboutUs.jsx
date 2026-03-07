@@ -1,7 +1,7 @@
 import './AboutUs.css'
-import { Frame1, LeftSideDesign } from '../../Components/Logo.jsx'
 import { Navbar } from '../../Components/Navbar/Navbar'
 import Footer from '../../Components/Footer/Footer'
+import aboutUsHero from '../../assets/About us.png'
 
 export function AboutUs() {
   return (
@@ -11,7 +11,11 @@ export function AboutUs() {
 
       {/* Hero Section */}
       <section className='hero-section'>
-        <Frame1 className='hero-graphic' />
+        <img
+          src={aboutUsHero}
+          alt='Healthcare team collaborating in a modern hospital environment'
+          className='hero-graphic'
+        />
         <div className='hero-content'>
           <h1 className='hero-title'>About System Partners Ltd</h1>
           <p className='hero-subtitle'>

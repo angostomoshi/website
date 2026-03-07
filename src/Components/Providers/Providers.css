@@ -1,0 +1,317 @@
+/* Providers Component Styling */
+@import url("https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap");
+
+:root {
+  --primary-cyan: #00bfff;
+  --primary-cyan-dark: #0099cc;
+  --primary-cyan-light: #40dfff;
+}
+
+.providers-container {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 60px 40px;
+}
+
+.providers-header {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.providers-header h1 {
+  font-size: clamp(2rem, 5vw, 2.8rem);
+  font-weight: 800;
+  color: #1e293b;
+  margin-bottom: 15px;
+  font-family: "Nunito Sans", sans-serif;
+}
+
+.providers-header p {
+  font-size: clamp(1rem, 2vw, 1.15rem);
+  color: #64748b;
+  line-height: 1.6;
+  max-width: 600px;
+  margin: 0 auto;
+  font-family: "Nunito Sans", sans-serif;
+}
+
+.providers-search {
+  margin-bottom: 40px;
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.providers-search input {
+  padding: 14px 20px;
+  border: 2px solid rgba(0, 191, 255, 0.2);
+  border-radius: 12px;
+  font-size: 1rem;
+  font-family: "Nunito Sans", sans-serif;
+  width: 100%;
+  max-width: 400px;
+  transition: all 0.3s ease;
+  background: rgba(0, 191, 255, 0.05);
+}
+
+.providers-search input:focus {
+  outline: none;
+  border-color: #00bfff;
+  background: white;
+  box-shadow: 0 0 0 4px rgba(0, 191, 255, 0.15);
+}
+
+.providers-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 30px;
+}
+
+/* Provider Card */
+.provider-card {
+  background: white;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid rgba(0, 191, 255, 0.15);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 15px rgba(0, 191, 255, 0.08);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.provider-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 15px 40px rgba(0, 191, 255, 0.15);
+  border-color: rgba(0, 191, 255, 0.3);
+}
+
+.provider-card-image {
+  width: 100%;
+  height: 200px;
+  background: linear-gradient(
+    135deg,
+    rgba(0, 191, 255, 0.1) 0%,
+    rgba(0, 191, 255, 0.05) 100%
+  );
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.provider-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.provider-card:hover .provider-card-image img {
+  transform: scale(1.08);
+}
+
+.provider-card-content {
+  padding: 25px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.provider-card-name {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin-bottom: 10px;
+  font-family: "Nunito Sans", sans-serif;
+}
+
+.provider-card-type {
+  font-size: 0.9rem;
+  color: #00bfff;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 15px;
+}
+
+.provider-card-info {
+  font-size: 0.95rem;
+  color: #64748b;
+  line-height: 1.5;
+  margin-bottom: 15px;
+  flex-grow: 1;
+}
+
+.provider-card-footer {
+  display: flex;
+  gap: 10px;
+  padding-top: 15px;
+  border-top: 1px solid rgba(0, 191, 255, 0.1);
+}
+
+.provider-card-button {
+  flex: 1;
+  padding: 10px 15px;
+  border: 2px solid #00bfff;
+  background: transparent;
+  color: #00bfff;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: "Nunito Sans", sans-serif;
+}
+
+.provider-card-button:hover {
+  background: #00bfff;
+  color: white;
+  box-shadow: 0 4px 12px rgba(0, 191, 255, 0.3);
+}
+
+/* Loading State */
+.provider-card.loading {
+  pointer-events: none;
+  opacity: 0.8;
+}
+
+.provider-card.loading .provider-card-image {
+  background: linear-gradient(
+    90deg,
+    rgba(0, 191, 255, 0.05) 0%,
+    rgba(0, 191, 255, 0.1) 25%,
+    rgba(0, 191, 255, 0.05) 50%,
+    rgba(0, 191, 255, 0.1) 75%,
+    rgba(0, 191, 255, 0.05) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  position: relative;
+}
+
+.provider-card.loading .provider-card-name,
+.provider-card.loading .provider-card-type,
+.provider-card.loading .provider-card-info {
+  background: linear-gradient(
+    90deg,
+    rgba(0, 191, 255, 0.05) 0%,
+    rgba(0, 191, 255, 0.15) 25%,
+    rgba(0, 191, 255, 0.05) 50%,
+    rgba(0, 191, 255, 0.15) 75%,
+    rgba(0, 191, 255, 0.05) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  color: transparent;
+  border-radius: 4px;
+  height: 1.2em;
+}
+
+.provider-card.loading .provider-card-type {
+  height: 0.9em;
+}
+
+.provider-card.loading .provider-card-info {
+  height: 3em;
+  margin-bottom: 10px;
+}
+
+.provider-card.loading .provider-card-button {
+  pointer-events: none;
+  opacity: 0.5;
+  background: linear-gradient(
+    90deg,
+    rgba(0, 191, 255, 0.05) 0%,
+    rgba(0, 191, 255, 0.15) 25%,
+    rgba(0, 191, 255, 0.05) 50%,
+    rgba(0, 191, 255, 0.15) 75%,
+    rgba(0, 191, 255, 0.05) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-color: transparent;
+  color: transparent;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* Empty State */
+.providers-empty {
+  text-align: center;
+  padding: 60px 20px;
+}
+
+.providers-empty-icon {
+  font-size: 64px;
+  margin-bottom: 20px;
+}
+
+.providers-empty h3 {
+  font-size: 1.5rem;
+  color: #1e293b;
+  margin-bottom: 10px;
+  font-family: "Nunito Sans", sans-serif;
+  font-weight: 700;
+}
+
+.providers-empty p {
+  color: #64748b;
+  font-size: 1rem;
+  margin-bottom: 30px;
+  font-family: "Nunito Sans", sans-serif;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .providers-container {
+    padding: 40px 20px;
+  }
+
+  .providers-header {
+    margin-bottom: 35px;
+  }
+
+  .providers-header h1 {
+    font-size: 2rem;
+  }
+
+  .providers-grid {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+  }
+
+  .provider-card-content {
+    padding: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .providers-container {
+    padding: 30px 15px;
+  }
+
+  .providers-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .providers-search input {
+    max-width: 100%;
+  }
+
+  .provider-card-name {
+    font-size: 1.1rem;
+  }
+
+  .provider-card-image {
+    height: 150px;
+  }
+}

@@ -1,0 +1,523 @@
+/* Accessibility Enhancements - ARIA Labels & Focus States */
+
+:root {
+  --focus-color: #0066cc;
+  --focus-offset: 2px;
+  --focus-width: 3px;
+  --skip-link-bg: #0066cc;
+  --skip-link-text: #ffffff;
+}
+
+/* Skip Link - For Keyboard Navigation */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: var(--skip-link-bg);
+  color: var(--skip-link-text);
+  padding: 12px 20px;
+  z-index: 10000;
+  border-radius: 0 4px 4px 0;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.skip-link:focus {
+  top: 0;
+  outline: none;
+  box-shadow: 0 2px 8px rgba(0, 102, 204, 0.3);
+}
+
+/* Focus Visible Styles - Applied to All Interactive Elements */
+*:focus-visible {
+  outline: var(--focus-width) solid var(--focus-color);
+  outline-offset: var(--focus-offset);
+}
+
+/* Button Focus States */
+button:focus-visible {
+  outline: var(--focus-width) solid var(--focus-color);
+  outline-offset: var(--focus-offset);
+}
+
+/* Link Focus States */
+a:focus-visible {
+  outline: var(--focus-width) solid var(--focus-color);
+  outline-offset: var(--focus-offset);
+  text-decoration: underline;
+}
+
+/* Form Input Focus States */
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: var(--focus-width) solid var(--focus-color);
+  outline-offset: var(--focus-offset);
+}
+
+/* Checkbox and Radio Focus States */
+input[type="checkbox"]:focus-visible,
+input[type="radio"]:focus-visible {
+  outline: var(--focus-width) solid var(--focus-color);
+  outline-offset: var(--focus-offset);
+}
+
+/* ARIA Live Region - Announcements */
+[aria-live] {
+  position: relative;
+}
+
+[aria-live="polite"] {
+  position: relative;
+}
+
+[aria-live="assertive"] {
+  position: relative;
+}
+
+/* ARIA Hidden - Visual Only Elements */
+[aria-hidden="true"] {
+  visibility: hidden;
+}
+
+/* ARIA Disabled State */
+[aria-disabled="true"] {
+  opacity: 0.6;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* ARIA Pressed State - Toggles */
+[aria-pressed="true"] {
+  background: linear-gradient(135deg, #00bfff 0%, #0099cc 100%);
+  color: white;
+  box-shadow: 0 4px 12px rgba(0, 191, 255, 0.25);
+}
+
+[aria-pressed="false"] {
+  background: transparent;
+  border: 1px solid #00bfff;
+  color: #00bfff;
+}
+
+/* ARIA Expanded State - Menus, Accordions */
+[aria-expanded="true"] {
+  position: relative;
+}
+
+[aria-expanded="false"] {
+  position: relative;
+}
+
+/* ARIA Selected State */
+[aria-selected="true"] {
+  background: rgba(0, 191, 255, 0.15);
+  border: 1px solid rgba(0, 191, 255, 0.3);
+}
+
+[aria-selected="false"] {
+  background: transparent;
+  border: 1px solid transparent;
+}
+
+/* ARIA Current Page Indicator */
+[aria-current="page"] {
+  font-weight: 700;
+  color: #00bfff;
+  position: relative;
+}
+
+[aria-current="page"]::after {
+  content: "";
+  position: absolute;
+  bottom: -8px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: #00bfff;
+  border-radius: 2px;
+}
+
+/* ARIA Label Visibility */
+label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+  color: #1a365d;
+}
+
+label[for] {
+  cursor: pointer;
+}
+
+/* ARIA Describedby - Help Text */
+[aria-describedby] {
+  position: relative;
+}
+
+.aria-description {
+  display: block;
+  margin-top: 4px;
+  font-size: 13px;
+  color: #666;
+  font-weight: 400;
+}
+
+/* Error Messages with ARIA Live */
+[role="alert"],
+.error-message {
+  background: #ffe8e8;
+  border: 1px solid #f5a6a6;
+  border-radius: 8px;
+  padding: 12px 16px;
+  color: #8b0000;
+  font-size: 14px;
+  margin: 12px 0;
+  font-weight: 500;
+}
+
+[role="alert"] {
+  animation: slide-up 0.3s ease;
+}
+
+/* Success Messages */
+[role="status"],
+.success-message {
+  background: #e8f5e9;
+  border: 1px solid #a5d6a7;
+  border-radius: 8px;
+  padding: 12px 16px;
+  color: #2e7d32;
+  font-size: 14px;
+  margin: 12px 0;
+  font-weight: 500;
+}
+
+/* Warning Messages */
+.warning-message {
+  background: #fff3e0;
+  border: 1px solid #ffe0b2;
+  border-radius: 8px;
+  padding: 12px 16px;
+  color: #e65100;
+  font-size: 14px;
+  margin: 12px 0;
+  font-weight: 500;
+}
+
+/* Info Messages */
+.info-message {
+  background: #e3f2fd;
+  border: 1px solid #90caf9;
+  border-radius: 8px;
+  padding: 12px 16px;
+  color: #01579b;
+  font-size: 14px;
+  margin: 12px 0;
+  font-weight: 500;
+}
+
+/* ARIA Loading Indicator */
+[aria-busy="true"] {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+/* Minimum Touch Target Size - WCAG Requirement */
+button,
+a,
+input[type="checkbox"],
+input[type="radio"],
+[role="button"],
+[role="link"] {
+  min-height: 44px;
+  min-width: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Heading Structure for Screen Readers */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-bottom: 0.5em;
+  line-height: 1.3;
+}
+
+h1 {
+  font-size: 2.2rem;
+  font-weight: 800;
+}
+
+h2 {
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+
+h3 {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+h4 {
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+h5 {
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+h6 {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+/* Landmark Roles */
+[role="main"] {
+  position: relative;
+}
+
+[role="navigation"] {
+  position: relative;
+}
+
+[role="contentinfo"] {
+  position: relative;
+}
+
+[role="region"] {
+  position: relative;
+}
+
+[role="complementary"] {
+  position: relative;
+}
+
+/* ARIA List Semantics */
+[role="list"] {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+[role="listitem"] {
+  margin: 0;
+  padding: 0;
+}
+
+/* Tooltip/Popover Accessibility */
+[role="tooltip"] {
+  background: #1a365d;
+  color: white;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  z-index: 1000;
+  position: absolute;
+  white-space: nowrap;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Progressbar */
+[role="progressbar"] {
+  width: 100%;
+  height: 4px;
+  background: #e0e0e0;
+  border-radius: 2px;
+  padding: 0;
+  overflow: hidden;
+}
+
+[role="progressbar"]::after {
+  content: "";
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, #00bfff 0%, #0099cc 100%);
+  border-radius: 2px;
+}
+
+/* Modal Dialog Accessibility */
+[role="dialog"] {
+  position: fixed;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+  padding: 24px;
+  z-index: 1000;
+}
+
+[role="dialog"][aria-modal="true"] {
+  position: fixed;
+}
+
+/* Tab Navigation */
+[role="tablist"] {
+  display: flex;
+  border-bottom: 2px solid #e0e7ff;
+  gap: 8px;
+}
+
+[role="tab"] {
+  padding: 12px 16px;
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  border-bottom: 3px solid transparent;
+  color: #666;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+[role="tab"]:hover {
+  color: #00bfff;
+}
+
+[role="tab"][aria-selected="true"] {
+  color: #00bfff;
+  border-bottom-color: #00bfff;
+  font-weight: 600;
+}
+
+[role="tab"][aria-selected="true"]:focus-visible {
+  outline: 2px solid #0066cc;
+  outline-offset: 4px;
+}
+
+[role="tabpanel"] {
+  padding: 16px 0;
+}
+
+[role="tabpanel"][hidden] {
+  display: none;
+}
+
+/* Combobox / Search Autocomplete */
+[role="combobox"] {
+  position: relative;
+}
+
+[role="listbox"] {
+  position: absolute;
+  background: white;
+  border: 1px solid #e0e7ff;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+  max-height: 300px;
+  overflow-y: auto;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+[role="option"] {
+  padding: 12px 16px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+[role="option"]:hover,
+[role="option"][aria-selected="true"] {
+  background: rgba(0, 191, 255, 0.1);
+  color: #00bfff;
+}
+
+/* Searchbox */
+[role="searchbox"] {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid #e0e7ff;
+  border-radius: 8px;
+  font-size: 14px;
+  font-family: inherit;
+}
+
+[role="searchbox"]:focus-visible {
+  outline: 2px solid #0066cc;
+  outline-offset: 2px;
+  border-color: #00bfff;
+}
+
+/* Spinbutton */
+[role="spinbutton"] {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Slider */
+[role="slider"] {
+  width: 100%;
+  height: 4px;
+  background: #e0e7ff;
+  border-radius: 2px;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+[role="slider"]::-webkit-slider-thumb {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 16px;
+  height: 16px;
+  background: #00bfff;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0, 191, 255, 0.3);
+}
+
+[role="slider"]::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  background: #00bfff;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0, 191, 255, 0.3);
+}
+
+/* Accessibility - Respects Prefers Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  [aria-live="assertive"] {
+    position: relative;
+  }
+}
+
+/* High Contrast Mode Support */
+@media (prefers-contrast: more) {
+  *:focus-visible {
+    outline-width: 4px;
+  }
+
+  label {
+    font-weight: 700;
+  }
+
+  [role="alert"],
+  .error-message {
+    border-width: 2px;
+  }
+
+  [role="status"],
+  .success-message {
+    border-width: 2px;
+  }
+}

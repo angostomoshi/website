@@ -17,23 +17,21 @@ export const Landing = () => {
     <Navbar/>
     <Hero/>
     <div className='container'>
-    {/* <Title title='OUR SERVICES' subTitle='What we offer'/> */}
         <About/> 
         
         <Title title='ABOUT US' />
          <AboutPage/>
      <Doctors/>
+    </div>
     
         <AppPage/>
+        
+    <div className='container'>
         <Title title='TESTIMONIALS' subTitle='Reviews from our Users'/>            
-    
-    <Testimonials />  
-    {/* <Doctor name="Dr Boma Okoh" speciality="Pediatrician" 
-     experience="6 years" patients={288} /> */}
-     {/* <Title title='CONTACT US' subTitle='Get in touch'/>
-     <Contact/> */}
-     <Footer/>
+        <Testimonials />  
     </div>
+    
+    <Footer/>
    
 </div>
   )

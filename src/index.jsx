@@ -1,6 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
+import './styles/smooth-scroll.css';
+import './styles/icon-standards.css';
+import './styles/gradient-borders.css';
+import './styles/page-transitions.css';
+import './styles/wcag-contrast.css';
+import './styles/image-lazy-loading.css';
+import './styles/accessibility-aria.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { HashRouter } from 'react-router-dom';

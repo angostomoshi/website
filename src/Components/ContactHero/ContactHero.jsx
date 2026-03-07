@@ -1,6 +1,5 @@
 import React from 'react'
 import './ContactHero.css' 
-import Contactimg from '../../assets/conct.png'
 
 export const ContactHero = () => {
   return (

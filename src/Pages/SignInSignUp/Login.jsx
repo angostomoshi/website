@@ -1,4 +1,5 @@
 import React,{useState} from "react";
+import { Link } from 'react-router-dom'
 import './SignInSignUp.css'
 import { AppLogo, Show, Hide} from '../../Components/Logo.jsx'
 import Signup from '../../assets/Signup.svg'
@@ -29,7 +30,7 @@ export const LogIn = () => {
         <h1 className="h1">WELCOME BACK!</h1>  
       <div>
         <p className='p'>Don't have an account ? 
-            <a className='login' href="src\pages\SignInSignUp\SignInSignUp.jsx">Sign Up</a>
+            <Link className='login' to="/signup">Sign Up</Link>
         </p>
        </div>
     
@@ -44,14 +45,14 @@ export const LogIn = () => {
        
        <label className='label'>Password</label>
        <div className='input-field password'>
-       <input className='input' type='{visible? "text":"password"}'
+      <input className='input' type={visible ? "text" : "password"}
        placeholder='Password'/>
       {(visible=== false)?   
         <Hide onClick={handleshow}/>:<Show onClick={handleshow}/>}
        </div>
 
        <div >
-        <a className='forget' href='#'>Forget Password?</a>
+        <button type="button" className='forget'>Forget Password?</button>
        </div>
 
       <br/>

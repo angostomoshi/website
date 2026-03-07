@@ -1,0 +1,454 @@
+/* Image Lazy Loading - Blur-up Effect */
+
+:root {
+  --blur-up-duration: 0.6s;
+  --blur-up-easing: cubic-bezier(0.4, 0, 0.2, 1);
+  --placeholder-bg: linear-gradient(
+    135deg,
+    #f0f9ff 0%,
+    rgba(0, 191, 255, 0.08) 100%
+  );
+  --skeleton-bg: linear-gradient(
+    90deg,
+    #f0f9ff 25%,
+    rgba(0, 191, 255, 0.1) 50%,
+    #f0f9ff 75%
+  );
+  --skeleton-duration: 1.6s;
+}
+
+/* Image - Blur Up Animation */
+img[loading="lazy"],
+.lazy-image {
+  transition:
+    filter var(--blur-up-duration) var(--blur-up-easing),
+    opacity var(--blur-up-duration) var(--blur-up-easing);
+  filter: blur(10px);
+  opacity: 0.8;
+}
+
+img[loading="lazy"].loaded,
+.lazy-image.loaded {
+  filter: blur(0);
+  opacity: 1;
+}
+
+/* Placeholder Container */
+.image-lazy-placeholder {
+  position: relative;
+  background: var(--placeholder-bg);
+  overflow: hidden;
+  border-radius: 12px;
+}
+
+.image-lazy-placeholder::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--skeleton-bg);
+  background-size: 200% 100%;
+  animation: skeleton-loading var(--skeleton-duration) infinite linear;
+  pointer-events: none;
+}
+
+.image-lazy-placeholder.loaded::after {
+  display: none;
+}
+
+@keyframes skeleton-loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* Lazy Image Wrapper */
+.lazy-image-wrapper {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 12px;
+  background: var(--placeholder-bg);
+}
+
+.lazy-image-wrapper.aspect-square {
+  aspect-ratio: 1 / 1;
+}
+
+.lazy-image-wrapper.aspect-video {
+  aspect-ratio: 16 / 9;
+}
+
+.lazy-image-wrapper.aspect-portrait {
+  aspect-ratio: 3 / 4;
+}
+
+.lazy-image-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Skeleton Loading State */
+.skeleton-loader {
+  position: relative;
+  background: var(--placeholder-bg);
+  border-radius: 12px;
+  overflow: hidden;
+  min-height: 200px;
+}
+
+.skeleton-loader::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--skeleton-bg);
+  background-size: 200% 100%;
+  animation: skeleton-loading var(--skeleton-duration) infinite linear;
+}
+
+/* Loading Spinner - Centered */
+.image-loading-spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(0, 191, 255, 0.2);
+  border-top-color: #00bfff;
+  border-radius: 50%;
+  animation: spinner-rotate 0.8s linear infinite;
+  opacity: 0;
+  animation:
+    spinner-rotate 0.8s linear infinite,
+    spinner-fade-in 0.3s ease-out forwards;
+  z-index: 2;
+}
+
+@keyframes spinner-rotate {
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+@keyframes spinner-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Loading Badge */
+.image-loading-badge {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  background: rgba(0, 191, 255, 0.9);
+  color: white;
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  z-index: 3;
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  animation: fade-in-up 0.4s ease-out;
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Image Container with Aspect Ratio */
+.image-container {
+  position: relative;
+  width: 100%;
+  background: var(--placeholder-bg);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.image-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+/* Responsive Image Loading */
+@media (max-width: 768px) {
+  .skeleton-loader {
+    min-height: 150px;
+  }
+
+  .image-loading-spinner {
+    width: 32px;
+    height: 32px;
+    border-width: 2px;
+  }
+
+  .image-loading-badge {
+    padding: 5px 10px;
+    font-size: 11px;
+    bottom: 8px;
+    right: 8px;
+  }
+}
+
+/* Error State */
+.image-error {
+  position: relative;
+  background: linear-gradient(135deg, #ffe8e8 0%, rgba(231, 76, 60, 0.08) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+  border-radius: 12px;
+  border: 2px dashed #e74c3c;
+}
+
+.image-error-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  color: #c0392b;
+  text-align: center;
+  padding: 20px;
+}
+
+.image-error-icon {
+  font-size: 32px;
+  opacity: 0.7;
+}
+
+.image-error-text {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.image-error-retry {
+  font-size: 12px;
+  color: #3498db;
+  text-decoration: underline;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.image-error-retry:hover {
+  color: #2980b9;
+}
+
+/* Fade In Animation */
+.fade-in-image {
+  animation: fade-in-smooth 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes fade-in-smooth {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Zoom In Animation */
+.zoom-in-image {
+  animation: zoom-in-smooth 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes zoom-in-smooth {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Slide In Animation */
+.slide-in-image {
+  animation: slide-in-smooth 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes slide-in-smooth {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Gallery Image Grid */
+.image-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 16px;
+}
+
+.image-gallery img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 12px;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.image-gallery img:hover {
+  transform: scale(1.03);
+}
+
+@media (max-width: 768px) {
+  .image-gallery {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 12px;
+  }
+
+  .image-gallery img {
+    height: 150px;
+  }
+}
+
+/* Hero Image Lazy Loading */
+.hero-image-lazy {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  border-radius: 16px;
+  box-shadow: 0 10px 40px rgba(0, 191, 255, 0.15);
+}
+
+/* Card Image Lazy Loading */
+.card-image-lazy {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  border-radius: 12px 12px 0 0;
+  display: block;
+}
+
+/* Avatar Image Lazy Loading */
+.avatar-image-lazy {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  display: block;
+}
+
+/* Thumbnail Image Lazy Loading */
+.thumbnail-image-lazy {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  min-height: 100px;
+}
+
+/* Background Image Lazy Loading */
+.bg-image-lazy {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 12px;
+}
+
+/* Blur-up Progressive Image Loading */
+.progressive-image {
+  position: relative;
+  background-size: cover;
+  background-position: center;
+}
+
+.progressive-image .placeholder {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-size: cover;
+  background-position: center;
+  filter: blur(10px);
+  z-index: 1;
+}
+
+.progressive-image .actual {
+  position: relative;
+  z-index: 2;
+  opacity: 0;
+  transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.progressive-image .actual.loaded {
+  opacity: 1;
+}
+
+/* Image with Caption Lazy Loading */
+.image-with-caption {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--placeholder-bg);
+}
+
+.image-with-caption img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 12px;
+}
+
+.image-caption {
+  margin-top: 12px;
+  font-size: 14px;
+  color: #666;
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+/* Accessibility - Prefers Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  img[loading="lazy"],
+  .lazy-image,
+  .image-loading-spinner,
+  .image-loading-badge,
+  .image-error-content,
+  .image-gallery img,
+  .skeleton-loader::after,
+  .progressive-image .actual {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  img[loading="lazy"],
+  .lazy-image {
+    filter: none;
+    opacity: 1;
+  }
+}

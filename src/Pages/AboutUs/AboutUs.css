@@ -1,38 +1,45 @@
-@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&display=swap");
 
 /* ==========================================================================
-   CSS Variables & Theme Configuration
+   CSS Variables & Theme Configuration - Modern Cyan Glass Morphism
    ========================================================================== */
 :root {
   /* Primary Colors */
-  --primary-blue: #0C3B98;
-  --primary-teal: #16CDAC;
-  --secondary-blue: #2A6EBB;
-  
+  --primary-cyan: #00bfff;
+  --primary-cyan-dark: #0099cc;
+  --primary-cyan-light: #40dfff;
+
   /* Accent & Background Colors */
-  --light-teal: #D0F2EE;
-  --accent-teal: #8FD8DC;
+  --glass-bg: rgba(0, 191, 255, 0.08);
+  --glass-blur: 12px;
   --white: #ffffff;
-  --light-bg: #FDFDFD;
-  
+  --light-bg: #f0f9ff;
+
   /* Text Colors */
-  --dark-text: #1A365D;
-  --medium-text: #2D3748;
+  --dark-text: #1a365d;
+  --medium-text: #2d3748;
   --light-text: #718096;
-  
+
   /* Gradients */
-  --gradient-primary: linear-gradient(90deg, #16CDAC 0.21%, #0C3B98 99.79%);
-  --gradient-light: linear-gradient(270deg, rgba(51, 178, 194, 0.23) 22.4%, 
-                                      rgba(51, 178, 194, 0.13) 55.21%, 
-                                      rgba(51, 178, 194, 0.56) 98.96%);
-  
+  --gradient-primary: linear-gradient(
+    90deg,
+    var(--primary-cyan) 0.21%,
+    var(--primary-cyan-dark) 99.79%
+  );
+  --gradient-light: linear-gradient(
+    270deg,
+    rgba(0, 191, 255, 0.23) 22.4%,
+    rgba(0, 191, 255, 0.13) 55.21%,
+    rgba(0, 191, 255, 0.56) 98.96%
+  );
+
   /* Shadows */
-  --shadow-light: 0 4px 15px rgba(0, 0, 0, 0.08);
-  --shadow-medium: 0 8px 30px rgba(0, 0, 0, 0.12);
-  
+  --shadow-light: 0 4px 15px rgba(0, 191, 255, 0.08);
+  --shadow-medium: 0 8px 30px rgba(0, 191, 255, 0.12);
+
   /* Transitions */
   --transition: all 0.3s ease;
-  
+
   /* Spacing */
   --spacing-xs: 8px;
   --spacing-sm: 15px;
@@ -40,7 +47,7 @@
   --spacing-lg: 25px;
   --spacing-xl: 30px;
   --spacing-xxl: 50px;
-  
+
   /* Border Radius */
   --radius-sm: 10px;
   --radius-md: 12px;
@@ -58,7 +65,7 @@
 }
 
 body {
-  font-family: 'Nunito Sans', sans-serif;
+  font-family: "Nunito Sans", sans-serif;
   line-height: 1.6;
   color: var(--medium-text);
 }
@@ -110,17 +117,17 @@ body {
 
 .btn-primary:hover {
   transform: translateY(-3px);
-  box-shadow: 0 10px 20px rgba(22, 205, 172, 0.3);
+  box-shadow: 0 10px 20px rgba(0, 191, 255, 0.3);
 }
 
 .btn-secondary {
   background: transparent;
-  color: var(--primary-blue);
-  border: 2px solid var(--primary-blue);
+  color: var(--primary-cyan);
+  border: 2px solid var(--primary-cyan);
 }
 
 .btn-secondary:hover {
-  background: var(--primary-blue);
+  background: var(--primary-cyan);
   color: var(--white);
   transform: translateY(-3px);
 }
@@ -136,7 +143,19 @@ body {
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  margin-top: 80px;
+  margin-top: 0;
+}
+
+.hero-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(0, 20, 40, 0.62),
+    rgba(0, 120, 170, 0.42)
+  );
+  z-index: 1;
 }
 
 .hero-graphic {
@@ -144,6 +163,7 @@ body {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center 30%;
   z-index: 0;
 }
 
@@ -200,23 +220,25 @@ body {
    ========================================================================== */
 .about-cards-section {
   padding: var(--spacing-xxl) 0 var(--spacing-xl);
-  background-color: var(--white);
+  background-color: #f9fafb;
 }
 
 .cards-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: var(--spacing-lg);
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 40px;
+  max-width: 1300px;
+  margin: 0 auto;
 }
 
 .about-card {
   background: var(--white);
-  border-radius: var(--radius-md);
-  padding: var(--spacing-xl) var(--spacing-lg);
-  box-shadow: var(--shadow-light);
+  border-radius: 16px;
+  padding: 40px 35px;
+  box-shadow: 0 4px 15px rgba(0, 191, 255, 0.08);
   transition: var(--transition);
   text-align: center;
-  border: 1px solid rgba(22, 205, 172, 0.1);
+  border: 1px solid rgba(0, 191, 255, 0.15);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -224,28 +246,36 @@ body {
 }
 
 .about-card:hover {
-  transform: translateY(-5px);
-  box-shadow: var(--shadow-medium);
-  border-color: var(--primary-teal);
+  transform: translateY(-8px);
+  box-shadow: 0 12px 30px rgba(0, 191, 255, 0.15);
+  border-color: var(--primary-cyan);
 }
 
 .card-icon {
-  font-size: 2.3rem;
-  margin-bottom: 18px;
-  width: 65px;
-  height: 65px;
+  font-size: 2.8rem;
+  margin-bottom: 20px;
+  width: 80px;
+  height: 80px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--gradient-light);
+  background: rgba(0, 191, 255, 0.08);
   border-radius: var(--radius-full);
+  border: 2px solid rgba(0, 191, 255, 0.15);
 }
 
 .card-title {
   font-size: 1.5rem;
   font-weight: 800;
-  margin-bottom: var(--spacing-sm);
-  color: var(--primary-blue);
+  margin-bottom: 15px;
+  background: linear-gradient(
+    135deg,
+    var(--primary-cyan) 0%,
+    var(--primary-cyan-dark) 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .card-content {
@@ -361,7 +391,7 @@ body {
 }
 
 .highlight .stat-label {
-  color: rgba(255,255,255,0.9);
+  color: rgba(255, 255, 255, 0.9);
 }
 
 /* ==========================================================================
@@ -556,49 +586,49 @@ body {
   .hero-title {
     font-size: 2rem;
   }
-  
+
   .hero-subtitle {
     font-size: 1rem;
   }
-  
+
   .section-title-main {
     font-size: 1.7rem;
   }
-  
+
   .section-title {
     font-size: 1.6rem;
   }
-  
+
   .cards-grid {
     grid-template-columns: repeat(3, 1fr);
     gap: var(--spacing-md);
   }
-  
+
   .success-grid {
     grid-template-columns: 1fr;
     gap: 30px;
   }
-  
+
   .success-stats {
     grid-template-columns: repeat(3, 1fr);
     max-width: 800px;
     margin: 0 auto;
   }
-  
+
   .integrated-grid {
     grid-template-columns: 1fr;
     gap: var(--spacing-xl);
   }
-  
+
   .content-main {
     padding-right: 0;
   }
-  
+
   .graphic-element {
     max-width: 300px;
     margin: 0 auto;
   }
-  
+
   .values-grid {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -609,73 +639,77 @@ body {
   .hero-section {
     height: 300px;
   }
-  
+
+  .hero-graphic {
+    object-position: center 28%;
+  }
+
   .hero-title {
     font-size: 1.8rem;
   }
-  
+
   .hero-subtitle {
     font-size: 0.95rem;
   }
-  
+
   .cards-grid {
     grid-template-columns: 1fr;
     gap: var(--spacing-md);
     max-width: 500px;
     margin: 0 auto;
   }
-  
+
   .about-card {
     padding: var(--spacing-lg) var(--spacing-md);
   }
-  
+
   .section-title-main,
   .section-title {
     font-size: 1.5rem;
   }
-  
+
   .success-stats {
     grid-template-columns: 1fr;
     max-width: 300px;
   }
-  
+
   .hospital-list {
     grid-template-columns: 1fr;
   }
-  
+
   .results-grid {
     grid-template-columns: 1fr;
     gap: 20px;
     max-width: 400px;
     margin: 30px auto 0;
   }
-  
+
   .content-paragraph {
     font-size: 1rem;
   }
-  
+
   .content-features {
     padding: var(--spacing-md);
   }
-  
+
   .cta-section {
     flex-direction: column;
     align-items: stretch;
     gap: 12px;
   }
-  
+
   .btn-primary,
   .btn-secondary {
     width: 100%;
     max-width: 300px;
     margin: 0 auto;
   }
-  
+
   .values-grid {
     grid-template-columns: 1fr;
     gap: var(--spacing-md);
   }
-  
+
   .value-item {
     padding: var(--spacing-lg) var(--spacing-md);
   }
@@ -685,42 +719,46 @@ body {
 @media (max-width: 480px) {
   .hero-section {
     height: 280px;
-    margin-top: 70px;
+    margin-top: 0;
   }
-  
+
+  .hero-graphic {
+    object-position: center 24%;
+  }
+
   .hero-title {
     font-size: 1.6rem;
   }
-  
+
   .hero-subtitle {
     font-size: 0.9rem;
   }
-  
+
   .section-title-main,
   .section-title {
     font-size: 1.4rem;
   }
-  
+
   .card-title {
     font-size: 1.4rem;
   }
-  
+
   .stat-number {
     font-size: 2.2rem;
   }
-  
+
   .result-icon {
     font-size: 2.8rem;
   }
-  
+
   .result-item h3 {
     font-size: 1.2rem;
   }
-  
+
   .graphic-element {
     max-width: 250px;
   }
-  
+
   .btn-primary,
   .btn-secondary {
     padding: 10px 20px;
@@ -738,20 +776,20 @@ body {
   .btn-secondary {
     display: none;
   }
-  
+
   .hero-section {
     background: none;
     margin-top: 0;
     height: auto;
     color: var(--dark-text);
   }
-  
+
   .hero-title,
   .hero-subtitle {
     color: var(--dark-text);
     text-shadow: none;
   }
-  
+
   .stat-card,
   .result-item,
   .hospital-showcase {

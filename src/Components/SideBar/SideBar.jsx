@@ -13,7 +13,7 @@ export const SideBar = () => {
       </div>
 
       <div className="menu-list">
-        <a href="#" className="item"></a>
+        <button type="button" className="item">Menu</button>
       </div>
       
           </div>

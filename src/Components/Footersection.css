@@ -1,9 +1,12 @@
+:root {
+  --primary-cyan: #00bfff;
+  --primary-cyan-dark: #0099cc;
+}
+
 .wrap {
-   border-bottom: 1px solid black;
+   border-bottom: 1px solid rgba(0, 191, 255, 0.2);
    display: flex;
-   /* align-items: flex-start; */
    gap: 80px;
-   /* margin-top: 50px; */
    padding-bottom: 50px;
    margin-top: 60px;
 }
@@ -13,17 +16,15 @@
 }
 
 .par {
-  color: var(--Secondary-04, #6190ED);
-/* H3: Regular */
+  color: var(--primary-cyan);
   font-family: Nunito;
   font-size: 13px;
   font-style: normal;
   font-weight: 400;
-  line-height: 120%; /* 27.6px */
+  line-height: 120%;
   text-align: start;
-  margin-bottom: 10px ;
+  margin-bottom: 10px;
   padding-top: 10px;
-  
 }
 
  .container{

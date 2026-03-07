@@ -1,281 +1,298 @@
+:root {
+  --primary-cyan: #00bfff;
+  --primary-cyan-dark: #0099cc;
+  --glass-bg: rgba(0, 191, 255, 0.08);
+}
+
 .other_services {
-    width: 100%;
-    min-height: 100%;
-    background: var(--Primary-01, #D0F2EE);
-    padding: 40px 20px;
-    box-sizing: border-box;
+  width: 100%;
+  min-height: 100%;
+  background: linear-gradient(135deg, #f0f9ff 0%, var(--glass-bg) 100%);
+  padding: 60px 40px;
+  box-sizing: border-box;
 }
 
 .other_services h1 {
-    font-family: 'Courier New', Courier, monospace;
-    font-size: 44px;
-    font-style: normal;
-    font-weight: 900;
-    line-height: normal;
-    color: var(--Accent-Main-Accent, #073169);
-    text-align: center;
-    margin-bottom: 40px;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 44px;
+  font-style: normal;
+  font-weight: 900;
+  line-height: normal;
+  color: var(--primary-cyan);
+  text-align: center;
+  margin: 0 auto 60px auto;
+  max-width: 1400px;
+  width: 100%;
 }
 
 .other_services h1 span {
-    background: var(--Linear, linear-gradient(90deg, #16CDAC 0.21%, #0C3B98 99.79%));
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    font-family: 'Courier New', Courier, monospace;
-    font-weight: 900;
-    font-size: 44px;
+  background: linear-gradient(
+    90deg,
+    var(--primary-cyan) 0.21%,
+    var(--primary-cyan-dark) 99.79%
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-family: "Courier New", Courier, monospace;
+  font-weight: 900;
+  font-size: 44px;
 }
 
 .other_services_div {
-    width: 100%;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1.5em;
-    padding: 10px;
-    margin: 0 auto;
-    max-width: 1200px;
-    box-sizing: border-box;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+  max-width: 1400px;
+  margin: 0 auto;
+  width: 100%;
 }
 
 .Appointment_booking {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-    padding: 20px 15px 15px;
-    background: var(--White-01, #FDFDFD);
-    border-radius: 15px;
-    color: #172048;
-    text-align: center;
-    height: auto;
-    transition: all 0.3s ease;
-    box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 20px 15px 15px;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(10px);
+  border-radius: 15px;
+  border: 1px solid rgba(0, 191, 255, 0.2);
+  color: #172048;
+  text-align: center;
+  height: auto;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+}
+
+.Appointment_booking:hover {
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 8px 20px rgba(0, 191, 255, 0.15);
+  transform: translateY(-4px);
 }
 
 .other_services_div img {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    object-fit: cover;
-    background: none;
-    margin: 0 auto;
-    display: block;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  background: none;
+  margin: 0 auto;
+  display: block;
 }
 
 .Appointment_booking h4 {
-    font-size: 16px;
-    font-weight: 800;
-    line-height: 1.4;
-    text-align: center;
-    color: var(--Accent-Main-Accent, #073169);
-    margin: 5px 0;
-    width: 100%;
+  font-size: 16px;
+  font-weight: 800;
+  line-height: 1.4;
+  text-align: center;
+  color: var(--Accent-Main-Accent, #073169);
+  margin: 5px 0;
+  width: 100%;
 }
 
 .other_services_div p {
-    font-size: 12px;
-    font-style: normal;
-    font-weight: 600;
-    color: #025F7D;
-    margin: 0;
-    padding: 0 0 5px;
-    line-height: 1.5;
-    width: 100%;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 600;
+  color: #025f7d;
+  margin: 0;
+  padding: 0 0 5px;
+  line-height: 1.5;
+  width: 100%;
 }
 
 /* Hover Effects */
 .Appointment_booking:hover {
-    background: linear-gradient(170deg, #16CDAC -9.82%, #0C3B98 137.55%);
-    transform: translateY(-5px);
-    cursor: pointer;
+  background: linear-gradient(170deg, #16cdac -9.82%, #0c3b98 137.55%);
+  transform: translateY(-5px);
+  cursor: pointer;
 }
 
 .Appointment_booking:hover h4 {
-    color: #fff;
+  color: #fff;
 }
 
 .Appointment_booking:hover p {
-    color: #fff;
+  color: #fff;
 }
 
 /* Tablet Landscape (1024px - 1440px) */
 @media (min-width: 1024px) and (max-width: 1440px) {
-    .other_services_div {
-        gap: 1.2em;
-        max-width: 1100px;
-    }
-    
-    .other_services_div img {
-        width: 90px;
-        height: 90px;
-    }
+  .other_services_div {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+
+  .other_services_div img {
+    width: 90px;
+    height: 90px;
+  }
 }
 
 /* Tablet Portrait (768px - 1023px) */
 @media (min-width: 768px) and (max-width: 1023px) {
-    .other_services {
-        padding: 30px 15px;
-    }
-    
-    .other_services_div {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 1.2em;
-        padding: 10px;
-        max-width: 700px;
-    }
-    
-    .other_services h1 {
-        font-size: 40px;
-    }
-    
-    .other_services h1 span {
-        font-size: 40px;
-    }
-    
-    .other_services_div img {
-        width: 85px;
-        height: 85px;
-    }
+  .other_services {
+    padding: 40px 20px;
+  }
+
+  .other_services_div {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+
+  .other_services h1 {
+    font-size: 40px;
+  }
+
+  .other_services h1 span {
+    font-size: 40px;
+  }
+
+  .other_services_div img {
+    width: 85px;
+    height: 85px;
+  }
 }
 
 /* Mobile Landscape (481px - 767px) */
 @media (min-width: 481px) and (max-width: 767px) {
-    .other_services {
-        padding: 25px 15px;
-    }
-    
-    .other_services_div {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 1em;
-        padding: 5px;
-    }
-    
-    .other_services h1 {
-        font-size: 36px;
-    }
-    
-    .other_services h1 span {
-        font-size: 36px;
-    }
-    
-    .Appointment_booking {
-        padding: 15px 10px 10px;
-    }
-    
-    .other_services_div img {
-        width: 75px;
-        height: 75px;
-    }
-    
-    .Appointment_booking h4 {
-        font-size: 14px;
-    }
-    
-    .other_services_div p {
-        font-size: 11px;
-    }
+  .other_services {
+    padding: 25px 15px;
+  }
+
+  .other_services_div {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1em;
+    padding: 5px;
+  }
+
+  .other_services h1 {
+    font-size: 36px;
+  }
+
+  .other_services h1 span {
+    font-size: 36px;
+  }
+
+  .Appointment_booking {
+    padding: 15px 10px 10px;
+  }
+
+  .other_services_div img {
+    width: 75px;
+    height: 75px;
+  }
+
+  .Appointment_booking h4 {
+    font-size: 14px;
+  }
+
+  .other_services_div p {
+    font-size: 11px;
+  }
 }
 
 /* Mobile Portrait (up to 480px) */
 @media screen and (max-width: 480px) {
-    .other_services {
-        padding: 20px 10px;
-    }
-    
-    .other_services h1 {
-        font-size: 32px;
-        margin-bottom: 20px;
-    }
-    
-    .other_services h1 span {
-        font-size: 32px;
-    }
-    
-    .other_services_div {
-        grid-template-columns: 1fr;
-        gap: 1em;
-        padding: 5px;
-        max-width: 350px;
-        margin: 0 auto;
-    }
-    
-    .Appointment_booking {
-        padding: 20px 15px 15px;
-        flex-direction: row;
-        text-align: left;
-        gap: 15px;
-    }
-    
-    .other_services_div img {
-        width: 70px;
-        height: 70px;
-        margin: 0;
-        flex-shrink: 0;
-    }
-    
-    .appointment_div_text, .Appointment_booking > div {
-        flex: 1;
-    }
-    
-    .Appointment_booking h4 {
-        font-size: 16px;
-        text-align: left;
-        margin-top: 0;
-    }
-    
-    .other_services_div p {
-        font-size: 12px;
-        text-align: left;
-        padding: 0;
-    }
+  .other_services {
+    padding: 20px 10px;
+  }
+
+  .other_services h1 {
+    font-size: 32px;
+    margin-bottom: 20px;
+  }
+
+  .other_services h1 span {
+    font-size: 32px;
+  }
+
+  .other_services_div {
+    grid-template-columns: 1fr;
+    gap: 1em;
+    padding: 5px;
+    max-width: 350px;
+    margin: 0 auto;
+  }
+
+  .Appointment_booking {
+    padding: 20px 15px 15px;
+    flex-direction: row;
+    text-align: left;
+    gap: 15px;
+  }
+
+  .other_services_div img {
+    width: 70px;
+    height: 70px;
+    margin: 0;
+    flex-shrink: 0;
+  }
+
+  .appointment_div_text,
+  .Appointment_booking > div {
+    flex: 1;
+  }
+
+  .Appointment_booking h4 {
+    font-size: 16px;
+    text-align: left;
+    margin-top: 0;
+  }
+
+  .other_services_div p {
+    font-size: 12px;
+    text-align: left;
+    padding: 0;
+  }
 }
 
 /* Small Mobile (up to 375px) */
 @media screen and (max-width: 375px) {
-    .other_services h1 {
-        font-size: 28px;
-    }
-    
-    .other_services h1 span {
-        font-size: 28px;
-    }
-    
-    .Appointment_booking {
-        padding: 15px 10px 10px;
-        gap: 10px;
-    }
-    
-    .other_services_div img {
-        width: 60px;
-        height: 60px;
-    }
-    
-    .Appointment_booking h4 {
-        font-size: 14px;
-    }
-    
-    .other_services_div p {
-        font-size: 11px;
-    }
+  .other_services h1 {
+    font-size: 28px;
+  }
+
+  .other_services h1 span {
+    font-size: 28px;
+  }
+
+  .Appointment_booking {
+    padding: 15px 10px 10px;
+    gap: 10px;
+  }
+
+  .other_services_div img {
+    width: 60px;
+    height: 60px;
+  }
+
+  .Appointment_booking h4 {
+    font-size: 14px;
+  }
+
+  .other_services_div p {
+    font-size: 11px;
+  }
 }
 
 /* For very large screens */
 @media (min-width: 1441px) {
-    .other_services_div {
-        max-width: 1300px;
-    }
-    
-    .other_services_div img {
-        width: 110px;
-        height: 110px;
-    }
-    
-    .Appointment_booking h4 {
-        font-size: 18px;
-    }
-    
-    .other_services_div p {
-        font-size: 13px;
-    }
+  .other_services_div {
+    max-width: 1300px;
+  }
+
+  .other_services_div img {
+    width: 110px;
+    height: 110px;
+  }
+
+  .Appointment_booking h4 {
+    font-size: 18px;
+  }
+
+  .other_services_div p {
+    font-size: 13px;
+  }
 }

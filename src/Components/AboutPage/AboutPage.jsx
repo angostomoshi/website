@@ -1,8 +1,6 @@
 import React from 'react'
 import './AboutPage.css'
 import healthcare from '../../assets/healthcare.webp'
-import play_icon from '../../assets/play_icon.png'
-import AnchorLink from 'react-anchor-link-smooth-scroll'
 
 export const About = () => {
   return (

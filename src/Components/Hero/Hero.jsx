@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Card, Row, Col, Typography, Spin, Empty, Tag, Space, theme } from 'antd';
-import { MailOutlined, FireOutlined, StarOutlined, RocketOutlined, CrownOutlined, ThunderboltOutlined, HeartOutlined, TrophyOutlined, GiftOutlined } from '@ant-design/icons';
+import { Card, Row, Col, Typography, Spin, Empty, Tag } from 'antd';
+import { FireOutlined, StarOutlined, RocketOutlined, CrownOutlined, ThunderboltOutlined, HeartOutlined, TrophyOutlined, GiftOutlined } from '@ant-design/icons';
 import { getDocs, collection } from "firebase/firestore/lite";
 import { db } from "../../firebase/firebase_config";
 
@@ -11,54 +11,62 @@ import b2 from '../../assets/b2.png';
 import b3 from '../../assets/b2.png';
 
 const { Text } = Typography;
-const { useToken } = theme;
+
+const HARDCODED_PRODUCTS = [
+  {
+    id: "hardcoded-1",
+    name: "OUT PATIENT CENTRE",
+    description: "O-50 Bed Hospital\n\n(This price is subject to VAT tax @ 16%). Training, support, travel and accommodation fees to be billed at 50% of the cost of the software",
+    price: 3999.00,
+    currency: "USD",
+    mediaType: null,
+    mediaUrl: null,
+    createdAt: new Date().toISOString(),
+    iconType: 'fire',
+    tagType: 'popular'
+  },
+  {
+    id: "hardcoded-2",
+    name: "OUT PATIENT CENTRE",
+    description: "O-50 Bed Hospital\n\n(This price is subject to VAT tax @ 16%). Training, support, travel and accommodation fees to be billed at 50% of the cost of the software",
+    price: 5999.00,
+    currency: "USD",
+    mediaType: null,
+    mediaUrl: null,
+    createdAt: new Date().toISOString(),
+    iconType: 'star',
+    tagType: 'featured'
+  },
+  {
+    id: "hardcoded-3",
+    name: "OUT PATIENT CENTRE",
+    description: "51-100 Bed Hospital\n\n(This price is subject to VAT tax @ 16%) Training, support fees to be billed online and ready to help.",
+    price: 8999.00,
+    currency: "USD",
+    mediaType: null,
+    mediaUrl: null,
+    createdAt: new Date().toISOString(),
+    iconType: 'rocket',
+    tagType: 'new'
+  }
+];
+
+const ICON_TYPES = ['fire', 'star', 'rocket', 'crown', 'thunder', 'heart', 'trophy', 'gift'];
+const TAG_TYPES = ['popular', 'featured', 'new', 'bestseller', 'trending', 'limited'];
+
+const CURRENCY_SYMBOLS = {
+  KES: "KSh",
+  USD: "$",
+  EUR: "€",
+  GBP: "£",
+  JPY: "¥",
+  CNY: "¥",
+};
 
 const HeroSection = () => {
-  const { token } = useToken();
   const [currentSlide, setCurrentSlide] = useState(0);
   const [products, setProducts] = useState([]);
-  const [filteredProducts, setFilteredProducts] = useState([]);
   const [loading, setLoading] = useState(true);
-
-  // Hardcoded products data with uniform blue gradient but different icons
-  const hardcodedProducts = [
-    {
-      id: "hardcoded-1",
-      name: "OUT PATIENT CENTRE",
-      description: "O-50 Bed Hospital\n\n(This price is subject to VAT tax @ 16%). Training, support, travel and accommodation fees to be billed at 50% of the cost of the software",
-      price: 3999.00,
-      currency: "USD",
-      mediaType: null,
-      mediaUrl: null,
-      createdAt: new Date().toISOString(),
-      iconType: 'fire',
-      tagType: 'popular' // First card has POPULAR tag
-    },
-    {
-      id: "hardcoded-2",
-      name: "OUT PATIENT CENTRE",
-      description: "O-50 Bed Hospital\n\n(This price is subject to VAT tax @ 16%). Training, support, travel and accommodation fees to be billed at 50% of the cost of the software",
-      price: 5999.00,
-      currency: "USD",
-      mediaType: null,
-      mediaUrl: null,
-      createdAt: new Date().toISOString(),
-      iconType: 'star',
-      tagType: 'featured' // Second card has FEATURED tag
-    },
-    {
-      id: "hardcoded-3",
-      name: "OUT PATIENT CENTRE",
-      description: "51-100 Bed Hospital\n\n(This price is subject to VAT tax @ 16%) Training, support fees to be billed online and ready to help.",
-      price: 8999.00,
-      currency: "USD",
-      mediaType: null,
-      mediaUrl: null,
-      createdAt: new Date().toISOString(),
-      iconType: 'rocket',
-      tagType: 'new' // Third card has NEW tag
-    }
-  ];
 
   // Icon mapping
   const getIconByType = (type) => {
@@ -88,78 +96,51 @@ const HeroSection = () => {
     return tags[type] || tags.popular;
   };
 
-  // Different icon types for Firebase products
-  const iconTypes = ['fire', 'star', 'rocket', 'crown', 'thunder', 'heart', 'trophy', 'gift'];
-  
-  // Different tag types for Firebase products
-  const tagTypes = ['popular', 'featured', 'new', 'bestseller', 'trending', 'limited'];
-
-  // Uniform blue gradient for all cards
-  const uniformBlueGradient = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
-
-  // Currency symbols
-  const currencySymbols = {
-    KES: "KSh",
-    USD: "$",
-    EUR: "€",
-    GBP: "£",
-    JPY: "¥",
-    CNY: "¥",
-  };
-
   // Format currency
   const formatCurrency = (amount, currency = "USD") => {
-    const symbol = currencySymbols[currency] || currency;
+    const symbol = CURRENCY_SYMBOLS[currency] || currency;
     return `${symbol}${amount?.toLocaleString() || 0}`;
   };
 
-  // Fetch products from Firebase
-  const fetchProducts = async () => {
-    try {
-      setLoading(true);
-      console.log("Fetching products from Firebase...");
-      
-      const productsRef = collection(db, "products", "listings", "products");
-      const snapshot = await getDocs(productsRef);
-      
-      let data = [];
-      
-      if (!snapshot.empty) {
-        snapshot.forEach((doc, index) => {
-          const productData = doc.data();
-          // Assign different icon and tag type to each Firebase product
-          const iconType = iconTypes[index % iconTypes.length];
-          const tagType = tagTypes[index % tagTypes.length];
-          data.push({ 
-            id: doc.id, 
-            ...productData,
-            price: Number(productData.price) || 0,
-            createdAt: productData.createdAt?.toDate ? productData.createdAt.toDate() : productData.createdAt,
-            updatedAt: productData.updatedAt?.toDate ? productData.updatedAt.toDate() : productData.updatedAt,
-            iconType: iconType,
-            tagType: tagType,
-          });
-        });
-        
-        console.log(`Found ${data.length} products from Firebase`);
-        setProducts(data);
-        setFilteredProducts(data);
-      } else {
-        console.log("No products in Firebase, using hardcoded products");
-        setProducts(hardcodedProducts);
-        setFilteredProducts(hardcodedProducts);
-      }
-    } catch (err) {
-      console.error("Error fetching products:", err);
-      console.log("Using hardcoded products due to error");
-      setProducts(hardcodedProducts);
-      setFilteredProducts(hardcodedProducts);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        setLoading(true);
+        console.log("Fetching products from Firebase...");
+
+        const productsRef = collection(db, "products", "listings", "products");
+        const snapshot = await getDocs(productsRef);
+        const data = [];
+
+        if (!snapshot.empty) {
+          snapshot.forEach((doc, index) => {
+            const productData = doc.data();
+            data.push({
+              id: doc.id,
+              ...productData,
+              price: Number(productData.price) || 0,
+              createdAt: productData.createdAt?.toDate ? productData.createdAt.toDate() : productData.createdAt,
+              updatedAt: productData.updatedAt?.toDate ? productData.updatedAt.toDate() : productData.updatedAt,
+              iconType: ICON_TYPES[index % ICON_TYPES.length],
+              tagType: TAG_TYPES[index % TAG_TYPES.length],
+            });
+          });
+
+          console.log(`Found ${data.length} products from Firebase`);
+          setProducts(data);
+        } else {
+          console.log("No products in Firebase, using hardcoded products");
+          setProducts(HARDCODED_PRODUCTS);
+        }
+      } catch (err) {
+        console.error("Error fetching products:", err);
+        console.log("Using hardcoded products due to error");
+        setProducts(HARDCODED_PRODUCTS);
+      } finally {
+        setLoading(false);
+      }
+    };
+
     fetchProducts();
   }, []);
 
@@ -266,6 +247,24 @@ const HeroSection = () => {
           background: white;
           border: 1px solid #f0f0f0 !important;
         }
+        .product-col {
+          display: flex;
+        }
+        .product-col .product-card {
+          width: 100%;
+        }
+        .product-card .ant-card-body {
+          padding: 0 !important;
+          display: flex;
+          height: 100%;
+        }
+        .product-card-body {
+          padding: 24px;
+          display: flex;
+          flex-direction: column;
+          width: 100%;
+          min-height: 430px;
+        }
         .product-card:hover {
           transform: translateY(-8px);
           box-shadow: 0 20px 40px rgba(114, 46, 209, 0.15) !important;
@@ -324,29 +323,75 @@ const HeroSection = () => {
           animation: pulse 2.5s infinite;
         }
         .enquire-button {
-          transition: all 0.3s ease;
-          background: linear-gradient(135deg, #667eea, #764ba2);
+          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+          background: linear-gradient(135deg, #00bfff, #0099cc);
           border: none;
           height: 48px;
           font-weight: 600;
           font-size: 15px;
           letter-spacing: 0.5px;
           border-radius: 12px;
-          box-shadow: 0 8px 16px rgba(102, 126, 234, 0.2);
+          box-shadow: 0 8px 16px rgba(0, 191, 255, 0.25);
           color: white;
-          width: 100%;
+          flex: 1;
           cursor: pointer;
           display: flex;
           align-items: center;
           justify-content: center;
           gap: 10px;
-          margin-top: 16px;
           border: 1px solid rgba(255, 255, 255, 0.2);
+          min-width: 0;
         }
         .enquire-button:hover {
           transform: translateY(-3px);
-          box-shadow: 0 15px 25px rgba(102, 126, 234, 0.3);
-          background: linear-gradient(135deg, #764ba2, #667eea);
+          box-shadow: 0 15px 30px rgba(0, 191, 255, 0.35);
+          background: linear-gradient(135deg, #0099cc, #00bfff);
+        }
+        .enquire-button:active {
+          transform: translateY(-1px);
+        }
+        .button-secondary {
+          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+          background: transparent;
+          border: 2px solid #00bfff;
+          height: 48px;
+          font-weight: 600;
+          font-size: 15px;
+          letter-spacing: 0.5px;
+          border-radius: 12px;
+          color: #00bfff;
+          flex: 1;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 10px;
+          min-width: 0;
+        }
+        .button-secondary:hover {
+          background: linear-gradient(135deg, rgba(0, 191, 255, 0.1) 0%, rgba(0, 191, 255, 0.05) 100%);
+          border-color: #0099cc;
+          color: #0099cc;
+          box-shadow: 0 8px 20px rgba(0, 191, 255, 0.2);
+          transform: translateY(-3px);
+        }
+        .button-secondary:active {
+          transform: translateY(-1px);
+        }
+        .button-container {
+          display: flex;
+          gap: 12px;
+          margin-top: auto;
+          width: 100%;
+        }
+        @media (max-width: 480px) {
+          .button-container {
+            flex-direction: column;
+          }
+          .enquire-button,
+          .button-secondary {
+            width: 100%;
+          }
         }
         .price-tag {
           font-size: 28px;
@@ -355,6 +400,7 @@ const HeroSection = () => {
           display: inline-block;
           letter-spacing: -0.5px;
           margin-bottom: 8px;
+          line-height: 1.1;
         }
         .product-name {
           font-size: 24px;
@@ -364,13 +410,33 @@ const HeroSection = () => {
           line-height: 1.3;
           text-transform: uppercase;
           letter-spacing: 0.5px;
+          min-height: 64px;
+        }
+        .product-description-wrap {
+          margin-top: 12px;
+          min-height: 170px;
+          display: flex;
+          flex-direction: column;
         }
         .product-description {
           color: #666;
           font-size: 14px;
           line-height: 1.7;
-          margin: 8px 0;
+          margin: 0 0 10px 0;
           white-space: pre-line;
+          text-align: left;
+        }
+        .product-description:last-child {
+          margin-bottom: 0;
+        }
+        @media (max-width: 992px) {
+          .product-card-body {
+            min-height: 400px;
+          }
+
+          .product-description-wrap {
+            min-height: 150px;
+          }
         }
         .stats-icon {
           font-size: 28px;
@@ -534,12 +600,12 @@ const HeroSection = () => {
                           textShadow: '0 4px 30px rgba(0, 0, 0, 0.6)',
                           letterSpacing: '-0.5px',
                           textTransform: 'uppercase',
-                          animation: 'typing 3.5s steps(40, end)',
-                          overflow: 'hidden',
-                          whiteSpace: 'nowrap',
-                          borderRight: '4px solid white',
-                          display: 'inline-block',
-                          maxWidth: '100%',
+                          animation: 'fadeInUp 0.9s ease-out 0.2s both',
+                          overflow: 'visible',
+                          whiteSpace: 'normal',
+                          borderRight: 'none',
+                          display: 'block',
+                          maxWidth: 'clamp(280px, 70vw, 780px)',
                         }}>
                           FUNSOFT Healthcare Systems
                         </h1>
@@ -1153,7 +1219,7 @@ const HeroSection = () => {
                 else if (product.iconType === 'gift') iconClass = 'icon-gift';
                 
                 return (
-                  <Col xs={24} sm={12} lg={8} xl={8} key={product.id}>
+                  <Col xs={24} sm={12} lg={8} xl={8} key={product.id} className="product-col">
                     <Card
                       hoverable
                       className="product-card"
@@ -1175,24 +1241,33 @@ const HeroSection = () => {
                         </div>
                       }
                     >
-                      <div style={{ padding: '24px' }}>
+                      <div className="product-card-body">
                         <h3 className="product-name">{product.name}</h3>
                         <div className="price-tag">{formatCurrency(product.price, product.currency)}</div>
-                        <div style={{ marginTop: 12 }}>
+                        <div className="product-description-wrap">
                           {product.description?.split('\n').map((line, i) => (
-                            <p key={i} className="product-description" style={{ margin: i === 1 ? '8px 0' : '0' }}>
+                            <p key={i} className="product-description">
                               {line}
                             </p>
                           ))}
                         </div>
                         
-                        <button
-                          className="enquire-button"
-                          onClick={() => handleGmailEnquiry(product.name, product.price)}
-                        >
-                          
-                          Enquire Now
-                        </button>
+                        <div className="button-container">
+                          <button
+                            className="enquire-button"
+                            onClick={() => handleGmailEnquiry(product.name, product.price)}
+                            title="Send an enquiry about this service"
+                          >
+                            Enquire Now
+                          </button>
+                          <button
+                            className="button-secondary"
+                            onClick={() => {}}
+                            title="Learn more about this service"
+                          >
+                            Learn More
+                          </button>
+                        </div>
                         
                         
                       </div>
@@ -1211,64 +1286,64 @@ const HeroSection = () => {
             background: 'linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%)',
             borderRadius: '30px',
             border: '1px solid rgba(102, 126, 234, 0.1)',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
           }}>
             <p style={{
               fontSize: 'clamp(1rem, 2.5vw, 1.2rem)',
               color: '#1A237E',
               fontWeight: 600,
-              marginBottom: 'clamp(15px, 3vw, 20px)',
+              margin: '0 auto 18px',
+              maxWidth: '900px',
+              lineHeight: 1.5,
             }}>
               The Funsoft® Integrated Healthcare Information Management System (I-HMIS)
             </p>
             <div style={{
               display: 'flex',
-              justifyContent: 'center',
-              gap: '30px',
               flexWrap: 'wrap',
-              margin: '20px 0 15px',
+              justifyContent: 'center',
+              alignItems: 'stretch',
+              gap: '14px',
+              margin: '20px auto 15px',
+              maxWidth: '980px',
             }}>
-              <span style={{
-                fontSize: '1rem',
-                color: '#666',
-                padding: '8px 20px',
-                background: 'linear-gradient(135deg, #f8f9fa, #ffffff)',
-                borderRadius: '40px',
-                border: '1px solid rgba(102, 126, 234, 0.1)',
-                boxShadow: '0 4px 12px rgba(0,0,0,0.03)',
-              }}><strong>200+</strong> Facilities</span>
-              <span style={{
-                fontSize: '1rem',
-                color: '#666',
-                padding: '8px 20px',
-                background: 'linear-gradient(135deg, #f8f9fa, #ffffff)',
-                borderRadius: '40px',
-                border: '1px solid rgba(102, 126, 234, 0.1)',
-                boxShadow: '0 4px 12px rgba(0,0,0,0.03)',
-              }}><strong>10+</strong> Years Expertise</span>
-              <span style={{
-                fontSize: '1rem',
-                color: '#666',
-                padding: '8px 20px',
-                background: 'linear-gradient(135deg, #f8f9fa, #ffffff)',
-                borderRadius: '40px',
-                border: '1px solid rgba(102, 126, 234, 0.1)',
-                boxShadow: '0 4px 12px rgba(0,0,0,0.03)',
-              }}><strong>15K+</strong> Daily Users</span>
-              <span style={{
-                fontSize: '1rem',
-                color: '#666',
-                padding: '8px 20px',
-                background: 'linear-gradient(135deg, #f8f9fa, #ffffff)',
-                borderRadius: '40px',
-                border: '1px solid rgba(102, 126, 234, 0.1)',
-                boxShadow: '0 4px 12px rgba(0,0,0,0.03)',
-              }}><strong>2M+</strong> Records</span>
+              {[
+                { value: '200+', label: 'Facilities' },
+                { value: '10+', label: 'Years Expertise' },
+                { value: '15K+', label: 'Daily Users' },
+                { value: '2M+', label: 'Records' },
+              ].map((item) => (
+                <span
+                  key={item.label}
+                  style={{
+                    fontSize: '1rem',
+                    color: '#666',
+                    padding: '12px 16px',
+                    background: 'linear-gradient(135deg, #f8f9fa, #ffffff)',
+                    borderRadius: '14px',
+                    border: '1px solid rgba(102, 126, 234, 0.1)',
+                    boxShadow: '0 4px 12px rgba(0,0,0,0.03)',
+                    width: 'clamp(180px, 22vw, 220px)',
+                    minHeight: '50px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: '6px',
+                    whiteSpace: 'nowrap',
+                  }}
+                >
+                  <strong>{item.value}</strong> {item.label}
+                </span>
+              ))}
             </div>
             <p style={{
               fontSize: 'clamp(0.9rem, 2vw, 1rem)',
               color: '#764ba2',
               fontWeight: 600,
               letterSpacing: '0.5px',
+              margin: '6px 0 0',
             }}>
               Committed to our clients needs
             </p>

@@ -1,6 +1,5 @@
 import React from 'react'
 import './AppPage.css'
-import Home from '../../assets/Home.png'
 import AppStoreDownload from '../../assets/apple-store-download.jpg'
 import PlayStoreDownload from '../../assets/google-play-download.png'
 import ap from '../../assets/ap.png'

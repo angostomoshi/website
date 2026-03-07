@@ -1,42 +1,72 @@
+:root {
+  --primary-cyan: #00bfff;
+  --primary-cyan-light: #40dfff;
+  --primary-cyan-dark: #0099cc;
+}
+
 button {
     cursor: pointer;
     text-align: center;
     width: 140px;
-    padding: 8px;
-    border-radius: 28px;
-    background: var(--Primary-Main-Primary, #16C0AC);
-    box-shadow: 0px 4.708px 7.063px 0px rgba(1, 115, 153, 0.20);
+    padding: 12px 20px;
+    border-radius: 50px;
+    background: linear-gradient(135deg, var(--primary-cyan) 0%, var(--primary-cyan-dark) 100%);
+    color: #fff;
+    font-weight: 600;
+    border: none;
+    box-shadow: 0 8px 20px rgba(0, 191, 255, 0.3);
+    transition: all 0.3s ease;
+}
+
+button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 30px rgba(0, 191, 255, 0.4);
+    background: linear-gradient(135deg, var(--primary-cyan-light) 0%, var(--primary-cyan) 100%);
+}
+
+button:active {
+    transform: translateY(-1px);
 }
 
 button.green {
-    background-color: #16C0AC;
+    background: linear-gradient(135deg, var(--primary-cyan) 0%, var(--primary-cyan-dark) 100%);
     color: #fff;
     width: 100px;
     margin-right: -10px;
-    border: none;
 }
 
 button.submit {
-    padding: 10px 27px;
-    width: 145px;
-   /* width: 300px;
-   height: 60px; */
-   margin-left: 50px;
-   text-align: center;
-   border-radius: 80px;
-   background: var(--Primary-Main-Primary, #16C0AC);
-   box-shadow: 0px 4px 12px 0px rgba(200, 211, 249, 0.60)
-   inset, 4px 8px 12px 0px rgba(78, 99, 141, 0.06);
- 
- 
- }
+    padding: 14px 40px;
+    width: auto;
+    min-width: 145px;
+    margin-left: 50px;
+    border-radius: 50px;
+    background: linear-gradient(135deg, var(--primary-cyan) 0%, var(--primary-cyan-dark) 100%);
+    box-shadow: 0 8px 20px rgba(0, 191, 255, 0.3);
+    border: none;
+    color: #fff;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
 
- .blue {
-    border: 2px solid var(--Secondary-08, #0C3B98);
-    box-shadow: 0px 4.708px 7.063px 0px rgba(1, 115, 153, 0.20);
-    color: var(--Secondary-08, #0C3B98);
-    background-color: #D0F2EE;
-    width: 100px;
+button.submit:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 30px rgba(0, 191, 255, 0.4);
+}
+
+button.blue {
+    border: 2px solid var(--primary-cyan);
+    box-shadow: 0 8px 20px rgba(0, 191, 255, 0.2);
+    color: var(--primary-cyan);
+    background-color: rgba(0, 191, 255, 0.1);
+    width: auto;
+    min-width: 100px;
     margin-right: -20px;
     font-weight: 600;
- }
+    transition: all 0.3s ease;
+}
+
+button.blue:hover {
+    background-color: rgba(0, 191, 255, 0.2);
+    box-shadow: 0 8px 20px rgba(0, 191, 255, 0.3);
+}

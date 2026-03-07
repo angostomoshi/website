@@ -112,76 +112,6 @@ const Testimonials = () => {
     }
   ];
 
-  const coverageData = [
-    {
-      region: "Kenya",
-      flag: "🇰🇪",
-      facilities: [
-        "Jaramogi Oginga Odinga Teaching Referral Hospital (JOOTRH)",
-        "Kisumu County Hospital",
-        "Coast Province General Hospital",
-        "Lodwar County Referral Hospital",
-        "Kenyatta National Hospital",
-        "Moi Teaching Referral Hospital (MTRH)",
-        "Rift Valley Provincial General Hospital - Annex (RPGH)",
-        "Nanyuki Teaching Referral Hospital (NTRH)",
-        "Kisii Teaching Referral Hospital",
-        "Kenhancha Sub-County Hospital",
-        "Homa Bay Teaching Referral Hospital",
-        "Machakos Level 5 Hospital",
-        "Makueni County Referral Hospital",
-        "Makindu County Hospital",
-        "Kibwezi County Hospital",
-        "Thika Level 5 Hospital",
-        "Ruiru County Hospital",
-        "Narok County Referral Hospital",
-        "Kimilili County Hospital",
-        "Samburu County Referral Hospital"
-      ]
-    },
-    {
-      region: "Kenya (Continued)",
-      flag: "🇰🇪",
-      facilities: [
-        "Ngao County Hospital",
-        "Kakamega Teaching Referral Hospital",
-        "Malava County Referral Hospital",
-        "Webuye County Referral Hospital",
-        "Chwele County Hospital",
-        "Cheptais County Hospital",
-        "Lumakanda County Hospital",
-        "Likuyani County Hospital",
-        "Mautuma County Hospital",
-        "Kandiege County Hospital",
-        "Kandongo County Hospital",
-        "Nduru County Hospital",
-        "Kijauri County Hospital",
-        "Masimba County Hospital",
-        "Ogembo Level 4 Hospital",
-        "Bahati County Hospital",
-        "Nyakechi Hospital",
-        "Mbita Sub County Hospital",
-        "Rachuonyo County Hospital",
-        "Siaya County Referral Hospital"
-      ]
-    },
-    {
-      region: "Other African Countries",
-      flag: "🌍",
-      facilities: [
-        "Enugu State University Teaching Hospital (ESUTH) Parklane - Nigeria",
-        "Nnamdi Azikiwe University Teaching Hospital Nnewi - Nigeria",
-        "Ahfad University for Women - Sudan",
-        "Sudan Family Planning Association - Sudan",
-        "St. Nicholas Hospital Lagos - Nigeria",
-        "Juba Teaching Hospital - South Sudan",
-        "Multiple facilities in Tanzania, Uganda, Rwanda",
-        "Healthcare centers in Ghana and Ethiopia",
-        "Regional hospitals across 15+ African nations"
-      ]
-    }
-  ];
-
   const infiniteTestimonials = [...testimonials, ...testimonials, ...testimonials];
 
   useEffect(() => {
@@ -203,7 +133,6 @@ const Testimonials = () => {
 
   useEffect(() => {
     if (sliderContainer.current) {
-      const containerWidth = sliderContainer.current.offsetWidth;
       const slideWidthPercentage = 100 / visibleSlides;
       setSlideWidth(slideWidthPercentage);
     }
@@ -289,25 +218,31 @@ const Testimonials = () => {
   }, [currentIndex, slideWidth, isDragging, dragDistance]);
 
   useEffect(() => {
+    const sliderElement = slider.current;
+
     const handleTransitionEnd = () => {
       if (currentIndex >= testimonials.length) {
-        slider.current.style.transition = 'none';
+        if (!sliderElement) {
+          return;
+        }
+
+        sliderElement.style.transition = 'none';
         setCurrentIndex(0);
         setTimeout(() => {
-          if (slider.current) {
-            slider.current.style.transition = 'transform 0.6s ease-in-out';
+          if (sliderElement) {
+            sliderElement.style.transition = 'transform 0.6s ease-in-out';
           }
         }, 50);
       }
     };
 
-    if (slider.current) {
-      slider.current.addEventListener('transitionend', handleTransitionEnd);
+    if (sliderElement) {
+      sliderElement.addEventListener('transitionend', handleTransitionEnd);
     }
 
     return () => {
-      if (slider.current) {
-        slider.current.removeEventListener('transitionend', handleTransitionEnd);
+      if (sliderElement) {
+        sliderElement.removeEventListener('transitionend', handleTransitionEnd);
       }
     };
   }, [currentIndex, testimonials.length]);

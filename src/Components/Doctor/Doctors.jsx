@@ -1,37 +1,7 @@
-import React, { useRef } from 'react'
+import React from 'react'
 import './Doctors.css'
-import back_arrow from '../../assets/back-arrow.png'
-import next_arrow from '../../assets/next-arrow.png'
 
 export const Doctors = () => {
-  const slider = useRef();
-  let tx = 0;
-  
-  const slideForward = ()=>{
-    if (tx > -50){
-      tx -=25;
-    }
-    slider.current.style.transform = `translatex(${tx}%)`
-  }
-  
-  const slideBackward = ()=>{
-    if (tx < 0){
-      tx +=25;
-    }
-    slider.current.style.transform = `translatex(${tx}%)`
-  }
-
-  const hospitalSolutions = [
-    // ... (your hospitalSolutions array)
-  ];
-
-  // Google Maps location
-  const location = {
-    address: "Westlands Business Park, 4th Floor, Chiromo Ln, Nairobi, Kenya",
-    lat: -1.2684,
-    lng: 36.8063
-  };
-
   const googleMapsUrl = `https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3988.835585677798!2d36.80367527500311!3d-1.2683984355897735!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x182f1746779e8f8b%3A0x9c503c0d5d7f6a1e!2sWestlands%20Business%20Park%2C%20Chiromo%20Ln%2C%20Nairobi%2C%20Kenya!5e0!3m2!1sen!2sng!4v${Date.now()}`;
 
   return (

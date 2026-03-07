@@ -1,17 +1,20 @@
 import React from 'react'
 import './Footer.css'
 import {Link} from 'react-router-dom'
+import fsLogo from '../../assets/fs-logo-cropped.png'
 
 export const Footer = () => {
+  const currentYear = new Date().getFullYear();
+
   return (
     <div className='footer'>
         <div className='footer-div-top'>
             <div className='footer-div-text'>
                 <div className='footer-logo'>
-                  <div className='logo-initials'>FS</div>
-                  <div className='logo-text'>
-                    <span className='logo-main'>FUNSOFT</span>
-                    <span className='logo-sub'>Healthcare Systems</span>
+                  <img src={fsLogo} alt='Funsoft logo' className='footer-logo-img' />
+                  <div className='footer-brand-text'>
+                    <span className='footer-brand-name'>Funsoft</span>
+                    <span className='footer-brand-badge'>I-HMIS</span>
                   </div>
                 </div>
                 <p className='footer-tagline'>Transforming Healthcare Management </p>
@@ -73,7 +76,7 @@ export const Footer = () => {
         
         <div className='footer-div-bottom'>
           <div className='footer-bottom-left'>
-            <p>© 2026 Funsoft Healthcare Systems. All rights reserved.</p>
+            <p>&copy; {currentYear} Funsoft Healthcare Systems. All rights reserved.</p>
             <div className='footer-links'>
               <Link to="/privacy-policy">Privacy Policy</Link>
               <span> • </span>
@@ -86,17 +89,17 @@ export const Footer = () => {
           <div className='footer-bottom-right'>
             <div className='social-icons'>
               <span>Follow Us:</span>
-              <a href="https://facebook.com/funsofthealth" target="_blank" rel="noopener noreferrer">
+              <a href="https://facebook.com/funsofthealth" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073C0 18.1 4.388 23.094 10.125 24V15.563H7.078V12.073H10.125V9.413C10.125 6.387 11.917 4.716 14.658 4.716C15.97 4.716 17.344 4.951 17.344 4.951V7.923H15.83C14.34 7.923 13.875 8.853 13.875 9.808V12.073H17.203L16.671 15.563H13.875V24C19.612 23.094 24 18.1 24 12.073Z" fill="currentColor"/>
                 </svg>
               </a>
-              <a href="https://linkedin.com/company/funsofthealth" target="_blank" rel="noopener noreferrer">
+              <a href="https://linkedin.com/company/funsofthealth" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M20.447 20.452H16.893V14.883C16.893 13.555 16.866 11.846 15.041 11.846C13.188 11.846 12.905 13.291 12.905 14.785V20.452H9.351V9H12.765V10.561H12.811C13.288 9.661 14.448 8.711 16.181 8.711C19.782 8.711 20.448 11.081 20.448 14.166V20.452H20.447ZM5.337 7.433C4.193 7.433 3.274 6.507 3.274 5.368C3.274 4.23 4.194 3.305 5.337 3.305C6.477 3.305 7.401 4.23 7.401 5.368C7.401 6.507 6.476 7.433 5.337 7.433ZM7.119 20.452H3.555V9H7.119V20.452ZM22.225 0H1.771C0.792 0 0 0.774 0 1.729V22.271C0 23.227 0.792 24 1.771 24H22.225C23.2 24 24 23.227 24 22.271V1.729C24 0.774 23.2 0 22.225 0Z" fill="currentColor"/>
                 </svg>
               </a>
-              <a href="https://twitter.com/funsofthealth" target="_blank" rel="noopener noreferrer">
+              <a href="https://twitter.com/funsofthealth" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231 5.45-6.231zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77z" fill="currentColor"/>
                 </svg>

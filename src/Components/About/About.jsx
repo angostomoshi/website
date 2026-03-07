@@ -4,43 +4,41 @@ import abtImage from '../../assets/abt.png';
 import { getDocs, collection } from "firebase/firestore/lite";
 import { db } from "../../firebase/firebase_config";
 
+const HARDCODED_SERVICES = [
+  {
+    id: "hardcoded-1",
+    title: "Health Management Information Systems (HMIS)",
+    description: "Comprehensive digital solutions for healthcare facilities including patient records, appointment scheduling, billing, and clinical decision support. Streamline operations and improve patient care with our integrated HMIS platform.",
+    type: "image",
+    url: null,
+    uploadDate: new Date().toISOString(),
+    icon: "🏥"
+  },
+  {
+    id: "hardcoded-2",
+    title: "Enterprise Resource Planning (ERPM)",
+    description: "End-to-end business management solutions integrating finance, HR, procurement, inventory, and operations. Optimize resources, reduce costs, and enhance productivity with our customizable ERP systems.",
+    type: "image",
+    url: null,
+    uploadDate: new Date().toISOString(),
+    icon: "📊"
+  },
+  {
+    id: "hardcoded-3",
+    title: "Artificial Intelligence Systems",
+    description: "Cutting-edge AI solutions including machine learning, predictive analytics, natural language processing, and computer vision. Transform data into actionable insights and automate complex processes.",
+    type: "image",
+    url: null,
+    uploadDate: new Date().toISOString(),
+    icon: "🤖"
+  }
+];
+
 const About = () => {
   const [selectedService, setSelectedService] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [services, setServices] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [useHardcoded, setUseHardcoded] = useState(false);
-
-  // Hardcoded services data (shown when no Firebase data or as fallback)
-  const hardcodedServices = [
-    {
-      id: "hardcoded-1",
-      title: "Health Management Information Systems (HMIS)",
-      description: "Comprehensive digital solutions for healthcare facilities including patient records, appointment scheduling, billing, and clinical decision support. Streamline operations and improve patient care with our integrated HMIS platform.",
-      type: "image",
-      url: null,
-      uploadDate: new Date().toISOString(),
-      icon: "🏥"
-    },
-    {
-      id: "hardcoded-2",
-      title: "Enterprise Resource Planning (ERPM)",
-      description: "End-to-end business management solutions integrating finance, HR, procurement, inventory, and operations. Optimize resources, reduce costs, and enhance productivity with our customizable ERP systems.",
-      type: "image",
-      url: null,
-      uploadDate: new Date().toISOString(),
-      icon: "📊"
-    },
-    {
-      id: "hardcoded-3",
-      title: "Artificial Intelligence Systems",
-      description: "Cutting-edge AI solutions including machine learning, predictive analytics, natural language processing, and computer vision. Transform data into actionable insights and automate complex processes.",
-      type: "image",
-      url: null,
-      uploadDate: new Date().toISOString(),
-      icon: "🤖"
-    }
-  ];
 
   // Service type colors mapping - Using purple/pink gradient like Hero
   const serviceTypeColors = {
@@ -65,45 +63,38 @@ const About = () => {
     "Artificial Intelligence Systems": "🤖"
   };
 
-  // Fetch services from Firebase
-  const fetchServices = async () => {
-    try {
-      setLoading(true);
-      const servicesRef = collection(db, "services", "media", "media");
-      const snapshot = await getDocs(servicesRef);
-      let data = [];
-      
-      snapshot.forEach((doc) => {
-        const d = doc.data();
-        data.push({ 
-          id: doc.id, 
-          ...d,
-          uploadDate: d.uploadDate?.toDate ? d.uploadDate.toDate() : d.uploadDate,
-        });
-      });
-
-      // Sort by upload date (newest first)
-      data.sort((a, b) => new Date(b.uploadDate || 0) - new Date(a.uploadDate || 0));
-      
-      if (data.length > 0) {
-        setServices(data);
-        setUseHardcoded(false);
-      } else {
-        // If no Firebase data, use hardcoded services
-        setServices(hardcodedServices);
-        setUseHardcoded(true);
-      }
-    } catch (err) {
-      console.error("Error fetching services:", err);
-      // On error, use hardcoded services as fallback
-      setServices(hardcodedServices);
-      setUseHardcoded(true);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   useEffect(() => {
+    const fetchServices = async () => {
+      try {
+        setLoading(true);
+        const servicesRef = collection(db, "services", "media", "media");
+        const snapshot = await getDocs(servicesRef);
+        const data = [];
+
+        snapshot.forEach((doc) => {
+          const d = doc.data();
+          data.push({
+            id: doc.id,
+            ...d,
+            uploadDate: d.uploadDate?.toDate ? d.uploadDate.toDate() : d.uploadDate,
+          });
+        });
+
+        data.sort((a, b) => new Date(b.uploadDate || 0) - new Date(a.uploadDate || 0));
+
+        if (data.length > 0) {
+          setServices(data);
+        } else {
+          setServices(HARDCODED_SERVICES);
+        }
+      } catch (err) {
+        console.error("Error fetching services:", err);
+        setServices(HARDCODED_SERVICES);
+      } finally {
+        setLoading(false);
+      }
+    };
+
     fetchServices();
   }, []);
 
@@ -144,15 +135,6 @@ const About = () => {
       return hardcodedIcons[service.title] || "📁";
     }
     return serviceTypeIcons[service.type] || serviceTypeIcons.default;
-  };
-
-  // Format file size
-  const formatFileSize = (bytes) => {
-    if (!bytes) return '';
-    if (bytes < 1024 * 1024) {
-      return `${(bytes / 1024).toFixed(1)} KB`;
-    }
-    return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
   };
 
   return (

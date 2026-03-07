@@ -1,0 +1,182 @@
+/* Icon Sizing Standards */
+/* Provides consistent icon sizing across all components */
+
+:root {
+  /* Icon Size Variables */
+  --icon-xs: 16px; /* Extra small - inline icons, badges */
+  --icon-sm: 24px; /* Small - form inputs, small cards */
+  --icon-md: 32px; /* Medium - card headers, sections */
+  --icon-lg: 48px; /* Large - feature cards, main icons */
+  --icon-xl: 64px; /* Extra large - hero sections, hero cards */
+  --icon-xxl: 100px; /* Extra extra large - featured images */
+}
+
+/* Base Icon Styles */
+.icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* Icon Size Modifiers */
+.icon-xs {
+  width: var(--icon-xs);
+  height: var(--icon-xs);
+  font-size: var(--icon-xs);
+}
+
+.icon-sm {
+  width: var(--icon-sm);
+  height: var(--icon-sm);
+  font-size: var(--icon-sm);
+}
+
+.icon-md {
+  width: var(--icon-md);
+  height: var(--icon-md);
+  font-size: var(--icon-md);
+}
+
+.icon-lg {
+  width: var(--icon-lg);
+  height: var(--icon-lg);
+  font-size: var(--icon-lg);
+}
+
+.icon-xl {
+  width: var(--icon-xl);
+  height: var(--icon-xl);
+  font-size: var(--icon-xl);
+}
+
+.icon-xxl {
+  width: var(--icon-xxl);
+  height: var(--icon-xxl);
+  font-size: var(--icon-xxl);
+}
+
+/* Icon with Background Circle */
+.icon-circle {
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-circle.bg-cyan {
+  background: linear-gradient(135deg, #00bfff 0%, #0099cc 100%);
+  color: white;
+  box-shadow: 0 8px 20px rgba(0, 191, 255, 0.3);
+}
+
+.icon-circle.bg-light {
+  background: rgba(0, 191, 255, 0.1);
+  color: #0099cc;
+  border: 2px solid rgba(0, 191, 255, 0.2);
+}
+
+/* Icon Hover Effects */
+.icon-hover-scale:hover {
+  transform: scale(1.15);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.icon-hover-rotate:hover {
+  transform: rotate(15deg);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.icon-hover-lift:hover {
+  transform: translateY(-4px);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* SVG Icons */
+svg.icon {
+  fill: currentColor;
+}
+
+svg.icon-sm {
+  width: var(--icon-sm);
+  height: var(--icon-sm);
+}
+
+svg.icon-md {
+  width: var(--icon-md);
+  height: var(--icon-md);
+}
+
+svg.icon-lg {
+  width: var(--icon-lg);
+  height: var(--icon-lg);
+}
+
+svg.icon-xl {
+  width: var(--icon-xl);
+  height: var(--icon-xl);
+}
+
+/* Image Icons */
+img.icon-sm {
+  width: var(--icon-sm);
+  height: var(--icon-sm);
+  object-fit: contain;
+}
+
+img.icon-md {
+  width: var(--icon-md);
+  height: var(--icon-md);
+  object-fit: contain;
+}
+
+img.icon-lg {
+  width: var(--icon-lg);
+  height: var(--icon-lg);
+  object-fit: contain;
+}
+
+img.icon-xl {
+  width: var(--icon-xl);
+  height: var(--icon-xl);
+  object-fit: contain;
+}
+
+/* Ant Design Icons */
+.anticon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.anticon.icon-sm {
+  font-size: var(--icon-sm);
+}
+
+.anticon.icon-md {
+  font-size: var(--icon-md);
+}
+
+.anticon.icon-lg {
+  font-size: var(--icon-lg);
+}
+
+.anticon.icon-xl {
+  font-size: var(--icon-xl);
+}
+
+/* Responsive Icon Sizing */
+@media (max-width: 768px) {
+  :root {
+    --icon-xl: 56px;
+    --icon-xxl: 80px;
+  }
+}
+
+@media (max-width: 480px) {
+  :root {
+    --icon-lg: 40px;
+    --icon-xl: 48px;
+    --icon-xxl: 64px;
+  }
+}

@@ -10,13 +10,12 @@ import payment_img from '../../assets/payment_img.svg'
 
 export const Features = () => {
   return (
-    <div className='other_services container'>
+    <div className='other_services'>
       <h1>
-          Some of <span>Our Features</span>
-        </h1>
+        Some of <span>Our Features</span>
+      </h1>
 
-
-        <div className='other_services_div'>
+      <div className='other_services_div'>
 
         <div className='Appointment_booking'>
        <img src={appointment} alt="" className='appointment_image'/>
@@ -71,7 +70,7 @@ export const Features = () => {
               <p>Integrated with trusted providers for safe and seamless transactions.</p>
                 </div>
                </div>
-        </div>
+      </div>
     </div>
   )
 }

@@ -1,0 +1,36 @@
+/* Global Smooth Scroll Behavior */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Smooth scroll for all anchor links */
+a[href^="#"] {
+  scroll-behavior: smooth;
+}
+
+/* Enhance scroll experience */
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(0, 191, 255, 0.05);
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #00bfff 0%, #0099cc 100%);
+  border-radius: 6px;
+  transition: all 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #40dfff 0%, #00bfff 100%);
+  box-shadow: 0 0 10px rgba(0, 191, 255, 0.3);
+}
+
+/* Firefox scrollbar styling */
+* {
+  scrollbar-color: #00bfff rgba(0, 191, 255, 0.05);
+  scrollbar-width: thin;
+}

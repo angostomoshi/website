@@ -1,6 +1,5 @@
 import React from 'react'
 import './Contact.css'
-import envelope_icon from '../../assets/envelope.png'
 import email from '../../assets/email.png'
 import phone from '../../assets/phone.png'
 import location from '../../assets/location.png'
@@ -8,19 +7,92 @@ import location from '../../assets/location.png'
 export const Contact = () => {
     const [result, setResult] = React.useState("");
     const [isSubmitting, setIsSubmitting] = React.useState(false);
+    const [formData, setFormData] = React.useState({
+        name: '',
+        phone: '',
+        email: '',
+        subject: '',
+        message: ''
+    });
+    const [fieldStates, setFieldStates] = React.useState({
+        name: null,
+        phone: null,
+        email: null,
+        subject: null,
+        message: null
+    });
+    const [errors, setErrors] = React.useState({});
+
+    const validateField = (fieldName, value) => {
+        let isValid = true;
+        let error = '';
+
+        switch (fieldName) {
+            case 'name':
+                isValid = value.trim().length >= 2;
+                error = isValid ? '' : 'Please enter a valid name (min 2 characters)';
+                break;
+            case 'email':
+                isValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+                error = isValid ? '' : 'Please enter a valid email address';
+                break;
+            case 'phone':
+                isValid = /^[\d()+-]{10,}$/.test(value.replace(/\s/g, ''));
+                error = isValid ? '' : 'Please enter a valid phone number';
+                break;
+            case 'subject':
+                isValid = value.trim().length >= 3;
+                error = isValid ? '' : 'Please enter a valid subject (min 3 characters)';
+                break;
+            case 'message':
+                isValid = value.trim().length >= 10;
+                error = isValid ? '' : 'Please enter a valid message (min 10 characters)';
+                break;
+            default:
+                break;
+        }
+
+        setFieldStates(prev => ({...prev, [fieldName]: isValid}));
+        if (!isValid) {
+            setErrors(prev => ({...prev, [fieldName]: error}));
+        } else {
+            setErrors(prev => ({...prev, [fieldName]: ''}));
+        }
+        return isValid;
+    };
+
+    const handleFieldChange = (e) => {
+        const { name, value } = e.target;
+        setFormData(prev => ({...prev, [name]: value}));
+        validateField(name, value);
+    };
 
     const onSubmit = async (event) => {
         event.preventDefault();
+        
+        // Validate all fields before submission
+        let allValid = true;
+        Object.keys(formData).forEach(fieldName => {
+            if (!validateField(fieldName, formData[fieldName])) {
+                allValid = false;
+            }
+        });
+
+        if (!allValid) {
+            setResult("Please fix the errors in the form");
+            return;
+        }
+
         setIsSubmitting(true);
         setResult("Sending...");
-        const formData = new FormData(event.target);
+        const formDataToSend = new FormData(event.target);
 
-        formData.append("access_key", "44b10d58-6eb4-4144-8511-0b50b66a28f9");
+        formDataToSend.append("access_key", "44b10d58-6eb4-4144-8511-0b50b66a28f9");
 
         try {
             const res = await fetch("https://api.web3forms.com/submit", {
                 method: "POST",
-                body: formData
+                body: formDataToSend
             });
             
             const data = await res.json();
@@ -28,6 +100,8 @@ export const Contact = () => {
             if (data.success) {
                 setResult("Message sent successfully!");
                 event.target.reset();
+                setFormData({name: '', phone: '', email: '', subject: '', message: ''});
+                setFieldStates({name: null, phone: null, email: null, subject: null, message: null});
             } else {
                 setResult("Failed to send message. Please try again.");
             }
@@ -108,7 +182,12 @@ export const Contact = () => {
                                     placeholder='Enter your full name' 
                                     required 
                                     disabled={isSubmitting}
+                                    onChange={handleFieldChange}
+                                    value={formData.name}
+                                    className={`${fieldStates.name === true ? 'input-valid' : fieldStates.name === false ? 'input-invalid' : ''}`}
                                 />
+                                {errors.name && <span className='error-message'>{errors.name}</span>}
+                                {fieldStates.name === true && <span className='success-message'>✓ Valid</span>}
                             </div>
                             
                             <div className='form-group'>
@@ -120,7 +199,12 @@ export const Contact = () => {
                                     placeholder='Enter your phone number'
                                     required
                                     disabled={isSubmitting}
+                                    onChange={handleFieldChange}
+                                    value={formData.phone}
+                                    className={`${fieldStates.phone === true ? 'input-valid' : fieldStates.phone === false ? 'input-invalid' : ''}`}
                                 />
+                                {errors.phone && <span className='error-message'>{errors.phone}</span>}
+                                {fieldStates.phone === true && <span className='success-message'>✓ Valid</span>}
                             </div>
                             
                             <div className='form-group'>
@@ -132,7 +216,12 @@ export const Contact = () => {
                                     placeholder='Enter your email address'
                                     required
                                     disabled={isSubmitting}
+                                    onChange={handleFieldChange}
+                                    value={formData.email}
+                                    className={`${fieldStates.email === true ? 'input-valid' : fieldStates.email === false ? 'input-invalid' : ''}`}
                                 />
+                                {errors.email && <span className='error-message'>{errors.email}</span>}
+                                {fieldStates.email === true && <span className='success-message'>✓ Valid</span>}
                             </div>
                             
                             <div className='form-group'>
@@ -144,7 +233,12 @@ export const Contact = () => {
                                     placeholder='Enter message subject'
                                     required
                                     disabled={isSubmitting}
+                                    onChange={handleFieldChange}
+                                    value={formData.subject}
+                                    className={`${fieldStates.subject === true ? 'input-valid' : fieldStates.subject === false ? 'input-invalid' : ''}`}
                                 />
+                                {errors.subject && <span className='error-message'>{errors.subject}</span>}
+                                {fieldStates.subject === true && <span className='success-message'>✓ Valid</span>}
                             </div>
                             
                             <div className='form-group'>
@@ -156,7 +250,12 @@ export const Contact = () => {
                                     placeholder='Enter your message here...'
                                     required
                                     disabled={isSubmitting}
+                                    onChange={handleFieldChange}
+                                    value={formData.message}
+                                    className={`${fieldStates.message === true ? 'input-valid' : fieldStates.message === false ? 'input-invalid' : ''}`}
                                 ></textarea>
+                                {errors.message && <span className='error-message'>{errors.message}</span>}
+                                {fieldStates.message === true && <span className='success-message'>✓ Valid</span>}
                             </div>
                             
                             <button 
@@ -164,7 +263,12 @@ export const Contact = () => {
                                 className='submit-btn'
                                 disabled={isSubmitting}
                             >
-                                {isSubmitting ? 'Sending...' : 'Send Message'}
+                                {isSubmitting ? (
+                                    <>
+                                        <span className='spinner'></span>
+                                        Sending...
+                                    </>
+                                ) : 'Send Message'}
                             </button>
                             
                             <div className='form-result'>

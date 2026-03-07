@@ -1,22 +1,21 @@
-@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&family=Inter:wght@300;400;500;600;700;800&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&family=Inter:wght@300;400;500;600;700;800&display=swap");
 
 /* CSS Variables */
 :root {
-  --primary-green: #0F8073;
-  --accent-teal: #16CDAC;
-  --kenya-green: #006600;
-  --kenya-red: #BB0000;
-  --kenya-black: #000000;
-  --kenya-white: #FFFFFF;
+  --primary-cyan: #00bfff;
+  --primary-cyan-dark: #0099cc;
+  --cyan-light: rgba(0, 191, 255, 0.08);
   --dark-text: #1e293b;
   --medium-text: #475569;
   --light-text: #64748b;
-  --light-bg: #f8fafc;
-  --card-bg: #FFFFFF;
-  --border-color: #e2e8f0;
-  --shadow-light: 0 4px 20px rgba(0, 0, 0, 0.08);
-  --shadow-medium: 0 10px 40px rgba(15, 128, 115, 0.12);
-  --shadow-heavy: 0 20px 60px rgba(15, 128, 115, 0.18);
+  --light-bg: #f0f9ff;
+  --glass-bg: rgba(255, 255, 255, 0.8);
+  --glass-blur: 12px;
+  --card-bg: #ffffff;
+  --border-color: rgba(0, 191, 255, 0.2);
+  --shadow-light: 0 4px 20px rgba(0, 191, 255, 0.08);
+  --shadow-medium: 0 10px 40px rgba(0, 191, 255, 0.12);
+  --shadow-heavy: 0 20px 60px rgba(0, 191, 255, 0.18);
   --border-radius: 16px;
   --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -30,22 +29,30 @@
 
 /* Testimonials Section */
 .testimonial_section {
-  width: 100vw;
+  width: 100%;
   min-height: 100vh;
-  background: linear-gradient(135deg, #f0f9f8 0%, #e6f7ff 100%);
+  background: linear-gradient(135deg, #f0f9ff 0%, rgba(0, 191, 255, 0.08) 100%);
   padding: 80px 0;
   position: relative;
   overflow: hidden;
 }
 
+.Testimonials_page .testimonial_section {
+  padding-top: 52px;
+}
+
 .testimonial_section::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   height: 4px;
-  background: linear-gradient(90deg, var(--kenya-green), var(--kenya-red), var(--kenya-black));
+  background: linear-gradient(
+    90deg,
+    var(--primary-cyan),
+    var(--primary-cyan-dark)
+  );
   z-index: 1;
 }
 
@@ -59,21 +66,35 @@
 /* Header Section */
 .testimonial_header {
   text-align: center;
-  margin-bottom: 60px;
+  margin: 0 auto 48px;
+  max-width: 1120px;
   position: relative;
 }
 
+.section_intro {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
 .title_wrapper {
-  margin-bottom: 20px;
+  margin: 0 auto 18px;
+  max-width: 1050px;
 }
 
 .accent_text {
   display: inline-block;
-  background: linear-gradient(135deg, var(--kenya-green), var(--kenya-red));
+  background: linear-gradient(
+    135deg,
+    var(--primary-cyan),
+    var(--primary-cyan-dark)
+  );
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   font-size: clamp(16px, 1.5vw, 18px);
   font-weight: 600;
   text-transform: uppercase;
@@ -83,12 +104,17 @@
 
 .section_intro h1 {
   color: var(--dark-text);
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   font-size: clamp(36px, 5vw, 48px);
   font-weight: 800;
-  margin-bottom: 20px;
+  margin: 0 auto 18px;
+  max-width: 980px;
   line-height: 1.1;
-  background: linear-gradient(135deg, var(--kenya-black) 0%, var(--primary-green) 100%);
+  background: linear-gradient(
+    135deg,
+    var(--primary-cyan) 0%,
+    var(--primary-cyan-dark) 100%
+  );
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -96,23 +122,24 @@
 
 .subtitle {
   color: var(--medium-text);
-  font-family: 'Nunito Sans', sans-serif;
+  font-family: "Nunito Sans", sans-serif;
   font-size: clamp(16px, 1.8vw, 18px);
   font-weight: 400;
   line-height: 1.6;
-  max-width: 800px;
-  margin: 0 auto 30px;
+  max-width: 860px;
+  margin: 0 auto 24px;
 }
 
 .global_badge {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 10px;
   background: rgba(15, 128, 115, 0.1);
   padding: 12px 24px;
   border-radius: 50px;
   border: 2px solid rgba(15, 128, 115, 0.2);
-  margin-bottom: 20px;
+  margin: 0 auto;
 }
 
 .badge_icon {
@@ -121,34 +148,37 @@
 
 .badge_text {
   color: var(--primary-green);
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   font-weight: 600;
   font-size: clamp(14px, 1.2vw, 16px);
 }
 
 /* Coverage Section */
 .coverage_section {
-  margin-bottom: 80px;
+  margin: 0 auto 80px;
+  max-width: 1280px;
 }
 
 .coverage_header {
   text-align: center;
-  margin-bottom: 40px;
+  margin: 0 auto 32px;
+  max-width: 960px;
 }
 
 .coverage_header h3 {
   color: var(--dark-text);
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   font-size: 32px;
   font-weight: 700;
-  margin-bottom: 15px;
+  margin-bottom: 12px;
+  line-height: 1.2;
 }
 
 .coverage_subtitle {
   color: var(--medium-text);
-  font-family: 'Nunito Sans', sans-serif;
+  font-family: "Nunito Sans", sans-serif;
   font-size: 18px;
-  max-width: 800px;
+  max-width: 760px;
   margin: 0 auto;
 }
 
@@ -158,6 +188,7 @@
   padding: 30px;
   box-shadow: var(--shadow-medium);
   border: 1px solid var(--border-color);
+  margin: 0 auto;
 }
 
 .coverage_image_container {
@@ -193,103 +224,103 @@
 
 .map_views {
   color: var(--light-text);
-  font-family: 'Nunito Sans', sans-serif;
+  font-family: "Nunito Sans", sans-serif;
   font-size: 13px;
   font-weight: 500;
 }
 
 .map_source {
   color: var(--primary-green);
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   font-size: 12px;
   font-weight: 600;
 }
 
 .coverage_stats_row {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    gap: 20px;
-    flex-wrap: nowrap; /* Prevents wrapping */
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  gap: 20px;
+  flex-wrap: nowrap; /* Prevents wrapping */
 }
 
 .coverage_stat_box {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    flex: 1; /* Makes each box take equal width */
-    min-width: 0; /* Prevents flex items from overflowing */
-    background: rgba(255, 255, 255, 0.1);
-    padding: 15px 20px;
-    border-radius: 12px;
-    backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  flex: 1; /* Makes each box take equal width */
+  min-width: 0; /* Prevents flex items from overflowing */
+  background: rgba(255, 255, 255, 0.1);
+  padding: 15px 20px;
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
 }
 
 .coverage_stat_icon {
-    font-size: 40px;
-    line-height: 1;
-    flex-shrink: 0; /* Prevents icon from shrinking */
+  font-size: 40px;
+  line-height: 1;
+  flex-shrink: 0; /* Prevents icon from shrinking */
 }
 
 .coverage_stat_content {
-    display: flex;
-    flex-direction: column;
-    min-width: 0; /* Prevents text overflow */
+  display: flex;
+  flex-direction: column;
+  min-width: 0; /* Prevents text overflow */
 }
 
 .coverage_stat_number {
-    font-size: 28px;
-    font-weight: 800;
-    color: #64D5C8;
-    line-height: 1.2;
-    font-family: 'Nunito', sans-serif;
-    white-space: nowrap; /* Keeps number in one line */
+  font-size: 28px;
+  font-weight: 800;
+  color: #64d5c8;
+  line-height: 1.2;
+  font-family: "Nunito", sans-serif;
+  white-space: nowrap; /* Keeps number in one line */
 }
 
 .coverage_stat_label {
-    font-size: 14px;
-    color: white;
-    opacity: 0.9;
-    white-space: nowrap; /* Keeps label in one line */
+  font-size: 14px;
+  color: white;
+  opacity: 0.9;
+  white-space: nowrap; /* Keeps label in one line */
 }
 
 /* Responsive for tablets */
 @media (max-width: 768px) {
-    .coverage_stats_row {
-        gap: 15px;
-    }
-    
-    .coverage_stat_box {
-        padding: 12px 15px;
-    }
-    
-    .coverage_stat_icon {
-        font-size: 32px;
-    }
-    
-    .coverage_stat_number {
-        font-size: 22px;
-    }
-    
-    .coverage_stat_label {
-        font-size: 12px;
-    }
+  .coverage_stats_row {
+    gap: 15px;
+  }
+
+  .coverage_stat_box {
+    padding: 12px 15px;
+  }
+
+  .coverage_stat_icon {
+    font-size: 32px;
+  }
+
+  .coverage_stat_number {
+    font-size: 22px;
+  }
+
+  .coverage_stat_label {
+    font-size: 12px;
+  }
 }
 
 /* Responsive for mobile - stack vertically on very small screens */
 @media (max-width: 576px) {
-    .coverage_stats_row {
-        flex-direction: column;
-        flex-wrap: wrap;
-        gap: 15px;
-    }
-    
-    .coverage_stat_box {
-        width: 100%;
-        flex: none;
-    }
+  .coverage_stats_row {
+    flex-direction: column;
+    flex-wrap: wrap;
+    gap: 15px;
+  }
+
+  .coverage_stat_box {
+    width: 100%;
+    flex: none;
+  }
 }
 
 .coverage_stat_box {
@@ -319,7 +350,7 @@
 
 .coverage_stat_number {
   color: var(--primary-green);
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   font-size: 24px;
   font-weight: 800;
   margin-bottom: 5px;
@@ -327,7 +358,7 @@
 
 .coverage_stat_label {
   color: var(--medium-text);
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   font-size: 13px;
   font-weight: 600;
   text-transform: uppercase;
@@ -351,7 +382,7 @@
   align-items: center;
   gap: 10px;
   color: var(--dark-text);
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   font-size: 20px;
   font-weight: 700;
   margin-bottom: 20px;
@@ -400,7 +431,7 @@
 
 .facility_name {
   color: var(--medium-text);
-  font-family: 'Nunito Sans', sans-serif;
+  font-family: "Nunito Sans", sans-serif;
   font-size: 14px;
   line-height: 1.5;
   font-weight: 500;
@@ -418,7 +449,7 @@
 
 .section_title h2 {
   color: var(--dark-text);
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   font-size: 36px;
   font-weight: 700;
   margin-bottom: 15px;
@@ -426,7 +457,7 @@
 
 .section_subtitle {
   color: var(--medium-text);
-  font-family: 'Nunito Sans', sans-serif;
+  font-family: "Nunito Sans", sans-serif;
   font-size: 18px;
   max-width: 700px;
   margin: 0 auto;
@@ -470,9 +501,16 @@
 }
 
 .nav_button:hover {
-  background: var(--primary-green);
-  transform: translateY(-2px) scale(1.05);
-  box-shadow: var(--shadow-medium);
+  background: linear-gradient(
+    135deg,
+    var(--primary-cyan),
+    var(--primary-cyan-dark)
+  );
+  transform: translateY(-3px) scale(1.08);
+  box-shadow:
+    0 12px 30px rgba(0, 191, 255, 0.3),
+    0 0 20px rgba(0, 191, 255, 0.2);
+  border-color: var(--primary-cyan);
 }
 
 .nav_button:hover img {
@@ -544,18 +582,25 @@
 }
 
 .testimonial_card:hover {
-  transform: translateY(-5px);
-  box-shadow: var(--shadow-medium);
+  transform: translateY(-8px) scale(1.02);
+  box-shadow:
+    0 20px 50px rgba(0, 191, 255, 0.2),
+    0 0 30px rgba(0, 191, 255, 0.1);
 }
 
 .testimonial_card::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   height: 4px;
-  background: linear-gradient(90deg, var(--kenya-green), var(--kenya-red), var(--kenya-black));
+  background: linear-gradient(
+    90deg,
+    var(--kenya-green),
+    var(--kenya-red),
+    var(--kenya-black)
+  );
 }
 
 .card_header {
@@ -581,7 +626,7 @@
 
 .country_name {
   color: var(--kenya-green);
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   font-weight: 600;
   font-size: 12px;
   text-transform: uppercase;
@@ -618,7 +663,7 @@
 
 .testimonial_quote {
   color: var(--medium-text);
-  font-family: 'Nunito Sans', sans-serif;
+  font-family: "Nunito Sans", sans-serif;
   font-size: clamp(14px, 1.2vw, 16px);
   line-height: 1.6;
   font-weight: 400;
@@ -660,7 +705,7 @@
 
 .benefit_text {
   color: var(--dark-text);
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   font-size: clamp(12px, 1vw, 14px);
   font-weight: 500;
 }
@@ -710,7 +755,7 @@
 }
 
 .badge_text {
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   font-size: 8px;
 }
 
@@ -720,7 +765,7 @@
 
 .author_name {
   color: var(--dark-text);
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   font-size: clamp(16px, 1.3vw, 18px);
   font-weight: 700;
   margin: 0 0 4px 0;
@@ -728,7 +773,7 @@
 
 .author_position {
   color: var(--primary-green);
-  font-family: 'Nunito Sans', sans-serif;
+  font-family: "Nunito Sans", sans-serif;
   font-size: clamp(13px, 1.1vw, 15px);
   font-weight: 600;
   margin: 0 0 2px 0;
@@ -736,7 +781,7 @@
 
 .author_organization {
   color: var(--light-text);
-  font-family: 'Nunito Sans', sans-serif;
+  font-family: "Nunito Sans", sans-serif;
   font-size: clamp(11px, 0.9vw, 13px);
   font-weight: 400;
   margin: 0;
@@ -754,20 +799,28 @@
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  background: var(--border-color);
-  border: none;
+  background: rgba(0, 191, 255, 0.2);
+  border: 2px solid rgba(0, 191, 255, 0.3);
   cursor: pointer;
   transition: var(--transition);
   padding: 0;
 }
 
 .dot.active {
-  background: var(--primary-green);
-  transform: scale(1.2);
+  background: linear-gradient(
+    135deg,
+    var(--primary-cyan),
+    var(--primary-cyan-dark)
+  );
+  transform: scale(1.3);
+  border-color: var(--primary-cyan);
+  box-shadow: 0 0 15px rgba(0, 191, 255, 0.4);
 }
 
 .dot:hover {
-  background: var(--accent-teal);
+  background: rgba(0, 191, 255, 0.4);
+  border-color: var(--primary-cyan);
+  transform: scale(1.15);
 }
 
 /* Stats Section */
@@ -799,7 +852,7 @@
 }
 
 .stat_box::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
@@ -815,7 +868,7 @@
 
 .stat_number {
   color: var(--primary-green);
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   font-size: clamp(32px, 3vw, 40px);
   font-weight: 800;
   margin-bottom: 8px;
@@ -827,7 +880,7 @@
 
 .stat_label {
   color: var(--dark-text);
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   font-size: clamp(14px, 1.2vw, 16px);
   font-weight: 600;
   margin-bottom: 6px;
@@ -837,7 +890,7 @@
 
 .stat_sub {
   color: var(--light-text);
-  font-family: 'Nunito Sans', sans-serif;
+  font-family: "Nunito Sans", sans-serif;
   font-size: clamp(11px, 0.9vw, 13px);
   font-weight: 400;
 }
@@ -854,7 +907,9 @@
   }
 }
 
-.testimonial_card, .coverage_stat_box, .facility_item {
+.testimonial_card,
+.coverage_stat_box,
+.facility_item {
   animation: fadeInUp 0.5s ease-out;
 }
 
@@ -863,12 +918,13 @@
   .testimonial_slide {
     flex: 0 0 calc(100% / 2);
   }
-  
-  .stats_grid, .coverage_stats_row {
+
+  .stats_grid,
+  .coverage_stats_row {
     grid-template-columns: repeat(2, 1fr);
     gap: 20px;
   }
-  
+
   .facility_grid {
     grid-template-columns: 1fr;
   }
@@ -878,32 +934,33 @@
   .testimonial_section {
     padding: 60px 0;
   }
-  
+
   .nav_button {
     width: 48px;
     height: 48px;
   }
-  
-  .prev_button, .next_button {
+
+  .prev_button,
+  .next_button {
     margin: 0 5px;
   }
-  
+
   .testimonial_slide {
     flex: 0 0 calc(100%);
   }
-  
+
   .slider_track {
     padding: 15px 0;
   }
-  
+
   .testimonial_card {
     min-height: 360px;
   }
-  
+
   .coverage_container {
     padding: 25px;
   }
-  
+
   .map_wrapper {
     height: 350px;
   }
@@ -913,60 +970,63 @@
   .testimonial_section {
     padding: 50px 0;
   }
-  
+
   .testimonial_header {
     margin-bottom: 40px;
   }
-  
+
   .coverage_header h3 {
     font-size: 28px;
   }
-  
+
   .section_title h2 {
     font-size: 28px;
   }
-  
-  .coverage_subtitle, .section_subtitle {
+
+  .coverage_subtitle,
+  .section_subtitle {
     font-size: 16px;
   }
-  
+
   .nav_button {
     width: 44px;
     height: 44px;
   }
-  
+
   .nav_button img {
     width: 16px;
     height: 16px;
   }
-  
-  .stats_grid, .coverage_stats_row {
+
+  .stats_grid,
+  .coverage_stats_row {
     grid-template-columns: 1fr;
     gap: 15px;
   }
-  
-  .stat_box, .coverage_stat_box {
+
+  .stat_box,
+  .coverage_stat_box {
     padding: 20px 15px;
   }
-  
+
   .global_badge {
     padding: 10px 20px;
   }
-  
+
   .map_caption {
     flex-direction: column;
     gap: 10px;
     text-align: center;
   }
-  
+
   .map_wrapper {
     height: 300px;
   }
-  
+
   .coverage_stat_icon {
     font-size: 28px;
   }
-  
+
   .coverage_stat_number {
     font-size: 22px;
   }
@@ -976,49 +1036,50 @@
   .testimonial_section {
     padding: 40px 0;
   }
-  
+
   .testimonial_slider_wrapper {
     padding: 20px 0;
   }
-  
+
   .slider_track {
     padding: 10px 0;
     gap: 20px;
   }
-  
+
   .testimonial_card {
     padding: 20px;
     min-height: 350px;
   }
-  
+
   .author_image {
     width: 50px;
     height: 50px;
   }
-  
+
   .nav_button {
     width: 40px;
     height: 40px;
     margin: 0 10px;
   }
-  
+
   .nav_button img {
     width: 14px;
     height: 14px;
   }
-  
+
   .slider_dots {
     margin-top: 20px;
   }
-  
+
   .coverage_container {
     padding: 20px;
   }
-  
-  .coverage_header h3, .section_title h2 {
+
+  .coverage_header h3,
+  .section_title h2 {
     font-size: 24px;
   }
-  
+
   .region_title {
     font-size: 18px;
   }
@@ -1029,11 +1090,11 @@
   .testimonial_card {
     min-height: 320px;
   }
-  
+
   .testimonial_slide {
     flex: 0 0 calc(100% / 2);
   }
-  
+
   .map_wrapper {
     height: 300px;
   }

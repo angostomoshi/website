@@ -1,6 +1,7 @@
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import './Navbar.css'
 import { Link, useLocation } from 'react-router-dom'
+import fsLogo from '../../assets/fs-logo-cropped.png'
 
 export const Navbar = () => {
   const [activeMenu, setActiveMenu] = useState("home")
@@ -32,7 +33,7 @@ export const Navbar = () => {
     if (isMobile && isMenuOpen) {
       closeMenu()
     }
-  }, [location, isMobile])
+  }, [location, isMobile, isMenuOpen])
 
   const openMenu = () => {
     setIsMenuOpen(true)
@@ -59,27 +60,23 @@ export const Navbar = () => {
       {/* Main Logo */}
       <div className='logo-container'>
         <Link to="/" className='logo' onClick={() => handleNavClick("home")}>
-          <div className='logo-initials'>FS</div>
-          <div className='logo-text'>
-            <span className='logo-main'>FUNSOFT</span>
-            <span className='logo-sub'>Healthcare Systems</span>
-          </div>
+          <img src={fsLogo} alt="FS Logo" className='logo-img' />
+          <span className='navbar-brand-text'>
+            <span className='navbar-brand-name'>Funsoft</span>
+            <span className='navbar-brand-badge'>I-HMIS</span>
+          </span>
         </Link>
       </div>
 
       {/* Desktop Navigation */}
       <div className='nav-desktop'>
-        <div className='nav-menu-wrapper'>
-          <ul className='nav-menu-center'>
-            <li><Link to='/' onClick={() => handleNavClick("home")} className={activeMenu === "home" ? 'active-link' : ''}><span>Home</span></Link></li>
-            <li><Link to='/our-services' onClick={() => handleNavClick("services")} className={activeMenu === "services" ? 'active-link' : ''}><span>Services</span></Link></li>
-            <li><Link to='/about-us' onClick={() => handleNavClick("about")} className={activeMenu === "about" ? 'active-link' : ''}><span>About Us</span></Link></li>
-          </ul>
-          <ul className='nav-menu-end'>
-            <li><Link to='/testimonials' onClick={() => handleNavClick("testimonials")} className={activeMenu === "testimonials" ? 'active-link' : ''}><span>Testimonials</span></Link></li>
-            <li><Link to='/contact-us' onClick={() => handleNavClick("contact")} className={activeMenu === "contact" ? 'active-link' : ''}><span>Contact Us</span></Link></li>
-          </ul>
-        </div>
+        <ul className='nav-menu-desktop'>
+          <li><Link to='/' onClick={() => handleNavClick("home")} className={activeMenu === "home" ? 'active-link' : ''}><span>Home</span></Link></li>
+          <li><Link to='/our-services' onClick={() => handleNavClick("services")} className={activeMenu === "services" ? 'active-link' : ''}><span>Services</span></Link></li>
+          <li><Link to='/about-us' onClick={() => handleNavClick("about")} className={activeMenu === "about" ? 'active-link' : ''}><span>About Us</span></Link></li>
+          <li><Link to='/testimonials' onClick={() => handleNavClick("testimonials")} className={activeMenu === "testimonials" ? 'active-link' : ''}><span>Testimonials</span></Link></li>
+          <li><Link to='/contact-us' onClick={() => handleNavClick("contact")} className={activeMenu === "contact" ? 'active-link' : ''}><span>Contact Us</span></Link></li>
+        </ul>
       </div>
 
       {/* Mobile Menu Toggle */}

@@ -1,78 +1,81 @@
-@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap");
 
-
-.Services-hero{
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(to right, #33B2C2 1.04%,
-     rgba(51, 178, 194, 0.60) 39.97%,
-     rgba(51, 178, 194, 0.10) 82.6%),
-     url('../../assets/4.png');
-     background-repeat: no-repeat;
-     background-size: cover;
-  
-    
-
-}
-.picture_page{
-    position: relative;
-   width: 100%;
-   height: 100%;
-   
-    
-}
-.picture{
-    width: 100%;
-}
-.picture_page h1{
-position: absolute;
-color: var(--Accent-08, #052146);
-font-family: Nunito;
-font-size: 64px;
-font-style: normal;
-font-weight: 900;
-line-height: normal;
-font-family: 'Courier New', Courier, monospace;
-top: 50%;
+:root {
+  --primary-cyan: #00bfff;
+  --primary-cyan-dark: #0099cc;
 }
 
-/* media query */
-
-@media (min-width: 1439px){
-    .Services-hero{
-        width: 100%;
-        
-    } 
+.Services-hero {
+  width: 100%;
+  height: 350px;
+  min-height: 350px;
+  background:
+    linear-gradient(
+      115deg,
+      rgba(0, 33, 66, 0.78) 0%,
+      rgba(0, 138, 201, 0.42) 52%,
+      rgba(0, 191, 255, 0.12) 100%
+    ),
+    url("../../assets/our service page.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center 30%;
+  margin-top: 0;
+  overflow: hidden;
 }
 
-@media (min-width: 1023px) and (max-width: 1438px){
-    .Services-hero{
-        width: 100%; 
-        background: contain;
-      
-    } 
-    .picture_page{
-        position: relative;
-       width: 100%;      
-    }
+.Services-hero.container {
+  max-width: none;
+  padding-left: 0;
+  padding-right: 0;
+}
+.Services-hero .picture_page {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.picture {
+  width: 100%;
+}
+.Services-hero .picture_page h1 {
+  position: absolute;
+  color: #ffffff;
+  font-family: "Courier New", Courier, monospace;
+  font-size: clamp(2rem, 5vw, 3.8rem);
+  font-style: normal;
+  font-weight: 900;
+  line-height: normal;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-shadow: 0 8px 28px rgba(0, 17, 39, 0.6);
+  text-align: center;
+  padding: 0 16px;
 }
 
+@media (max-width: 768px) {
+  .Services-hero {
+    height: 300px;
+    min-height: 300px;
+    background-position: center 28%;
+  }
 
-@media (min-width: 766px) and (max-width: 1022px){
-    .Services-hero{
-        width: 150%;
-    }
+  .Services-hero .picture_page h1 {
+    font-size: 1.8rem;
+  }
 }
 
-@media screen and (max-width: 430px){
-    .Services-hero{
-        width: 200%;
-      
-        
-    } 
+@media (max-width: 480px) {
+  .Services-hero {
+    height: 280px;
+    min-height: 280px;
+    background-position: center 24%;
+  }
+
+  .Services-hero .picture_page h1 {
+    font-size: 1.6rem;
+  }
 }
-
-
-
-
-

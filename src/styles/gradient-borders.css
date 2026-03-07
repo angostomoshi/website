@@ -1,0 +1,310 @@
+/* Gradient Border Card Styles */
+/* Adds premium gradient borders to cards throughout the site */
+
+:root {
+  --gradient-cyan: linear-gradient(135deg, #00bfff 0%, #0099cc 100%);
+  --gradient-cyan-light: linear-gradient(135deg, #00bfff 0%, #40dfff 100%);
+  --gradient-multi: linear-gradient(
+    135deg,
+    #00bfff 0%,
+    #0099cc 50%,
+    #00bfff 100%
+  );
+}
+
+/* Gradient Border Card - Main */
+.card-gradient-border {
+  position: relative;
+  background: white;
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.card-gradient-border::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 16px;
+  padding: 2px;
+  background: var(--gradient-cyan);
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.card-gradient-border-content {
+  position: relative;
+  z-index: 2;
+  padding: 30px;
+}
+
+/* Animated Gradient Border */
+.card-gradient-border-animated {
+  position: relative;
+  background: white;
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.card-gradient-border-animated::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 16px;
+  padding: 2.5px;
+  background: linear-gradient(
+    90deg,
+    #00bfff,
+    #0099cc,
+    #00bfff,
+    #0099cc,
+    #00bfff
+  );
+  background-size: 300% 100%;
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  z-index: 1;
+  animation: gradientFlow 6s linear infinite;
+}
+
+@keyframes gradientFlow {
+  0% {
+    background-position: 0% 0;
+  }
+  100% {
+    background-position: 300% 0;
+  }
+}
+
+.card-gradient-border-animated-content {
+  position: relative;
+  z-index: 2;
+  padding: 30px;
+}
+
+/* Gradient Border with Glow */
+.card-gradient-glow {
+  position: relative;
+  background: white;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 0 30px rgba(0, 191, 255, 0.15);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card-gradient-glow::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 16px;
+  padding: 2px;
+  background: var(--gradient-cyan);
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.8;
+  transition: opacity 0.3s ease;
+}
+
+.card-gradient-glow:hover {
+  box-shadow: 0 0 50px rgba(0, 191, 255, 0.3);
+  transform: translateY(-4px);
+}
+
+.card-gradient-glow:hover::before {
+  opacity: 1;
+  box-shadow: 0 0 20px rgba(0, 191, 255, 0.4);
+}
+
+.card-gradient-glow-content {
+  position: relative;
+  z-index: 2;
+  padding: 30px;
+}
+
+/* Double Gradient Border */
+.card-double-gradient {
+  position: relative;
+  background: white;
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.card-double-gradient::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 16px;
+  padding: 3px;
+  background: linear-gradient(45deg, #00bfff, #0099cc);
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.card-double-gradient::after {
+  content: "";
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  right: 5px;
+  bottom: 5px;
+  border-radius: 13px;
+  border: 1px solid rgba(0, 191, 255, 0.2);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.card-double-gradient-content {
+  position: relative;
+  z-index: 2;
+  padding: 30px;
+}
+
+/* Accent Line Gradient Border */
+.card-accent-line {
+  position: relative;
+  background: white;
+  border-radius: 12px;
+  border: 1px solid rgba(0, 191, 255, 0.1);
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.card-accent-line::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(90deg, #00bfff 0%, #0099cc 50%, #00bfff 100%);
+}
+
+.card-accent-line:hover {
+  border-color: rgba(0, 191, 255, 0.3);
+  box-shadow: 0 4px 20px rgba(0, 191, 255, 0.15);
+}
+
+.card-accent-line-content {
+  padding: 30px;
+}
+
+/* Corner Gradient Border */
+.card-corner-gradient {
+  position: relative;
+  background: white;
+  border-radius: 12px;
+  border: 1px solid rgba(0, 191, 255, 0.15);
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.card-corner-gradient::before {
+  content: "";
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, #00bfff 0%, transparent 70%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.card-corner-gradient::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  right: -2px;
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, transparent 30%, #0099cc 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.card-corner-gradient:hover::before,
+.card-corner-gradient:hover::after {
+  opacity: 1;
+}
+
+.card-corner-gradient:hover {
+  border-color: rgba(0, 191, 255, 0.3);
+  box-shadow: 0 8px 25px rgba(0, 191, 255, 0.1);
+}
+
+.card-corner-gradient-content {
+  position: relative;
+  z-index: 1;
+  padding: 30px;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .card-gradient-border-content,
+  .card-gradient-border-animated-content,
+  .card-gradient-glow-content,
+  .card-double-gradient-content,
+  .card-accent-line-content,
+  .card-corner-gradient-content {
+    padding: 25px;
+  }
+}
+
+@media (max-width: 480px) {
+  .card-gradient-border-content,
+  .card-gradient-border-animated-content,
+  .card-gradient-glow-content,
+  .card-double-gradient-content,
+  .card-accent-line-content,
+  .card-corner-gradient-content {
+    padding: 20px;
+  }
+
+  .card-corner-gradient::before,
+  .card-corner-gradient::after {
+    width: 30px;
+    height: 30px;
+  }
+}
