@@ -31,12 +31,12 @@ export function Footer() {
             <h5>Contacts</h5>
             <a className='imgtag'>
                 <img src={call} alt='' className='tag' />
-                <span>+234 5464 8272</span>
+                <span>+254 714 433693</span>
             </a>
             <br/> 
             <a className='imgtag'>
                 <img src={message} alt='' className='tag' />
-                <span>input43@gmail.com</span>
+                <span>info@systempartners.biz</span>
             </a>
             <br/>
             <a className='imgtag'>

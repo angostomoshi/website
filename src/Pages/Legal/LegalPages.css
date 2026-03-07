@@ -1,0 +1,142 @@
+@import url("https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap");
+
+.legal-page {
+  min-height: 100vh;
+  background: linear-gradient(180deg, #f7fcff 0%, #eef8ff 100%);
+}
+
+.legal-main {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 40px 20px 56px;
+}
+
+.legal-hero {
+  border-radius: 24px;
+  padding: 28px 24px;
+  background:
+    radial-gradient(
+      circle at 78% 18%,
+      rgba(0, 191, 255, 0.22),
+      transparent 42%
+    ),
+    linear-gradient(
+      135deg,
+      rgba(14, 33, 54, 0.96) 0%,
+      rgba(17, 74, 114, 0.92) 100%
+    );
+  box-shadow: 0 20px 44px rgba(0, 64, 102, 0.18);
+  color: #ffffff;
+  margin-bottom: 20px;
+}
+
+.legal-kicker {
+  margin: 0;
+  font-size: 0.82rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(210, 243, 255, 0.95);
+  font-weight: 800;
+}
+
+.legal-hero h1 {
+  margin: 8px 0 10px;
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  font-weight: 900;
+  line-height: 1.1;
+}
+
+.legal-updated {
+  margin: 0;
+  color: rgba(229, 247, 255, 0.9);
+  font-size: 0.96rem;
+  font-weight: 600;
+}
+
+.legal-card {
+  border-radius: 20px;
+  background: #ffffff;
+  border: 1px solid rgba(0, 191, 255, 0.16);
+  box-shadow: 0 12px 34px rgba(0, 106, 169, 0.1);
+  padding: 26px 24px;
+}
+
+.legal-intro {
+  margin: 0 0 18px;
+  color: #24405c;
+  line-height: 1.65;
+  font-size: 0.98rem;
+}
+
+.legal-section {
+  margin-bottom: 18px;
+}
+
+.legal-section:last-child {
+  margin-bottom: 0;
+}
+
+.legal-section h2 {
+  margin: 0 0 8px;
+  color: #0f3454;
+  font-size: 1.13rem;
+  font-weight: 800;
+  letter-spacing: 0.01em;
+}
+
+.legal-section p {
+  margin: 0;
+  color: #33526e;
+  line-height: 1.62;
+}
+
+.legal-list {
+  margin: 8px 0 0 18px;
+  padding: 0;
+}
+
+.legal-list li {
+  margin-bottom: 8px;
+  color: #33526e;
+  line-height: 1.55;
+}
+
+.legal-note {
+  margin-top: 18px;
+  padding: 14px 14px;
+  border-radius: 12px;
+  background: rgba(0, 191, 255, 0.08);
+  border: 1px solid rgba(0, 191, 255, 0.22);
+  color: #114466;
+  font-size: 0.95rem;
+}
+
+.legal-contact-link {
+  color: #007db4;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.legal-contact-link:hover {
+  color: #005f8a;
+  text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+  .legal-main {
+    padding: 28px 16px 42px;
+  }
+
+  .legal-hero,
+  .legal-card {
+    border-radius: 16px;
+  }
+
+  .legal-hero {
+    padding: 22px 18px;
+  }
+
+  .legal-card {
+    padding: 20px 16px;
+  }
+}

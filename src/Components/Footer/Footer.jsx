@@ -6,6 +6,10 @@ import fsLogo from '../../assets/fs-logo-cropped.png'
 export const Footer = () => {
   const currentYear = new Date().getFullYear();
 
+  const handleFooterNav = () => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'auto' })
+  }
+
   return (
     <div className='footer'>
         <div className='footer-div-top'>
@@ -22,24 +26,24 @@ export const Footer = () => {
             </div>
             
             <div className='footer-list'>
-                <h4>Our Solutions</h4>
+              <h4>Customer Resources</h4>
                 <ul>
-                    <li><a href='#hospitals'>Hospital Management System</a></li>
-                    <li><a href='#hospitals'>Electronic Medical Records</a></li>
-                    <li><a href='#hospitals'>Telemedicine Platform</a></li>
-                    <li><a href='#hospitals'>Pharmacy Management</a></li>
-                    <li><a href='#hospitals'>Lab Information System</a></li>
+                <li><Link to="/our-services" onClick={handleFooterNav}>Explore All Services</Link></li>
+                <li><Link to="/contact-us" onClick={handleFooterNav}>Book a Product Demo</Link></li>
+                <li><Link to="/contact-us" onClick={handleFooterNav}>Request Pricing</Link></li>
+                <li><Link to="/contact-us" onClick={handleFooterNav}>Implementation Support</Link></li>
+                <li><Link to="/testimonials" onClick={handleFooterNav}>Success Stories</Link></li>
                 </ul>
             </div>
             
             <div className='footer-list'>
                 <h4>Quick Links</h4>
                 <ul>
-                    <li><Link to="/">Home</Link></li>
-                    <li><Link to="/our-services">Services</Link></li>
-                    <li><Link to="/about-us">About Us</Link></li>
-                    <li><Link to="/testimonials">Case Studies</Link></li>
-                    <li><Link to="/contact-us">Get a Demo</Link></li>
+                  <li><Link to="/" onClick={handleFooterNav}>Home</Link></li>
+                  <li><Link to="/our-services" onClick={handleFooterNav}>Services</Link></li>
+                  <li><Link to="/about-us" onClick={handleFooterNav}>About Us</Link></li>
+                  <li><Link to="/testimonials" onClick={handleFooterNav}>Testimonials</Link></li>
+                  <li><Link to="/contact-us" onClick={handleFooterNav}>Get a Demo</Link></li>
                 </ul>
             </div>
             
@@ -50,13 +54,29 @@ export const Footer = () => {
                       <svg className='contact-icon' width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M6.62 10.79C8.06 13.62 10.38 15.93 13.21 17.38L15.41 15.18C15.68 14.91 16.08 14.82 16.43 14.94C17.55 15.31 18.76 15.51 20 15.51C20.55 15.51 21 15.96 21 16.51V20C21 20.55 20.55 21 20 21C10.61 21 3 13.39 3 4C3 3.45 3.45 3 4 3H7.5C8.05 3 8.5 3.45 8.5 4C8.5 5.25 8.7 6.45 9.07 7.57C9.18 7.92 9.1 8.31 8.82 8.59L6.62 10.79Z" fill="currentColor"/>
                       </svg>
-                      <span>+254 714 433693</span>
+                      <span>
+                        <a href="tel:+254207857779">+254 20 7857779</a>
+                        <span> / </span>
+                        <a href="tel:+254207855355">7855355</a>
+                      </span>
+                    </li>
+                    <li>
+                      <svg className='contact-icon' width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M6.62 10.79C8.06 13.62 10.38 15.93 13.21 17.38L15.41 15.18C15.68 14.91 16.08 14.82 16.43 14.94C17.55 15.31 18.76 15.51 20 15.51C20.55 15.51 21 15.96 21 16.51V20C21 20.55 20.55 21 20 21C10.61 21 3 13.39 3 4C3 3.45 3.45 3 4 3H7.5C8.05 3 8.5 3.45 8.5 4C8.5 5.25 8.7 6.45 9.07 7.57C9.18 7.92 9.1 8.31 8.82 8.59L6.62 10.79Z" fill="currentColor"/>
+                      </svg>
+                      <a href="tel:+254714433693">+254 714 433693</a>
+                    </li>
+                    <li>
+                      <svg className='contact-icon' width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M6.62 10.79C8.06 13.62 10.38 15.93 13.21 17.38L15.41 15.18C15.68 14.91 16.08 14.82 16.43 14.94C17.55 15.31 18.76 15.51 20 15.51C20.55 15.51 21 15.96 21 16.51V20C21 20.55 20.55 21 20 21C10.61 21 3 13.39 3 4C3 3.45 3.45 3 4 3H7.5C8.05 3 8.5 3.45 8.5 4C8.5 5.25 8.7 6.45 9.07 7.57C9.18 7.92 9.1 8.31 8.82 8.59L6.62 10.79Z" fill="currentColor"/>
+                      </svg>
+                      <a href="tel:+254733367427">+254 733 367427</a>
                     </li>
                     <li>
                       <svg className='contact-icon' width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M20 4H4C2.9 4 2 4.9 2 6V18C2 19.1 2.9 20 4 20H20C21.1 20 22 19.1 22 18V6C22 4.9 21.1 4 20 4ZM19.6 8.25L12.53 12.67C12.21 12.87 11.79 12.87 11.47 12.67L4.4 8.25C4.15 8.09 4 7.82 4 7.53C4 6.86 4.73 6.46 5.3 6.81L12 11L18.7 6.81C19.27 6.46 20 6.86 20 7.53C20 7.82 19.85 8.09 19.6 8.25Z" fill="currentColor"/>
                       </svg>
-                      <span>info@funsofthealth.com</span>
+                      <a href="mailto:info@systempartners.biz">info@systempartners.biz</a>
                     </li>
                     <li>
                       <svg className='contact-icon' width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -78,11 +98,11 @@ export const Footer = () => {
           <div className='footer-bottom-left'>
             <p>&copy; {currentYear} Funsoft Healthcare Systems. All rights reserved.</p>
             <div className='footer-links'>
-              <Link to="/privacy-policy">Privacy Policy</Link>
+              <Link to="/privacy-policy" onClick={handleFooterNav}>Privacy Policy</Link>
               <span> • </span>
-              <Link to="/terms">Terms of Service</Link>
+              <Link to="/terms" onClick={handleFooterNav}>Terms of Service</Link>
               <span> • </span>
-              <a href="#cookie-policy">Cookie Policy</a>
+              <Link to="/cookie-policy" onClick={handleFooterNav}>Cookie Policy</Link>
             </div>
           </div>
           

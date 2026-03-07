@@ -142,7 +142,9 @@ export const Contact = () => {
                                 <div className='contact-text'>
                                     <h4 className='contact-subtitle'>Email</h4>
                                     <h5 className='contact-label'>Email Address</h5>
-                                    <p className='contact-content'>info@systempartners.biz</p>
+                                                                        <p className='contact-content'>
+                                                                            <a className='contact-link' href='mailto:info@systempartners.biz'>info@systempartners.biz</a>
+                                                                        </p>
                                 </div>
                             </div>
                             
@@ -153,9 +155,13 @@ export const Contact = () => {
                                 <div className='contact-text'>
                                     <h4 className='contact-subtitle'>Phone</h4>
                                     <h5 className='contact-label'>Phone Numbers</h5>
-                                    <p className='contact-content'>+254 20 7857779 / 7855355</p>
-                                    <p className='contact-content'>+254 714 433693</p>
-                                    <p className='contact-content'>+254 733 367427</p>
+                                                                        <p className='contact-content'>
+                                                                            <a className='contact-link' href='tel:+254207857779'>+254 20 7857779</a>
+                                                                            <span> / </span>
+                                                                            <a className='contact-link' href='tel:+254207855355'>7855355</a>
+                                                                        </p>
+                                                                        <p className='contact-content'><a className='contact-link' href='tel:+254714433693'>+254 714 433693</a></p>
+                                                                        <p className='contact-content'><a className='contact-link' href='tel:+254733367427'>+254 733 367427</a></p>
                                 </div>
                             </div>
                         </div>

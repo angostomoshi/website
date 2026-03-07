@@ -43,7 +43,7 @@ export const SignUp = () => {
        <label className='label'>Email</label>
        <div className='input-field'>
        <input className='input' type='Email'
-       placeholder='input43@gmail.com'/>
+      placeholder='info@systempartners.biz'/>
        </div>
        
        <label className='label'>Password</label>

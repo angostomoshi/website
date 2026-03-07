@@ -102,6 +102,10 @@ const HeroSection = () => {
     return `${symbol}${amount?.toLocaleString() || 0}`;
   };
 
+  const handleLearnMore = () => {
+    window.location.hash = '/our-services';
+  };
+
   useEffect(() => {
     const fetchProducts = async () => {
       try {
@@ -145,13 +149,13 @@ const HeroSection = () => {
   }, []);
 
   const handleGmailEnquiry = (productName, productPrice) => {
-    const recipient = "angostomoshi@gmail.com";
+    const recipient = "info@systempartners.biz";
     const subject = encodeURIComponent(`Enquiry about ${productName}`);
     const body = encodeURIComponent(
       `Hello,\n\nI'm interested in ${productName} (${formatCurrency(productPrice, 'USD')}).\n\nPlease provide more information and pricing.\n\nThank you.`
     );
-    
-    window.open(`https://mail.google.com/mail/?view=cm&fs=1&to=${recipient}&su=${subject}&body=${body}`, '_blank');
+
+    window.location.href = `mailto:${recipient}?subject=${subject}&body=${body}`;
   };
 
   // Carousel items
@@ -1262,7 +1266,7 @@ const HeroSection = () => {
                           </button>
                           <button
                             className="button-secondary"
-                            onClick={() => {}}
+                            onClick={handleLearnMore}
                             title="Learn more about this service"
                           >
                             Learn More

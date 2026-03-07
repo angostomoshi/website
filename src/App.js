@@ -1,14 +1,26 @@
 import React, { useEffect, useState } from 'react'
-import {Routes, Route} from 'react-router-dom'
+import {Routes, Route, useLocation} from 'react-router-dom'
 import {Landing} from './Pages/Landing/Landing'
 import {OurServices} from './Pages/OurServices/OurServices'
 import {ContactPage} from './Pages/ContactPage/ContactPage'
 import {TestimonialsPage} from './Pages/Testimonials/TestimonialsPage'
-import {PrivacyPolicy} from './Components/PrivacyPolicy/PrivacyPolicy'
 import {AboutUs} from './Pages/AboutUs/AboutUs'
 import {LogIn} from './Pages/SignInSignUp/Login'
 import {SignUp} from './Pages/SignInSignUp/SignInSignUp'
+import { PrivacyPolicyPage } from './Pages/Legal/PrivacyPolicyPage'
+import { TermsOfServicePage } from './Pages/Legal/TermsOfServicePage'
+import { CookiePolicyPage } from './Pages/Legal/CookiePolicyPage'
 import fsLogo from './assets/fs-logo-cropped.png'
+
+const ScrollToTop = () => {
+    const { pathname } = useLocation()
+
+    useEffect(() => {
+        window.scrollTo({ top: 0, left: 0, behavior: 'auto' })
+    }, [pathname])
+
+    return null
+}
 
 
 
@@ -44,6 +56,7 @@ const App = () => {
             </div>
 
             <div className={`app-shell ${isEntering ? 'app-shell-preload' : 'app-shell-ready'}`}>
+                <ScrollToTop />
                 <Routes>
                 <Route path='/' element={<Landing /> }></Route>
                <Route path='/our-services' element= {<OurServices />} ></Route>
@@ -52,7 +65,9 @@ const App = () => {
                <Route path='/testimonials' element= {< TestimonialsPage />} ></Route>
                <Route path='/login' element= {< LogIn />} ></Route>
                <Route path='/signup' element= {< SignUp />} ></Route>
-               <Route path='/privacy-policy' element= {< PrivacyPolicy />} ></Route>
+               <Route path='/privacy-policy' element= {< PrivacyPolicyPage />} ></Route>
+               <Route path='/terms' element= {< TermsOfServicePage />} ></Route>
+               <Route path='/cookie-policy' element= {< CookiePolicyPage />} ></Route>
 
                </Routes>
             </div>

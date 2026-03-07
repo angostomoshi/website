@@ -10,7 +10,7 @@ export function AboutUs() {
       <Navbar />
 
       {/* Hero Section */}
-      <section className='hero-section'>
+      <section className='hero-section hero-banner hero-banner--overlay'>
         <img
           src={aboutUsHero}
           alt='Healthcare team collaborating in a modern hospital environment'

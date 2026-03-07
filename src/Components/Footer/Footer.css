@@ -120,45 +120,6 @@
   box-shadow: 0 8px 18px rgba(0, 191, 255, 0.26);
 }
 
-.logo-initials {
-  width: 48px;
-  height: 48px;
-  background: linear-gradient(
-    135deg,
-    var(--primary-cyan) 0%,
-    var(--primary-cyan-dark) 100%
-  );
-  color: white;
-  font-size: 20px;
-  font-weight: 800;
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: "Courier New", Courier, monospace;
-  box-shadow: 0 8px 20px rgba(0, 191, 255, 0.3);
-}
-
-.logo-text {
-  display: flex;
-  flex-direction: column;
-}
-
-.logo-main {
-  color: white;
-  font-size: 24px;
-  font-weight: 800;
-  line-height: 1;
-  margin-bottom: 4px;
-}
-
-.logo-sub {
-  color: rgba(255, 255, 255, 0.8);
-  font-size: 12px;
-  font-weight: 500;
-  letter-spacing: 1px;
-}
-
 .footer-tagline {
   color: #00bfff;
   font-size: 18px;
@@ -250,7 +211,8 @@
 }
 
 .office-list li span,
-.contact-info ul li span {
+.contact-info ul li span,
+.contact-info ul li a {
   flex: 1;
   line-height: 1.5;
   word-break: break-word;
@@ -487,7 +449,7 @@
 @media (max-width: 768px) {
   .footer-div-top {
     grid-template-columns: 1fr;
-    gap: 35px;
+    gap: 28px;
   }
 
   .footer-div-bottom {
@@ -502,7 +464,15 @@
   }
 
   .footer {
-    padding: 40px 20px 20px;
+    padding: 44px 20px 24px;
+  }
+
+  .footer-list ul li a,
+  .footer-links a {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--tap-target-min);
+    padding: 4px 0;
   }
 
   .contact-icon {
@@ -513,8 +483,8 @@
   }
 
   .social-links a {
-    width: 36px;
-    height: 36px;
+    width: var(--tap-target-min);
+    height: var(--tap-target-min);
   }
 
   .social-links svg {
@@ -538,19 +508,23 @@
   }
 
   .social-icons > span {
-    font-size: 24px;
+    font-size: 22px;
   }
 
   .social-icons a {
-    width: 36px;
-    height: 36px;
+    width: var(--tap-target-min);
+    height: var(--tap-target-min);
   }
 }
 
 @media (max-width: 480px) {
+  .footer {
+    padding: 40px 16px 22px;
+  }
+
   .footer-logo {
     flex-direction: row;
-    align-items: flex-start;
+    align-items: center;
     gap: 10px;
   }
 
@@ -582,8 +556,8 @@
   }
 
   .social-links a {
-    width: 34px;
-    height: 34px;
+    width: var(--tap-target-min);
+    height: var(--tap-target-min);
   }
 
   .social-links svg {
@@ -610,7 +584,7 @@
   .certification {
     flex-direction: column;
     align-items: flex-start;
-    gap: 5px;
+    gap: 6px;
     background: none;
     padding: 0;
   }

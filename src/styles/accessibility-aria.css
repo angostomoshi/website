@@ -29,29 +29,16 @@
   box-shadow: 0 2px 8px rgba(0, 102, 204, 0.3);
 }
 
-/* Focus Visible Styles - Applied to All Interactive Elements */
-*:focus-visible {
-  outline: var(--focus-width) solid var(--focus-color);
-  outline-offset: var(--focus-offset);
-}
-
-/* Button Focus States */
-button:focus-visible {
-  outline: var(--focus-width) solid var(--focus-color);
-  outline-offset: var(--focus-offset);
-}
-
-/* Link Focus States */
-a:focus-visible {
-  outline: var(--focus-width) solid var(--focus-color);
-  outline-offset: var(--focus-offset);
-  text-decoration: underline;
-}
-
-/* Form Input Focus States */
-input:focus-visible,
-textarea:focus-visible,
-select:focus-visible {
+/* Focus Visible Styles - Keep scoped to interactive controls */
+:where(
+  a,
+  button,
+  input,
+  textarea,
+  select,
+  [role="button"],
+  [role="link"]
+):focus-visible {
   outline: var(--focus-width) solid var(--focus-color);
   outline-offset: var(--focus-offset);
 }
@@ -74,11 +61,6 @@ input[type="radio"]:focus-visible {
 
 [aria-live="assertive"] {
   position: relative;
-}
-
-/* ARIA Hidden - Visual Only Elements */
-[aria-hidden="true"] {
-  visibility: hidden;
 }
 
 /* ARIA Disabled State */
@@ -139,14 +121,7 @@ input[type="radio"]:focus-visible {
   border-radius: 2px;
 }
 
-/* ARIA Label Visibility */
-label {
-  display: block;
-  margin-bottom: 8px;
-  font-weight: 500;
-  color: #1a365d;
-}
-
+/* ARIA Label Helpers */
 label[for] {
   cursor: pointer;
 }
@@ -224,59 +199,13 @@ label[for] {
   cursor: wait;
 }
 
-/* Minimum Touch Target Size - WCAG Requirement */
-button,
-a,
-input[type="checkbox"],
-input[type="radio"],
-[role="button"],
-[role="link"] {
+/* Minimum Touch Target Size - opt-in utility */
+.touch-target {
   min-height: 44px;
   min-width: 44px;
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-}
-
-/* Heading Structure for Screen Readers */
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  margin-bottom: 0.5em;
-  line-height: 1.3;
-}
-
-h1 {
-  font-size: 2.2rem;
-  font-weight: 800;
-}
-
-h2 {
-  font-size: 1.8rem;
-  font-weight: 700;
-}
-
-h3 {
-  font-size: 1.5rem;
-  font-weight: 700;
-}
-
-h4 {
-  font-size: 1.2rem;
-  font-weight: 600;
-}
-
-h5 {
-  font-size: 1.1rem;
-  font-weight: 600;
-}
-
-h6 {
-  font-size: 1rem;
-  font-weight: 600;
 }
 
 /* Landmark Roles */

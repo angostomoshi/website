@@ -1,0 +1,58 @@
+/* Reusable hero/banner shell for About, Services, Contact, Testimonials */
+.hero-banner {
+  position: relative;
+  width: 100%;
+  height: var(--hero-banner-height-desktop);
+  min-height: var(--hero-banner-height-desktop);
+  margin-top: 0;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center var(--hero-focus-desktop);
+}
+
+.hero-banner--overlay::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--hero-overlay, var(--hero-overlay-default));
+  z-index: 1;
+  pointer-events: none;
+}
+
+.hero-banner > * {
+  position: relative;
+  z-index: 2;
+}
+
+.hero-banner .hero-graphic {
+  z-index: 0;
+  object-position: center var(--hero-focus-desktop);
+}
+
+@media (max-width: 768px) {
+  .hero-banner {
+    height: var(--hero-banner-height-tablet);
+    min-height: var(--hero-banner-height-tablet);
+    background-position: center var(--hero-focus-tablet);
+  }
+
+  .hero-banner .hero-graphic {
+    object-position: center var(--hero-focus-tablet);
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-banner {
+    height: var(--hero-banner-height-mobile);
+    min-height: var(--hero-banner-height-mobile);
+    background-position: center var(--hero-focus-mobile);
+  }
+
+  .hero-banner .hero-graphic {
+    object-position: center var(--hero-focus-mobile);
+  }
+}

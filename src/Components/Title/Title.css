@@ -19,11 +19,11 @@
 
 .title h2 {
   margin: 0;
-  font-size: clamp(2rem, 5vw, 3.2rem);
+  font-size: var(--type-section-title);
   line-height: 1.15;
   text-transform: uppercase;
-  letter-spacing: 1.6px;
-  font-family: "Courier New", Courier, monospace;
+  letter-spacing: 0.03em;
+  font-family: var(--font-brand);
   font-weight: 900;
   background: linear-gradient(
     135deg,
@@ -38,10 +38,10 @@
 
 .title p {
   margin: 0;
-  font-size: clamp(0.95rem, 2vw, 1.22rem);
+  font-size: var(--type-kicker);
   line-height: 1.35;
   font-weight: 700;
-  letter-spacing: 0.8px;
+  letter-spacing: 0.04em;
   color: var(--primary-cyan-dark);
 }
 
@@ -57,55 +57,44 @@
 }
 
 /* Testimonials page hero banner */
-.Testimonials_page .title {
+.Testimonials_page .testimonials-hero {
+  --hero-overlay: linear-gradient(
+    115deg,
+    rgba(0, 24, 48, 0.78) 0%,
+    rgba(0, 138, 201, 0.42) 52%,
+    rgba(0, 191, 255, 0.12) 100%
+  );
   position: relative;
   max-width: none;
-  height: 350px;
-  min-height: 350px;
   margin: 0;
   padding: 26px 20px;
   justify-content: center;
-  background:
-    linear-gradient(
-      115deg,
-      rgba(0, 24, 48, 0.78) 0%,
-      rgba(0, 138, 201, 0.42) 52%,
-      rgba(0, 191, 255, 0.12) 100%
-    ),
-    url("../../assets/Testimony page.png");
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center 30%;
+  background-image: url("../../assets/Testimony page.png");
   overflow: hidden;
 }
 
-.Testimonials_page .title h2 {
+.Testimonials_page .testimonials-hero h2 {
+  font-size: var(--type-hero-title);
+  font-family: var(--font-brand);
+  line-height: 1.1;
   color: #ffffff;
   background: none;
   -webkit-text-fill-color: #ffffff;
   text-shadow: 0 8px 28px rgba(0, 17, 39, 0.62);
-  letter-spacing: 2px;
+  letter-spacing: 0.02em;
 }
 
-.Testimonials_page .title p {
+.Testimonials_page .testimonials-hero p {
+  font-size: var(--type-hero-subtitle);
+  line-height: 1.45;
+  letter-spacing: 0.03em;
   color: rgba(241, 252, 255, 0.95);
   font-weight: 700;
   text-shadow: 0 4px 15px rgba(0, 17, 39, 0.5);
 }
 
 @media (max-width: 768px) {
-  .Testimonials_page .title {
-    height: 300px;
-    min-height: 300px;
+  .Testimonials_page .testimonials-hero {
     padding: 20px 16px;
-    background-position: center 28%;
-  }
-}
-
-@media (max-width: 480px) {
-  .Testimonials_page .title {
-    height: 280px;
-    min-height: 280px;
-    background-position: center 24%;
   }
 }

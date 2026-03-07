@@ -9,6 +9,19 @@ export const Navbar = () => {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768)
   const location = useLocation()
 
+  const closeMenu = () => {
+    setIsMenuOpen(false)
+    document.body.style.overflow = 'unset'
+  }
+
+  const toggleMenu = () => {
+    setIsMenuOpen((prev) => {
+      const next = !prev
+      document.body.style.overflow = next ? 'hidden' : 'unset'
+      return next
+    })
+  }
+
   useEffect(() => {
     const handleResize = () => {
       const mobile = window.innerWidth <= 768
@@ -29,21 +42,13 @@ export const Navbar = () => {
     else if (path.includes('/about-us')) setActiveMenu('about')
     else if (path.includes('/testimonials')) setActiveMenu('testimonials')
     else if (path.includes('/contact-us')) setActiveMenu('contact')
-    
-    if (isMobile && isMenuOpen) {
+  }, [location.pathname])
+
+  useEffect(() => {
+    if (isMobile) {
       closeMenu()
     }
-  }, [location, isMobile, isMenuOpen])
-
-  const openMenu = () => {
-    setIsMenuOpen(true)
-    document.body.style.overflow = 'hidden'
-  }
-
-  const closeMenu = () => {
-    setIsMenuOpen(false)
-    document.body.style.overflow = 'unset'
-  }
+  }, [location.pathname, isMobile])
 
   const handleNavClick = (menuItem) => {
     setActiveMenu(menuItem)
@@ -81,9 +86,11 @@ export const Navbar = () => {
 
       {/* Mobile Menu Toggle */}
       <button 
-        className='menu-toggle' 
-        onClick={openMenu} 
-        aria-label="Open menu"
+        className={`menu-toggle ${isMenuOpen ? 'is-open' : ''}`}
+        onClick={toggleMenu}
+        aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
+        aria-expanded={isMenuOpen}
+        aria-controls='mobile-menu-panel'
       >
         <div className="hamburger-box">
           <div className="hamburger-inner"></div>
@@ -91,29 +98,33 @@ export const Navbar = () => {
       </button>
 
       {/* Mobile Menu */}
-      <div className={`mobile-menu ${isMenuOpen ? 'active' : ''}`}>
+      <div id='mobile-menu-panel' className={`mobile-menu ${isMenuOpen ? 'active' : ''}`}>
         <div className='mobile-menu-overlay' onClick={closeMenu}></div>
         
         <div className='mobile-menu-content'>
+          <div className='mobile-menu-header'>
+            <span className='mobile-menu-title'>Menu</span>
+          </div>
+
           {/* Navigation Links */}
           <nav className='mobile-nav'>
             <ul className='mobile-nav-list'>
               <li>
-                <Link to='/' onClick={() => handleNavClick("home")} className={activeMenu === "home" ? 'active' : ''}>
+                <Link to='/' onClick={() => { handleNavClick("home"); closeMenu() }} className={activeMenu === "home" ? 'active' : ''}>
                   <span className="nav-icon">🏠</span>
                   <span className="nav-label">Home</span>
                   <span className="nav-arrow">→</span>
                 </Link>
               </li>
               <li>
-                <Link to='/our-services' onClick={() => handleNavClick("services")} className={activeMenu === "services" ? 'active' : ''}>
+                <Link to='/our-services' onClick={() => { handleNavClick("services"); closeMenu() }} className={activeMenu === "services" ? 'active' : ''}>
                   <span className="nav-icon">⚕️</span>
                   <span className="nav-label">Services</span>
                   <span className="nav-arrow">→</span>
                 </Link>
               </li>
               <li>
-                <Link to='/about-us' onClick={() => handleNavClick("about")} className={activeMenu === "about" ? 'active' : ''}>
+                <Link to='/about-us' onClick={() => { handleNavClick("about"); closeMenu() }} className={activeMenu === "about" ? 'active' : ''}>
                   <span className="nav-icon">🏢</span>
                   <span className="nav-label">About Us</span>
                   <span className="nav-arrow">→</span>
@@ -121,14 +132,14 @@ export const Navbar = () => {
               </li>
               <li className="nav-divider"></li>
               <li>
-                <Link to='/testimonials' onClick={() => handleNavClick("testimonials")} className={activeMenu === "testimonials" ? 'active' : ''}>
+                <Link to='/testimonials' onClick={() => { handleNavClick("testimonials"); closeMenu() }} className={activeMenu === "testimonials" ? 'active' : ''}>
                   <span className="nav-icon">💬</span>
                   <span className="nav-label">Testimonials</span>
                   <span className="nav-arrow">→</span>
                 </Link>
               </li>
               <li>
-                <Link to='/contact-us' onClick={() => handleNavClick("contact")} className={activeMenu === "contact" ? 'active' : ''}>
+                <Link to='/contact-us' onClick={() => { handleNavClick("contact"); closeMenu() }} className={activeMenu === "contact" ? 'active' : ''}>
                   <span className="nav-icon">📞</span>
                   <span className="nav-label">Contact Us</span>
                   <span className="nav-arrow">→</span>

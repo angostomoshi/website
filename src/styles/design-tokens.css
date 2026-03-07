@@ -1,0 +1,35 @@
+:root {
+  --primary-cyan: #00bfff;
+  --primary-cyan-light: #40dfff;
+  --primary-cyan-dark: #0099cc;
+
+  --text-primary: #0a0e27;
+  --text-secondary: #1e293b;
+
+  --container-pad-desktop: 40px;
+  --container-pad-tablet: 24px;
+  --container-pad-mobile: 16px;
+
+  --hero-banner-height-desktop: 350px;
+  --hero-banner-height-tablet: 300px;
+  --hero-banner-height-mobile: 280px;
+
+  --hero-focus-desktop: 30%;
+  --hero-focus-tablet: 28%;
+  --hero-focus-mobile: 24%;
+
+  --hero-overlay-default: linear-gradient(
+    115deg,
+    rgba(0, 33, 66, 0.78) 0%,
+    rgba(0, 138, 201, 0.42) 52%,
+    rgba(0, 191, 255, 0.12) 100%
+  );
+
+  --font-brand: "Nunito Sans", sans-serif;
+  --type-hero-title: clamp(2rem, 5vw, 3.6rem);
+  --type-hero-subtitle: clamp(0.95rem, 2vw, 1.2rem);
+  --type-section-title: clamp(1.45rem, 3vw, 1.95rem);
+  --type-kicker: clamp(0.85rem, 1.4vw, 1rem);
+
+  --tap-target-min: 44px;
+}

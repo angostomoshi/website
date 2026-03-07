@@ -1,10 +1,13 @@
 /* Page Transition Animations */
-/* Smooth page transitions for enhanced user experience */
+/*
+  Keep transitions opt-in to avoid unintentional motion on every element.
+  Use these utility classes where animation is explicitly desired.
+*/
 
 @keyframes fadeInUp {
   from {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(16px);
   }
   to {
     opacity: 1;
@@ -19,14 +22,14 @@
   }
   to {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(16px);
   }
 }
 
 @keyframes slideInFromLeft {
   from {
     opacity: 0;
-    transform: translateX(-30px);
+    transform: translateX(-20px);
   }
   to {
     opacity: 1;
@@ -37,7 +40,7 @@
 @keyframes slideInFromRight {
   from {
     opacity: 0;
-    transform: translateX(30px);
+    transform: translateX(20px);
   }
   to {
     opacity: 1;
@@ -48,7 +51,7 @@
 @keyframes scaleIn {
   from {
     opacity: 0;
-    transform: scale(0.95);
+    transform: scale(0.97);
   }
   to {
     opacity: 1;
@@ -56,252 +59,54 @@
   }
 }
 
-@keyframes expandHeight {
-  from {
-    max-height: 0;
-    opacity: 0;
-  }
-  to {
-    max-height: 1000px;
-    opacity: 1;
-  }
-}
-
-/* Page Container Transitions */
 .page-container {
-  animation: fadeInUp 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  animation: fadeInUp 0.45s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .page-container.exit {
-  animation: fadeOutDown 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  animation: fadeOutDown 0.28s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
-/* Heading Animations */
-h1,
-h2,
-h3 {
-  animation: slideInFromLeft 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-/* Section Animations */
-section {
-  animation: fadeInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-section:nth-child(2) {
-  animation-delay: 0.1s;
-}
-
-section:nth-child(3) {
-  animation-delay: 0.2s;
-}
-
-section:nth-child(4) {
-  animation-delay: 0.3s;
-}
-
-section:nth-child(5) {
-  animation-delay: 0.4s;
-}
-
-/* Card Animations */
-.card,
-.about-card,
-.provider-card,
-.testimonial-card,
-.feature-card,
-.overview-card,
-.pricing-card {
-  animation: fadeInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.card:nth-child(1),
-.about-card:nth-child(1),
-.provider-card:nth-child(1),
-.feature-card:nth-child(1),
-.overview-card:nth-child(1),
-.pricing-card:nth-child(1) {
-  animation-delay: 0s;
-}
-
-.card:nth-child(2),
-.about-card:nth-child(2),
-.provider-card:nth-child(2),
-.feature-card:nth-child(2),
-.overview-card:nth-child(2),
-.pricing-card:nth-child(2) {
-  animation-delay: 0.1s;
-}
-
-.card:nth-child(3),
-.about-card:nth-child(3),
-.provider-card:nth-child(3),
-.feature-card:nth-child(3),
-.overview-card:nth-child(3),
-.pricing-card:nth-child(3) {
-  animation-delay: 0.2s;
-}
-
-.card:nth-child(4),
-.about-card:nth-child(4),
-.provider-card:nth-child(4),
-.feature-card:nth-child(4),
-.overview-card:nth-child(4),
-.pricing-card:nth-child(4) {
-  animation-delay: 0.3s;
-}
-
-.card:nth-child(n + 5),
-.about-card:nth-child(n + 5),
-.provider-card:nth-child(n + 5),
-.feature-card:nth-child(n + 5),
-.overview-card:nth-child(n + 5),
-.pricing-card:nth-child(n + 5) {
-  animation-delay: 0.4s;
-}
-
-/* Button Animations */
-button,
-.button,
-.btn {
-  animation: fadeInUp 0.7s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-/* Form Input Animations */
-input,
-textarea,
-.form-group {
-  animation: slideInFromRight 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-input:nth-of-type(1),
-textarea:nth-of-type(1),
-.form-group:nth-child(1) {
-  animation-delay: 0s;
-}
-
-input:nth-of-type(2),
-textarea:nth-of-type(2),
-.form-group:nth-child(2) {
-  animation-delay: 0.1s;
-}
-
-input:nth-of-type(3),
-textarea:nth-of-type(3),
-.form-group:nth-child(3) {
-  animation-delay: 0.2s;
-}
-
-input:nth-of-type(n + 4),
-textarea:nth-of-type(n + 4),
-.form-group:nth-child(n + 4) {
-  animation-delay: 0.3s;
-}
-
-/* Link Animations */
-a {
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-/* List Item Animations */
-li {
-  animation: slideInFromLeft 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-li:nth-child(1) {
-  animation-delay: 0s;
-}
-
-li:nth-child(2) {
-  animation-delay: 0.1s;
-}
-
-li:nth-child(3) {
-  animation-delay: 0.2s;
-}
-
-li:nth-child(4) {
-  animation-delay: 0.3s;
-}
-
-li:nth-child(n + 5) {
-  animation-delay: 0.4s;
-}
-
-/* Image Animations */
-img {
-  animation: slideInFromRight 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-/* Hero Section Animations */
-.hero,
-.hero-section,
-.picture_page {
-  animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-/* Navbar Animation */
-nav,
-.navbar,
-.Navbar {
-  animation: slideInFromLeft 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-/* Footer Animation */
-footer,
-.footer {
-  animation: slideInFromRight 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-/* Modal/Dialog Animations */
-.modal,
-.dialog,
-.popup {
-  animation: scaleIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-/* Accordion Animations */
-.accordion-content {
-  animation: expandHeight 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-/* Tab Animations */
-.tab-content {
-  animation: fadeInUp 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-/* Animation Utilities */
 .animate-fade-in {
-  animation: fadeInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  animation: fadeInUp 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .animate-slide-in-left {
-  animation: slideInFromLeft 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  animation: slideInFromLeft 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .animate-slide-in-right {
-  animation: slideInFromRight 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  animation: slideInFromRight 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .animate-scale-in {
-  animation: scaleIn 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  animation: scaleIn 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Disable animations for users who prefer reduced motion */
+.stagger-children > * {
+  animation: fadeInUp 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.stagger-children > *:nth-child(2) {
+  animation-delay: 0.08s;
+}
+
+.stagger-children > *:nth-child(3) {
+  animation-delay: 0.16s;
+}
+
+.stagger-children > *:nth-child(4) {
+  animation-delay: 0.24s;
+}
+
 @media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-  }
-}
-
-/* Performance Optimization */
-@media (prefers-color-scheme: dark) {
-  /* Reduce animations in dark mode for better performance on some devices */
-  body {
-    --animation-duration: 0.6s;
+  .page-container,
+  .page-container.exit,
+  .animate-fade-in,
+  .animate-slide-in-left,
+  .animate-slide-in-right,
+  .animate-scale-in,
+  .stagger-children > * {
+    animation: none !important;
   }
 }

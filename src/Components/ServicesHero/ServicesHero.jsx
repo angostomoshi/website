@@ -4,7 +4,7 @@ import './ServicesHero.css'
 
 const ServicesHero = () => {
   return (
-    <div className='Services-hero container'>
+    <div className='Services-hero container hero-banner hero-banner--overlay'>
    
       <section className='picture_page'>
       {/* <img src={servicefirstpicture} alt="" className='picture' /> */}

@@ -21,10 +21,25 @@
 body {
   background: linear-gradient(135deg, #f0f9ff 0%, #e0f7ff 100%);
   min-height: 100vh;
+  color: #1e293b;
+  line-height: 1.5;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html,
+body,
+#root {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
 }
 
 .App {
   min-height: 100vh;
+  max-width: 100%;
+  overflow-x: hidden;
 }
 
 /* Startup Intro Animation */
@@ -67,6 +82,8 @@ body {
 
 .site-intro-content {
   text-align: center;
+  width: min(560px, calc(100vw - 32px));
+  max-width: 100%;
   padding: 30px 38px;
   border-radius: 20px;
   border: 1px solid rgba(255, 255, 255, 0.2);
@@ -162,27 +179,86 @@ body {
 }
 
 @media (max-width: 600px) {
+  .site-intro {
+    padding: env(safe-area-inset-top, 0) 10px env(safe-area-inset-bottom, 0);
+  }
+
   .site-intro-content {
-    padding: 24px 20px;
+    width: calc(100vw - 20px);
+    padding: 22px 16px;
+    border-radius: 16px;
   }
 
   .site-intro-brand {
-    gap: 10px;
+    gap: 8px;
+  }
+
+  .site-intro-logo {
+    width: 56px;
+    height: 56px;
+  }
+
+  .site-intro-brand-name {
+    font-size: clamp(1.45rem, 8.3vw, 2.1rem);
   }
 
   .site-intro-brand-badge {
-    margin-top: 6px;
-    padding: 4px 10px;
-    letter-spacing: 0.9px;
+    margin-top: 5px;
+    padding: 4px 9px;
+    font-size: 0.64rem;
+    letter-spacing: 0.75px;
   }
 
   .site-intro-content p {
-    letter-spacing: 1.2px;
+    margin-top: 10px;
+    font-size: clamp(0.72rem, 3.5vw, 0.9rem);
+    letter-spacing: 0.9px;
+    line-height: 1.35;
+  }
+
+  .site-intro-line {
+    width: min(170px, 60vw);
+    margin-top: 12px;
+    height: 3px;
+  }
+}
+
+@media (max-width: 400px) {
+  .site-intro-content {
+    width: calc(100vw - 16px);
+    padding: 18px 12px;
+  }
+
+  .site-intro-brand {
+    gap: 6px;
+  }
+
+  .site-intro-logo {
+    width: 50px;
+    height: 50px;
+  }
+
+  .site-intro-brand-name {
+    font-size: clamp(1.3rem, 8vw, 1.75rem);
+  }
+
+  .site-intro-brand-badge {
+    padding: 3px 8px;
+    font-size: 0.58rem;
+    letter-spacing: 0.6px;
+  }
+
+  .site-intro-content p {
+    margin-top: 8px;
+    font-size: 0.68rem;
+    letter-spacing: 0.65px;
   }
 }
 
 .app-shell {
   min-height: 100vh;
+  max-width: 100%;
+  overflow-x: hidden;
   transition:
     opacity 0.55s ease,
     transform 0.55s ease;
@@ -246,9 +322,30 @@ a {
 .container {
   max-width: 1400px;
   margin: 0 auto;
-  padding-left: 40px;
-  padding-right: 40px;
+  padding-left: var(--container-pad-desktop);
+  padding-right: var(--container-pad-desktop);
   width: 100%;
+}
+
+img,
+svg,
+video {
+  max-width: 100%;
+  height: auto;
+}
+
+@media (max-width: 1024px) {
+  .container {
+    padding-left: var(--container-pad-tablet);
+    padding-right: var(--container-pad-tablet);
+  }
+}
+
+@media (max-width: 640px) {
+  .container {
+    padding-left: var(--container-pad-mobile);
+    padding-right: var(--container-pad-mobile);
+  }
 }
 
 .btn {
@@ -292,6 +389,21 @@ a {
 @media (max-width: 768px) {
   :root {
     --app-block-padding: 30px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }
 

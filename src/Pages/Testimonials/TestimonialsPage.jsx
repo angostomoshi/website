@@ -9,7 +9,7 @@ export const TestimonialsPage = () => {
   return (
     <div className='Testimonials_page'>
         <Navbar/>
-        <Title title='TESTIMONIALS' subTitle='Reviews from our Users'/>   
+        <Title className='hero-banner hero-banner--overlay testimonials-hero' title='TESTIMONIALS' subTitle='Reviews from our Users'/>   
         <Testimonials/>
         <Footer/>
 

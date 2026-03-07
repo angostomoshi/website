@@ -6,23 +6,13 @@
 }
 
 .ContactPage {
-  width: 100%;
-  position: relative;
-  height: 350px;
-  min-height: 350px;
-  background:
-    linear-gradient(
-      115deg,
-      rgba(0, 33, 66, 0.78) 0%,
-      rgba(0, 138, 201, 0.42) 52%,
-      rgba(0, 191, 255, 0.12) 100%
-    ),
-    url("../../assets/Contact us page.png");
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center 30%;
-  margin-top: 0;
-  overflow: hidden;
+  --hero-overlay: linear-gradient(
+    115deg,
+    rgba(0, 33, 66, 0.78) 0%,
+    rgba(0, 138, 201, 0.42) 52%,
+    rgba(0, 191, 255, 0.12) 100%
+  );
+  background-image: url("../../assets/Contact us page.png");
 }
 
 .ContactPage .picture_page {
@@ -36,11 +26,12 @@
 
 .ContactPage .picture_page h1 {
   color: #ffffff;
-  font-family: "Nunito Sans", sans-serif;
-  font-size: clamp(2rem, 5vw, 3.8rem);
+  font-family: var(--font-brand);
+  font-size: var(--type-hero-title);
   font-style: normal;
   font-weight: 900;
-  line-height: normal;
+  line-height: 1.1;
+  letter-spacing: 0.02em;
   text-align: center;
   margin: 0;
   padding: 0 20px;
@@ -49,24 +40,12 @@
 }
 
 @media (max-width: 768px) {
-  .ContactPage {
-    height: 300px;
-    min-height: 300px;
-    background-position: center 28%;
-  }
-
   .ContactPage .picture_page h1 {
     font-size: 1.8rem;
   }
 }
 
 @media (max-width: 480px) {
-  .ContactPage {
-    height: 280px;
-    min-height: 280px;
-    background-position: center 24%;
-  }
-
   .ContactPage .picture_page h1 {
     font-size: 1.6rem;
   }

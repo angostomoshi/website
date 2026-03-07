@@ -99,17 +99,17 @@ const About = () => {
   }, []);
 
   const handleGmailEnquiry = (serviceTitle) => {
-    const recipient = "angostomoshi@gmail.com";
+    const recipient = "info@systempartners.biz";
     const subject = encodeURIComponent(`Enquiry about Service: ${serviceTitle}`);
     const body = encodeURIComponent(
       `Hello,\n\nI'm interested in your service: ${serviceTitle}.\n\nPlease provide more information about this service, including pricing and availability.\n\nThank you.`
     );
-    
-    window.open(`https://mail.google.com/mail/?view=cm&fs=1&to=${recipient}&su=${subject}&body=${body}`, '_blank');
+
+    window.location.href = `mailto:${recipient}?subject=${subject}&body=${body}`;
   };
 
   const handleScheduleDemo = () => {
-    window.open('https://wa.me/254758533049?text=Hello%2C%20I%27d%20like%20to%20schedule%20a%20personalized%20demo%20of%20your%20IT%20solutions.', '_blank');
+    window.open('https://wa.me/254714433693?text=Hello%2C%20I%27d%20like%20to%20schedule%20a%20personalized%20demo%20of%20your%20IT%20solutions.', '_blank');
   };
 
   const openServiceModal = (service) => {
