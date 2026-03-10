@@ -9,6 +9,7 @@ export const About = () => {
     <section id='about' className='about_page container'>
       {/* Left Column - Image */}
       <div className='about_page_left'>
+        
         <img src={healthcare} alt="Healthcare professionals" className='healthcare_img' />
        
       </div>
